@@ -1,24 +1,32 @@
 ---
-// Component Imports
-import Button from '../components/Button.astro';
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
+import MainLayout from "../layouts/MainLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + TailwindCSS</title>
-	</head>
-
+<MainLayout
+	description={"sitio de melina batalla, comunicadora visual"}
+	title={"Melina Batalla"}
+>
 	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Tailwind Button in Astro!</Button>
-			<a href="/markdown-page" class="p-4 underline">Markdown is also supported...</a>
+		<div class="flex justify-centerh-full p-5 w-full">
+			<div class="w-full flex flex-row gap-5 justify-around items-center">
+				<div class="flex justify-center">
+					<div class="flex flex-col gap-2">
+						<h1 class="text-5xl font-bold text-left">
+							Welcome! <br />
+							Soy Melina Batalla
+						</h1>
+						<p class="text-center text-xl">
+							Creemos universos únicos a la medida de tu marca.
+						</p>
+						<button
+							class="bg-gray-900 text-xl text-white p-2 w-fit py-2 px-2"
+						>
+							Hablemos!
+						</button>
+					</div>
+				</div>
+				<div class="bg-gray-500 w-1/2 h-[700px]"></div>
+			</div>
 		</div>
 	</body>
-</html>
+</MainLayout>

@@ -1,0 +1,46 @@
+---
+import LinkComponent from "../components/linktree/LinkComponent.astro";
+import LinktreeLayout from "../layouts/LinktreeLayout.astro";
+import type { Props as iconPros } from "../components/linktree/LinkComponent.astro";
+
+const links: iconPros[] = [
+    {
+        text: "Youtube",
+        icon: "youtube",
+        href: "https://www.youtube.com/@melina.batalla/videos",
+        size: "40",
+        viewbox: "48",
+    },
+    {
+        text: "Tiktok",
+        icon: "tiktok",
+        href: "https://www.tiktok.com/@melina.batalla.d",
+        size: "40",
+        viewbox: "40",
+    },
+    {
+        text: "Instagram",
+        icon: "instagram",
+        href: "https://www.tiktok.com/@melina.batalla.d",
+        size: "40",
+        viewbox: "169",
+    },
+    {
+        text: "Whatsapp",
+        icon: "whatsapp",
+        href: "https://api.whatsapp.com/send?phone=543774400625&text=Hola%20Meli!%20Me%20gustaría%20info%20sobre",
+        size: "40",
+        viewbox: "308",
+    },
+];
+---
+
+<LinktreeLayout title={"links"}>
+    <div
+        class="flex flex-col max-w-2xl justify-center items-center w-11/12 m-4"
+    >
+        <div class="flex flex-col max-w-2xl w-11/12">
+            {links.map(({ ...rest }) => <LinkComponent {...rest} />)}
+        </div>
+    </div>
+</LinktreeLayout>
