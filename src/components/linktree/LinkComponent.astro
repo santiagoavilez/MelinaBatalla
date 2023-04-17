@@ -1,0 +1,52 @@
+---
+import Icon from "../Icon.astro";
+import type { iconPaths } from "../IconPaths";
+
+export interface Props {
+    href?: string;
+    icon: keyof typeof iconPaths;
+    size?: string;
+    viewbox?: string;
+    text?: string;
+}
+const { href, icon, text, size, viewbox } = Astro.props as Props;
+---
+
+<a
+    class="card flex justify-between items-center rounded-md m-2 p-2 group bg-gradient-to-tl from-gray-50 to-white"
+    href={href ? href : "#"}
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    <div class="flex items-end justify-center text-gray-900">
+        <Icon size={size} icon={icon} viewbox={viewbox} />
+    </div>
+    <p class="font-semibold">{text ? text : "Youtube"}</p>
+    <div
+        class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-300 group-hover:visible invisible"
+    >
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            enable-background="new 0 0 24 24"
+            class=""
+            ><path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M10.6464 3.85347L11 4.20702L11.7071 3.49992L11.3536 3.14636L8.35355 0.146362H7.64645L4.64645 3.14636L4.29289 3.49992L5 4.20702L5.35355 3.85347L7.5 1.70702V9.49992V9.99992H8.5V9.49992V1.70702L10.6464 3.85347ZM1 5.49994L1.5 4.99994H4V5.99994H2V14.9999H14V5.99994H12V4.99994H14.5L15 5.49994V15.4999L14.5 15.9999H1.5L1 15.4999V5.49994Z"
+                fill="currentColor"></path></svg
+        >
+    </div>
+</a>
+
+<style>
+    .card {
+        transition: cubic-bezier(0.07, 1.41, 0.82, 1.41) 0.2s;
+        transform: scale(1);
+    }
+    .card:hover {
+        transition: cubic-bezier(0.07, 1.41, 0.82, 1.41) 0.2s;
+        transform: scale(1.02);
+    }
+</style>
