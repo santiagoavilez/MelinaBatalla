@@ -23,7 +23,9 @@ const { title, description } = Astro.props;
 	<body>
 		<div class="h-screen bg-gray-100">
 			<Nav />
-			<slot />
+			<body>
+				<slot />
+			</body>
 		</div>
 	</body>
 </html>
