@@ -1,5 +1,7 @@
 ---
 import Nav from "../components/nav/Nav.astro";
+import "@fontsource/poppins";
+import "../styles/global.css";
 
 interface Props {
 	title?: string | undefined;
@@ -18,14 +20,15 @@ const { title, description } = Astro.props;
 			content={description}
 		/>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="style" />
 		<title>{title}</title>
 	</head>
-	<body>
-		<div class="h-screen bg-gray-100">
+	<body class="h-screen bg-blanco">
+		<main class="">
 			<Nav />
 			<body>
 				<slot />
 			</body>
-		</div>
+		</main>
 	</body>
 </html>

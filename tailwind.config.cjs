@@ -4,7 +4,15 @@ module.exports = {
 	// These paths are just examples, customize them to match your project structure
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				blanco: '#F1F1F1',
+				primary: 'B3906C',
+				yema: '#E4A711',
+				negro: '#2A2A2A',
+				marmol: 'D1C1A1',
+			}
+		},
 	},
 	plugins: [
 		function ({ addBase, theme }) {
