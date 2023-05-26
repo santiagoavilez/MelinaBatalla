@@ -2,6 +2,7 @@
 import Nav from "../components/nav/Nav.astro";
 import "@fontsource/poppins";
 import "../styles/global.css";
+import Footer from "../components/Footer.astro";
 
 interface Props {
 	title?: string | undefined;
@@ -19,16 +20,20 @@ const { title, description } = Astro.props;
 			property="og:description"
 			content={description}
 		/>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="style" />
+		<meta name="viewport" content="width=device-width" />
+
+		<meta name="generator" content={Astro.generator} />
+
+		<link rel="icon" type="image/svg+xml" href="/MBlogo.svg" />
 		<title>{title}</title>
 	</head>
 	<body class="h-screen bg-blanco">
-		<main class="">
+		<main>
 			<Nav />
 			<body>
 				<slot />
 			</body>
+			<Footer />
 		</main>
 	</body>
 </html>

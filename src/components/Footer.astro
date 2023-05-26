@@ -1,0 +1,38 @@
+---
+const links = [
+    {
+        text: "Youtube",
+        href: "https://www.youtube.com/@melina.batalla/videos",
+    },
+    {
+        text: "Tiktok",
+
+        href: "https://www.tiktok.com/@melina.batalla.d",
+    },
+    {
+        text: "Instagram",
+
+        href: "https://www.tiktok.com/@melina.batalla.d",
+    },
+    {
+        text: "Whatsapp",
+        href: "https://api.whatsapp.com/send?phone=543774400625&text=Hola%20Meli!%20Me%20gustaría%20info%20sobre",
+    },
+];
+---
+
+<footer>
+    <div class="bg-negro p-4 flex flex-col gap-5">
+        <img src="/melina-batalla-logo.png" width="150px" />
+        <div class="flex justify-between text-blanco">
+            {links.map(({ text, href }) => <a href={href}>{text}</a>)}
+        </div>
+        <hr class="opacity-50" />
+        <span class="block text-sm text-gray-200 text-center"
+            >© 2023 <a
+                href="https://santiagoavilezdev.vercel.app"
+                class="hover:underline">Santiago Avilez™</a
+            >. All Rights Reserved.</span
+        >
+    </div>
+</footer>

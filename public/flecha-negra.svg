@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.48 49.71">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #262626;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="Mobil">
+    <g id="S7">
+      <g>
+        <line class="cls-1" x1=".71" y1="49" x2="48.48" y2="1.22"/>
+        <line class="cls-1" x1="48.48" y1="20.82" x2="48.48"/>
+        <line class="cls-1" x1="28.88" y1="1.22" x2="48.48" y2="1.22"/>
+      </g>
+    </g>
+  </g>
+</svg>
