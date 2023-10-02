@@ -1,3 +1,4 @@
+/** @jsxImportSource solid-js */
 import { createSignal } from 'solid-js';
 import { Collapse } from 'solid-collapse';
 

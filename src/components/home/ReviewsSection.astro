@@ -1,0 +1,29 @@
+---
+import { Button } from "@components/ui/button";
+---
+
+<section class="h-4/5 p-4 flex justify-between sm:p-10">
+    <header class="">
+        <h2 class="text-4xl">RESEÑAS DEL E-BOOK</h2>
+        <Button className="w-full">Quiero el e-book</Button>
+    </header>
+    <body class="">
+        <figure class="max-w-screen-md mx-auto text-left">
+            <figcaption class="flex items-left mt-6 space-x-3">
+                <div class="flex items-center divide-x-2 divide-gray-500">
+                    <cite class="pr-3 font-medium text-gray-900"
+                        >@marcossmartin</cite
+                    >
+                </div>
+            </figcaption>
+
+            <blockquote>
+                <p class="text-2xl italic font-medium text-gray-900">
+                    {
+                        "!Muy bunea data! me parecieron super utiles los ejercicios."
+                    }
+                </p>
+            </blockquote>
+        </figure>
+    </body>
+</section>

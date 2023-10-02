@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import ResponsiveImage from "@components/ResponsiveImage.astro";
+import FormEbook from "../ui/FormEbook";
+import ebookPortrait from "@assets/ebook-portrait.png";
+---
+
+<section class="h-full p-6 sm:p-10 bg-negro rounded-md">
+    <div
+        class="container px-0 flex flex-col md:flex-row justify-between items-center gap-5 text-slate-100"
+    >
+        <div class="flex max-w-2xl flex-col gap-5">
+            <h1 class="text-2xl md:text-5xl">
+                CONOCÉ TU PROPOSITO Y LOGRÁ AYUDAR A OTROS.
+            </h1>
+            <span class="text-lg md:text-2xl">DESCARGÁ TU E-BOOK GRATUITO</span>
+            <FormEbook />
+        </div>
+
+        <div class="">
+            <Image
+                width={300}
+                class="md:hidden"
+                src={ebookPortrait}
+                alt={"portrait"}
+            />
+            <Image
+                width={500}
+                class="md:block hidden"
+                src={ebookPortrait}
+                alt={"portrait"}
+            />
+        </div>
+    </div>
+</section>

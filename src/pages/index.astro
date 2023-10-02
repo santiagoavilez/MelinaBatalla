@@ -1,19 +1,24 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import "../../src/styles/global.css";
+import Hero from "@components/home/Hero.astro";
+import ReviewsSection from "@components/home/ReviewsSection.astro";
 ---
 
 <MainLayout
 	description={"sitio de melina batalla, comunicadora visual"}
 	title={"Melina Batalla"}
 >
-	<body>
+	<main>
+		<Hero />
+		<ReviewsSection />
 		<div class="flex justify-centerh-full p-5 w-full">
 			<div class="w-full flex flex-row gap-5 justify-around items-center">
 				<div class="flex justify-center">
 					<div class="flex flex-col gap-2">
 						<h1 class="text-5xl font-bold text-left">
 							Welcome! <br />
-							Soy Melina Batalla
+							 Soy Melina Batalla
 						</h1>
 						<p class="text-center text-xl">
 							Creemos universos únicos a la medida de tu marca.
@@ -28,5 +33,5 @@ import MainLayout from "../layouts/MainLayout.astro";
 				<div class="bg-gray-500 w-1/2 h-[700px]"></div>
 			</div>
 		</div>
-	</body>
+	</main>
 </MainLayout>
