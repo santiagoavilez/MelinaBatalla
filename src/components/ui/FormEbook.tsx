@@ -25,10 +25,14 @@ const FormEbook = () => {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      body: JSON.stringify(values)
+    })
   }
   return (
     <Form {...form}>
