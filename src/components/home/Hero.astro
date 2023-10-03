@@ -3,6 +3,20 @@ import { Image } from "astro:assets";
 import ResponsiveImage from "@components/ResponsiveImage.astro";
 import FormEbook from "../ui/FormEbook";
 import ebookPortrait from "@assets/ebook-portrait.png";
+
+ 
+const res = await fetch('https://connect.mailerlite.com/api/groups', {
+    headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+        Authorization: `Bearer ${import.meta.env.PUBLIC_MAILERLITE_API_KEY}`
+    }
+})
+       
+const {data : groups} = await res.json() as {data:{id: string, name: string}[]};       
+
+const ebokkgroup = groups.find(group => group.name === 'e-book') as {id: string, name: string};
+ 
 ---
 
 <section class="h-full p-6 sm:p-10 bg-negro rounded-md">
@@ -14,7 +28,7 @@ import ebookPortrait from "@assets/ebook-portrait.png";
                 CONOCÉ TU PROPOSITO Y LOGRÁ AYUDAR A OTROS.
             </h1>
             <span class="text-lg md:text-2xl">DESCARGÁ TU E-BOOK GRATUITO</span>
-            <FormEbook client:load />
+            <FormEbook groupId={ebokkgroup.id} client:load />
         </div>
 
         <div class="">
