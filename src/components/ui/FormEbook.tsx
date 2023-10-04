@@ -10,10 +10,10 @@ import SuccessDialog from '@components/home/SuccesDialog'
 import ErrorDialog from '@components/home/ErrorDialog'
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "el nombre debe tener por lo menos 2 caracteres",
+    message: "Es un nombre muy corto :o debe tener al menos 2 letras",
   }),
   email: z.string().email({
-    message: "el email debe ser valido",
+    message: "Si no ingresás un mail válido no te puedo enviar el e-book :/",
   }),
 })
 
