@@ -1,26 +1,31 @@
 ---
 import { Button } from "@components/ui/button";
+import Totop from "./ToTop";
 ---
 
-<section class="h-4/5 p-4 flex justify-center flex-col md:flex-row md:justify-between gap-2 sm:p-10">
+<section
+    class="h-full max-w-[1400px] mx-auto p-6 w-full flex justify-center flex-col md:flex-row md:justify-between md:py-10"
+>
     <header class="">
-        <h3 class="text-xl md:text-3xl whitespace-nowrap">RESEÑAS DEL E-BOOK</h3>
-        
+        <h3 class="text-xl md:text-3xl whitespace-nowrap pb-2">
+            RESEÑAS DEL E-BOOK
+        </h3>
+        <Button className="w-full hidden md:block">Quiero el e-book</Button>
     </header>
-    <div class="flex flex-col gap-6 justify-center">
+    <div class="flex flex-col gap-6 justify-center md:pr-10">
         <figure class="max-w-screen-sm text-left">
             <figcaption class="flex items-left mt-6 space-x-3">
                 <div class="flex items-center divide-x-2 divide-gray-500">
-                    <cite class="pr-3 font-medium text-gray-900"
+                    <cite class="pr-3 not-italic font-semibold text-gray-900"
                         >@marcossmartin</cite
                     >
                 </div>
             </figcaption>
 
             <blockquote>
-                <p class="text-2xl  font-medium text-gray-900">
+                <p class="text-2xl font-medium text-gray-900">
                     {
-                        "!Muy bunea data! me parecieron super útiles los ejercicios para saber como encarar el mensaje de una marca personal."
+                        "¡Muy buena data! Me parecieron super útiles los ejercicios para saber como encarar el mensaje de una marca personal."
                     }
                 </p>
             </blockquote>
@@ -28,7 +33,7 @@ import { Button } from "@components/ui/button";
         <figure class="max-w-screen-sm text-left">
             <figcaption class="flex items-left mt-6 space-x-3">
                 <div class="flex items-center divide-x-2 divide-gray-500">
-                    <cite class="pr-3 font-medium text-gray-900"
+                    <cite class="pr-3 not-italic font-semibold text-gray-900"
                         >@esteban.escribe - Copywriter</cite
                     >
                 </div>
@@ -37,11 +42,11 @@ import { Button } from "@components/ui/button";
             <blockquote>
                 <p class="text-2xl font-medium text-gray-900">
                     {
-"Me encantó lo bien redactado que está. Gran e-book. Te vuela la cabeza cuando lo entendés"
-  }
+                        "Me encantó lo bien redactado que está. Gran e-book. Te vuela la cabeza cuando lo entendés"
+                    }
                 </p>
             </blockquote>
         </figure>
-        <Button className="w-full">Quiero el e-book</Button>
+        <Totop client:idle />
     </div>
 </section>

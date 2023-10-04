@@ -6,8 +6,8 @@ import * as z from 'zod'
 import { Button } from './button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './form'
 import { Input } from './input'
-import { SuccessDialog } from '@components/home/SuccesDialog'
-
+import SuccessDialog from '@components/home/SuccesDialog'
+import ErrorDialog from '@components/home/ErrorDialog'
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "el nombre debe tener por lo menos 2 caracteres",
@@ -30,37 +30,37 @@ const FormEbook = ({ groupId }: Props) => {
     },
   })
   const [openFirst, setOpenFirst] = React.useState(false)
+  const [openError, setOpenError] = React.useState(false)
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
-    setOpenFirst(true)
-    // try {
 
-    //   const ebookId = import.meta.env.PUBLIC_MAILERLITE_EBOOK_GROUP_ID
-    //   console.log(ebookId)
-    //   const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'accept': 'application/json',
-    //       Authorization: `Bearer ${import.meta.env.PUBLIC_MAILERLITE_API_KEY}`,
-    //     },
-    //     body: JSON.stringify({
-    //       email: values.email,
-    //       fields: { name: values.name },
-    //       groups: [`${groupId}`],
-    //     })
-    //   })
-    //   if (!response.ok) {
-    //     throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-    //   }
-    //   const data = await response.json();
-    //   console.log(data);
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          Authorization: `Bearer ${import.meta.env.PUBLIC_MAILERLITE_API_KEY}`,
+        },
+        body: JSON.stringify({
+          email: values.email,
+          fields: { name: values.name },
+          groups: [`${groupId}`],
+        })
+      })
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log(data)
+      if (response.ok && !!data) {
+        setOpenFirst(true)
+      }
+    } catch (error) {
+      setOpenError(true)
+    }
   }
   return (
     <Form {...form}>
@@ -71,7 +71,7 @@ const FormEbook = ({ groupId }: Props) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input className='bg-transparent placeholder:text-slate-50' aria-label='Nombre' placeholder="Nombre" {...field} />
+                <Input className='bg-transparent placeholder:text-slate-50' aria-label='Nombre' placeholder="¿Comó te gusta que te llamen?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -83,15 +83,16 @@ const FormEbook = ({ groupId }: Props) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input className='bg-transparent placeholder:text-slate-50' aria-label='Email' placeholder="Email" {...field} />
+                <Input className='bg-transparent placeholder:text-slate-50' aria-label='Email' placeholder="¿Qué email abrís siempre?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button className='bg-yema w-full hover:bg-marmol' type="submit">Enviar</Button>
+        <Button className='w-full hover:bg-marmol font-semibold' type="submit">Obtener e-book</Button>
       </form>
       <SuccessDialog open={openFirst} onClose={() => setOpenFirst(false)} />
+      <ErrorDialog open={openError} onClose={() => setOpenError(false)} />
     </Form>
   )
 }

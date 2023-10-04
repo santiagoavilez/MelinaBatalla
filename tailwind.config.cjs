@@ -14,17 +14,17 @@ module.exports = {
       colors: {
         blanco: '#F1F1F1',
         primary: 'B3906C',
-        yema: '#F2600C',
-        negro: '#0D0D0B',
-        marmol: '#D1C1A1',
+        yema: '#E28443',
+        negro: '#09090B',
+        marmol: '#EDE9DE',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#E1A543",
+          foreground: "#09090B",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
