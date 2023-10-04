@@ -2,13 +2,13 @@
 import { Button } from "@components/ui/button";
 ---
 
-<section class="h-4/5 p-4 flex justify-between sm:p-10">
+<section class="h-4/5 p-4 flex justify-center flex-col md:flex-row md:justify-between gap-6 sm:p-10">
     <header class="">
-        <h2 class="text-4xl">RESEÑAS DEL E-BOOK</h2>
+        <h2 class="text-3xl">RESEÑAS DEL E-BOOK</h2>
         <Button className="w-full">Quiero el e-book</Button>
     </header>
-    <body class="">
-        <figure class="max-w-screen-md mx-auto text-left">
+    <div class="flex flex-col justify-center">
+        <figure class="max-w-screen-sm text-left">
             <figcaption class="flex items-left mt-6 space-x-3">
                 <div class="flex items-center divide-x-2 divide-gray-500">
                     <cite class="pr-3 font-medium text-gray-900"
@@ -20,10 +20,27 @@ import { Button } from "@components/ui/button";
             <blockquote>
                 <p class="text-2xl italic font-medium text-gray-900">
                     {
-                        "!Muy bunea data! me parecieron super utiles los ejercicios."
+                        "!Muy bunea data! me parecieron super útiles los ejercicios para saber como encarar el mensaje de una marca personal."
                     }
                 </p>
             </blockquote>
         </figure>
-    </body>
+        <figure class="max-w-screen-sm text-left">
+            <figcaption class="flex items-left mt-6 space-x-3">
+                <div class="flex items-center divide-x-2 divide-gray-500">
+                    <cite class="pr-3 font-medium text-gray-900"
+                        >@esteban.escribe - Copywriter</cite
+                    >
+                </div>
+            </figcaption>
+
+            <blockquote>
+                <p class="text-2xl italic font-medium text-gray-900">
+                    {
+"Me encantó lo bien redactado que está. Gran e-book. Te vuela la cabeza cuando lo entendés"
+  }
+                </p>
+            </blockquote>
+        </figure>
+    </di>
 </section>

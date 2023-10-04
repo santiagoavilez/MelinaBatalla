@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import melinaLogo from "@assets/melina-batalla-logo.png";
 const links = [
     {
         text: "Youtube",
@@ -22,12 +24,18 @@ const links = [
 ---
 
 <footer>
-    <div class="bg-negro p-4 flex flex-col gap-5">
-        <img src="/melina-batalla-logo.png" width="150px" />
-        <div class="flex justify-between text-blanco">
+    <div class="bg-negro p-4 flex  flex-col gap-5 rounded-t-lg">
+        <Image class="self-center" alt={'melina batalla logo'}
+         src={melinaLogo} width={150} format="webp"/>
+        <div class="flex flex-col ">
+            <span class="text-blanco text-center">Importante: Melina Batalla no garantiza resultados por el uso de este recurso. </span>
+            <span class="text-blanco text-center">La interpretacion y aplicacion son responsabilidad del usuario</span>
+
+            </div>
+            <div class="flex max-w-3xl self-center w-full justify-between  text-blanco">
             {links.map(({ text, href }) => <a href={href}>{text}</a>)}
         </div>
-        <hr class="opacity-50" />
+        <hr class="opacity-50 border-blanco" />
         <span class="block text-sm text-gray-200 text-center"
             >© 2023 <a
                 href="https://santiagoavilezdev.vercel.app"

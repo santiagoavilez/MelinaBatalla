@@ -1,11 +1,17 @@
 ---
 import { Button } from "@components/ui/button";
+import melinaLogo from "@assets/melina-batalla-logo-black.png";
+import { Image } from "astro:assets";
+
 ---
 
 <nav class="bg-blanco w-full z-40 border-gray-800/75">
     <div class="flex flex-wrap items-center justify-between mx-auto px-10 py-1">
-        <a href="/identidad-visual" class="flex items-center">
-            <img src="/mblogo.png" class="h-7 mr-3" alt="Flowbite Logo" />
+        <a href="/identidad-visual" class="flex items-center py-2">
+            <Image alt={'melina batalla logo'}
+         src={melinaLogo} height={48}
+            format="webp"
+         />
         </a>
         <button
             data-collapse-toggle="navbar-default"
