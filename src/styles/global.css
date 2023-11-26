@@ -6,37 +6,6 @@ body {
 	font-family: "TT commons", sans-serif;
 }
 
-/* h1 {
-	font-weight: bold !important;
-	font-size: 1.875rem !important;
-
-	line-height: 2.25rem !important;
-
-} */
-
-/* h2 {
-	font-weight: 500 !important;
-	font-size: 1.5rem !important;
-
-	line-height: 1.7rem !important;
-
-} */
-
-h3 {
-	font-weight: 500 !important;
-	font-size: 1.25rem !important;
-	/* 20px */
-	line-height: 1.5rem !important;
-	/* 28px */
-}
-
-p {
-	font-size: 0.9rem !important;
-	/* 14px */
-	line-height: 1.15rem !important;
-	/* 20px */
-	/* 16px */
-}
 
 .my-transition {
 	transition: height 300ms cubic-bezier(0.65, 0, 0.35, 1);

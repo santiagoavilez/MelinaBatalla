@@ -19,15 +19,15 @@ export default function SuccessDialog({ open, onClose }: Props) {
                 <DialogHeader>
                     <DialogTitle className='text-2xl text-left leading-8'>Ups, ha ocurrido un error!</DialogTitle>
                 </DialogHeader>
-                <div className=''>Ha ocurrido un error desconocido con el servidor, por favor intentá más tarde.
-                    <br></br>
-                    <br></br>
-                    Si persiste el error comunicate a <a className='font-semibold' href='mailto:equipo@melinabatalla.com?subject=E-book gratuito'>equipo@melinabatalla.com</a>
+                <div className=''>
+                    <p>Ha ocurrido un error desconocido con el servidor, por favor intentá más tarde.</p>
+
+                    <p> Si persiste el error comunicate a <a className='font-semibold' href='mailto:equipo@melinabatalla.com?subject=E-book gratuito'>equipo@melinabatalla.com</a></p>
                 </div>
                 <DialogFooter>
                     <Button className=" font-semibold" onClick={onClose}>Entendido</Button>
                 </DialogFooter>
-            </DialogContent>
+            </DialogContent >
         </Dialog >
     )
 }

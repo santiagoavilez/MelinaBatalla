@@ -6,15 +6,15 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
+
+  output: 'static',
   integrations: [
     tailwind({
       applyBaseStyles: false,
     }),
     react({
-      include: ['**/react/*'],
-    }),
-    solid({
-      include: ['**/solid/*'],
+      experimentalReactChildren: true,
+
     }),
   ]
 });

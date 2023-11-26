@@ -1,0 +1,82 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import CourseHero from "@components/courses/CourseHero.astro";
+import CourseForm from "@components/courses/CourseForm";
+import Benefits from "@components/courses/Benefits.astro";
+import Witch from "@components/courses/Witch.astro";
+import Includes from "@components/courses/Includes.astro";
+---
+
+<MainLayout
+    description={"Sitio de melina batalla, Mentora de emprendedoras holísticas"}
+    title={"Melina Batalla"}
+>
+    <main class="w-full flex flex-col gap-4">
+        <CourseHero />
+        <section class="h-full p-6 sm:p-10 w-full bg-blanco rounded-md">
+            <div
+                class="w-full px-0 flex flex-col items-center gap-5 text-negro"
+            >
+                <div
+                    class="flex w-full justify-center max-w-3xl flex-col gap-4"
+                >
+                    <h3 class="text-xl md:text-4xl">
+                        REGíSTRATE AHORA Y ACCEDE GRATIS A LAS CLASES QUE
+                        TRANSFORMARAN TU REALIDAD
+                    </h3>
+
+                    <CourseForm groupId="1111" client:load />
+                </div>
+            </div>
+        </section>
+        <Benefits />
+        <Witch />
+        <Includes />
+        <section class="h-full p-6 sm:p-10 w-full bg-blanco rounded-md">
+            <div
+                class="w-full px-0 flex flex-col items-center gap-5 text-negro"
+            >
+                <div
+                    class="flex w-full text-center justify-center max-w-3xl flex-col gap-4"
+                >
+                    <h3 class="text-xl md:text-4xl">
+                        REGíSTRATE AHORA Y ACCEDE GRATIS A LAS CLASES QUE
+                        TRANSFORMARAN TU REALIDAD
+                    </h3>
+                    <p>«Estas a 4 clases de cambiar tu realidad»</p>
+                    <CourseForm groupId="1111" client:load />
+                </div>
+            </div>
+        </section>
+
+        <section class="h-full p-6 sm:p-10 w-full bg-blanco rounded-md">
+            <div
+                class="w-full px-0 flex flex-col items-center gap-5 text-negro"
+            >
+                <div
+                    class="flex w-full text-center justify-center max-w-3xl flex-col"
+                >
+                    <h3 class="text-xl md:text-4xl md:whitespace-nowrap text-">
+                        SI SENTÍS QUE TU <span
+                            class="bg-yema whitespace-nowrap px-1 rounded-lg"
+                            >PODER ESTÁ DORMIDO...</span
+                        >
+                    </h3>
+                    <p class="text-lg md:text-2xl">
+                        y te está costando definir claramente eso que te hace
+                        <span class="bg-yema whitespace-nowrap px-1 rounded-lg"
+                            >única, poderosa y diferente
+                        </span>, estas clases te ayudarán a adquirir
+                        herramientas prácticas para identificar eso que te hace
+                        <span class="bg-yema whitespace-nowrap px-1 rounded-lg"
+                            >inigualable y digna</span
+                        > de <span
+                            class="bg-yema whitespace-nowrap px-1 rounded-lg"
+                            >admirar a vos y a tu marca.</span
+                        >
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+</MainLayout>

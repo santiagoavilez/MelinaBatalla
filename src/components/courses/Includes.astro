@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import mentoriaGrupal from "@assets/mentoria-grupald-descubri-tu-esencia.png";
+---
+
+<section class="h-full p-6 sm:p-10 bg-negro rounded-md">
+    <div
+        class="px-0 flex container flex-col w-full md:flex-row justify-between items-start gap-5 text-slate-100"
+    >
+        <div class="flex flex-col gap-2">
+            <h3 class="text-xl md:text-4xl">INCLUYE</h3>
+            <ul class="flex flex-col gap-4">
+                <li>
+                    - Clase 1: Conectar con tu autenticidad y definir tu
+                    propósito. Esto te dará claridad.
+                </li>
+                <li>
+                    - Clase 2: Conseguir un equilibrio esencia- negocio. Esto te
+                    permitirá construir tu negocio desde el disfrute.
+                </li>
+                <li>
+                    - Clase 3: Diferenciar tu marca a partir de tu esencia.
+                    Destacá sin pisar a nadie, sin imitar, solo siendo tú misma.
+                </li>
+                <li>
+                    - Clase 4: Aprender cómo comunicar tu mensaje para que
+                    llegue y conecte profundamente con las personas que buscas
+                    ayudar.
+                </li>
+            </ul>
+        </div>
+        <div class="shadow-lg">
+            <Image
+                alt={"mentoria-grupald-descubri-tu-esencia"}
+                src={mentoriaGrupal}
+                height={300}
+                format="webp"
+            />
+        </div>
+    </div>
+</section>
