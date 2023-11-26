@@ -20,13 +20,18 @@ const { title, description } = Astro.props;
 			property="og:description"
 			content={description}
 		/>
+		<meta name="twitter:site" content="summary_large_image" />
+		<meta property="og:image" content="/alquimista.jpg" />
+
 		<meta name="viewport" content="width=device-width" />
 
 		<meta name="generator" content={Astro.generator} />
 
 		<link rel="icon" type="image/svg+xml" href="/MBlogo.svg" />
+		<meta name="title" property="og:title" content={title} />
 		<title>{title}</title>
 	</head>
+
 	<body class="h-screen bg-blanco">
 		<main class="w-full">
 			<Nav />
