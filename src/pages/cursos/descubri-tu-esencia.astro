@@ -1,0 +1,62 @@
+---
+import CourseClass from "@components/descubriTuEscencia/CourseClass.astro";
+import CoursesHero from "@components/descubriTuEscencia/CoursesHero.astro";
+import MentoryReviewsSection from "@components/descubriTuEscencia/MentoryReviewsSection.astro";
+import RootMentorySection from "@components/descubriTuEscencia/RootMentorySection.astro";
+import MainLayout from "@components/layouts/MainLayout.astro";
+// import clase1Url from "@assets/videos/descubri-tu-esencia-1-Mentoria-Grupal.mp4";
+
+// import clase2Url from "@assets/videos/descubri-tu-esencia-2-Mentoria-Grupal.mp4";
+// import clase3Url from "@assets/videos/descubri-tu-esencia-3-Mentoria-Grupal.mp4";
+// import clase4Url from "@assets/videos/descubri-tu-esencia-4-Mentoria-Grupal.mp4";
+import Nav from "@components/nav/Nav.astro";
+import { Button } from "@components/ui/button";
+---
+
+<MainLayout
+    description={"sitio de melina batalla, comunicadora visual"}
+    title={"Melina Batalla"}
+>
+    <main>
+        <Nav>
+            <a href="/transforma-tu-realidad"
+                ><Button size={"sm"} className="font-semibold h-6">
+                    Contactar
+                </Button></a
+            >
+        </Nav>
+        <CoursesHero />
+        <CourseClass
+            title="Clase 1 "
+            description="Al ver esta clase vas a lograr conectar con tu autenticidad y definir tu propósito. Esto te dará claridad al momento de definir tu plan de acción"
+            videoUrl={"clase1Url"}
+        />
+        <CourseClass
+            title="Clase 2 "
+            description="Al ver esta clase vas a lograr conseguir un equilibrio esencia-negocio.Esto te permitirá construir tu negocio desde el disfrute."
+            videoUrl={"clase2Url"}
+        />
+        <CourseClass
+            title="Clase 3 "
+            description="Al ver esta clase vas a lograr diferenciar tu marca a partir de tu esencia. Destacar sin pisar a nadie, sin imitar, siendo tú misma."
+            videoUrl={"clase3Url"}
+        />
+
+        <RootMentorySection />
+
+        <CourseClass
+            title="Clase 4 "
+            description="Al ver esta clase lograrás aprender cómo comunicar tu mensaje para que llegue y conecte profundamente con las personas que buscas ayudar."
+            videoUrl={"clase4Url"}
+        />
+
+        <CourseClass
+            colorSection="negro"
+            title="BONUS ÚLTIMA CLASE"
+            description="Toda esta información no es nada si no actúas. Quiero que ayudes a miles de personas, que logres vivir de lo que amas, que transmitas tu mensaje sin estrés, que trabajes con las personas que están dispuestas a hacer un cambio, por eso te invito a que veas el último video:"
+            videoUrl={"clase4Url"}
+        />
+
+        <MentoryReviewsSection />
+    </main>
+</MainLayout>

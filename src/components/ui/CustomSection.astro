@@ -1,0 +1,16 @@
+---
+interface Props {
+    color: "negro" | "blanco";
+}
+const { color } = Astro.props;
+---
+
+<section
+    class={`h-full p-6 sm:p-10 ${
+        color === "blanco" ? "bg-blanco text-negro" : "bg-negro text-blanco"
+    } rounded-md`}
+>
+    <div class="container px-0 flex flex-col items-center gap-5">
+        <slot />
+    </div>
+</section>

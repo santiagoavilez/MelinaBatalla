@@ -73,6 +73,23 @@ body {
 		--input: 217.2 32.6% 17.5%;
 		--ring: 212.7 26.8% 83.9%;
 	}
+
+	h1 {
+		@apply text-4xl md:text-6xl text-center font-medium;
+	}
+
+	h2 {
+		@apply text-2xl md:text-5xl text-center font-medium;
+
+	}
+
+	h3 {
+		@apply text-xl md:text-4xl text-center font-medium;
+	}
+
+	p {
+		@apply text-base md:text-xl text-center font-normal;
+	}
 }
 
 @layer base {

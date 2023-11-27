@@ -1,0 +1,45 @@
+---
+import CustomSection from "@components/ui/CustomSection.astro";
+import { Image } from "astro:assets";
+import review1 from "@assets/descubri-tu-escencia/review1.png";
+import review2 from "@assets/descubri-tu-escencia/review2.png";
+import review3 from "@assets/descubri-tu-escencia/review3.png";
+import review4 from "@assets/descubri-tu-escencia/review4.png";
+---
+
+<CustomSection color="negro">
+    <div class="h-auto text-3xl mt-5 mx-auto">
+        <h2 class="whitespace-break-spaces">
+            PALABRAS DE AMOR SOBRE MIS ACOMPAÑAMIENTOS
+        </h2>
+    </div>
+    <div class="flex flex-row flex-wrap justify-center items-center gap-8">
+        <Image
+            alt={"Alquimista del exito: melina batalla"}
+            src={review1}
+            height={280}
+            format="webp"
+        />
+        <Image
+            alt={"Alquimista del exito: melina batalla"}
+            src={review2}
+            height={280}
+            format="webp"
+        />
+        <Image
+            alt={"Alquimista del exito: melina batalla"}
+            src={review4}
+            height={280}
+            width={400}
+            format="webp"
+        />
+
+        <Image
+            alt={"Alquimista del exito: melina batalla"}
+            src={review3}
+            height={280}
+            width={400}
+            format="webp"
+        />
+    </div>
+</CustomSection>

@@ -43,7 +43,7 @@ export default function CourseForm({ groupId }: Props) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
-        window.location.replace('/')
+        window.location.replace('/cursos/descubri-tu-esencia')
 
         // try {
         //     const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
