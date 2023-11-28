@@ -27,6 +27,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
+    "react-snap-carousel": "^0.3.2",
+    "scroll-carousel-react": "^1.0.0",
     "solid-collapse": "^1.1.0",
     "solid-js": "^1.8.6",
     "tailwind-merge": "^2.0.0",

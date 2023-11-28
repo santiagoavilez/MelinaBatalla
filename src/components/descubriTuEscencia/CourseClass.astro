@@ -7,33 +7,33 @@ interface Props {
     colorSection?: "negro" | "blanco";
     title: string;
     description: string;
-    videoUrl: string;
+    videoUrl?: string;
 }
 const { title, description, videoUrl, colorSection = "blanco" } = Astro.props;
 ---
 
 <CustomSection color={colorSection}>
     <div
-        class="container px-0 flex flex-col md:flex-row justify-between items-start gap-5"
+        class="container h-full px-0 flex flex-col w-full justify-center xl:flex-row items-center md:items-start gap-20"
     >
-        <div class="flex justify-start flex-col gap-4 max-w-3xl">
+        <div class="flex justify-start flex-col gap-4 xl:max-w-lg">
             <h2 class="text-left">{title}</h2>
             <p class="text-left">
                 {description}
             </p>
         </div>
-        <div class="max-w-xl">
-            <!-- <video preload="metadata" controls>
-                <source src={videoUrl} type="video/mp4" />
-                 Your browser does not support the video tag.
-                <source src={videoUrl} type="video/webm" />
-            </video> -->
+        <div class="w-full h-full">
+        <div class=" w-full relative grow h-full ">
+           {videoUrl ?<iframe allowfullscreen  class="w-full " height="460" scrolling="no" src={videoUrl} > </iframe>
+            :
             <Image
                 alt={"mentoria-grupald-descubri-tu-esencia"}
                 src={mentoriaGrupal}
-                height={324}
+                class="w-full"
                 format="webp"
             />
+        }
+        </div>
         </div>
     </div>
 </CustomSection>
