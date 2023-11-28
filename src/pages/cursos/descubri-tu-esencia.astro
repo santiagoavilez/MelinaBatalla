@@ -15,10 +15,11 @@ import SnapCarousel from "@components/descubriTuEscencia/SnapCarousel.tsx";
 import Nav from "@components/nav/Nav.astro";
 import { Button } from "@components/ui/button";
 
-import review1 from "@assets/descubri-tu-escencia/review1.png";
-import review2 from "@assets/descubri-tu-escencia/review2.png";
-import review3 from "@assets/descubri-tu-escencia/review3.png";
-import review4 from "@assets/descubri-tu-escencia/review4.png";
+import review1 from "@assets/descubri-tu-escencia/1.png";
+import review2 from "@assets/descubri-tu-escencia/2.png";
+import review3 from "@assets/descubri-tu-escencia/3.png";
+import review4 from "@assets/descubri-tu-escencia/4.png";
+import review5 from "@assets/descubri-tu-escencia/5.png";
 ---
 
 <MainLayout
@@ -37,7 +38,7 @@ import review4 from "@assets/descubri-tu-escencia/review4.png";
         <CourseClass
             title="Clase 1 "
             description="Al ver esta clase vas a lograr conectar con tu autenticidad y definir tu propósito. Esto te dará claridad al momento de definir tu plan de acción"
-            videoUrl={'https://www.youtube.com/embed/H7QzEvpmDek'}
+            videoUrl={"https://www.youtube.com/embed/H7QzEvpmDek"}
         />
         <CourseClass
             title="Clase 2 "
@@ -62,13 +63,14 @@ import review4 from "@assets/descubri-tu-escencia/review4.png";
             colorSection="negro"
             title="BONUS ÚLTIMA CLASE"
             description="Toda esta información no es nada si no actúas. Quiero que ayudes a miles de personas, que logres vivir de lo que amas, que transmitas tu mensaje sin estrés, que trabajes con las personas que están dispuestas a hacer un cambio, por eso te invito a que veas el último video:"
-            
         />
 
         <!-- <MentoryReviewsSection  client:load /> -->
         <!-- <CarouselScroll  client:only="react" />
         <FlowBiteCarousel client:only="react" /> -->
-        <SnapCarousel images={[review1,review4,review3,review4, review1]} client:only="react" />
-
+        <SnapCarousel
+            images={[review1, review2, review3, review4, review5]}
+            client:only="react"
+        />
     </main>
 </MainLayout>

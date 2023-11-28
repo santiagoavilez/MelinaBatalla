@@ -34,7 +34,7 @@ const AdvancedCarousel = ({ images }: props) => {
                 {images.map((image, i) => (
                     <li
                         key={i}
-                        className='w-full md:w-auto h-full '
+                        className='w-full md:w-96 h-full '
                         style={{
                             flexShrink: 0,
                             scrollSnapAlign: snapPointIndexes.has(i) ? "start" : "",
@@ -46,7 +46,7 @@ const AdvancedCarousel = ({ images }: props) => {
                     >
                         < img
 
-                            alt={"Alquimista del exito: melina batalla"}
+                            alt={"Review mentoria grupal"}
                             src={image.src}
                             width={image.width}
                             height={image.height}
