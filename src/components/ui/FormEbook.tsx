@@ -54,7 +54,7 @@ const FormEbook = ({ groupId }: Props) => {
         throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       if (response.ok && !!data) {
         setOpenFirst(true)
       }
