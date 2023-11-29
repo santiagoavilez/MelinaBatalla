@@ -7,6 +7,25 @@ import Includes from "@components/courses/Includes.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
 import Nav from "@components/nav/Nav.astro";
 import { Button } from "@components/ui/button";
+
+const res = await fetch("https://connect.mailerlite.com/api/groups", {
+    headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.PUBLIC_MAILERLITE_API_KEY}`,
+    },
+});
+
+const { data: groups } = (await res.json()) as {
+    data: { id: string; name: string }[];
+};
+
+const coursegruop = groups.find((group) => group.name === "Pagina de Clases") as {
+    id: string;
+    name: string;
+};
+
+console.log(coursegruop);
 ---
 
 <MainLayout
@@ -35,7 +54,7 @@ import { Button } from "@components/ui/button";
                         TRANSFORMARAN TU REALIDAD
                     </h3>
 
-                    <CourseForm groupId="1111" client:load />
+                    <CourseForm groupId={coursegruop.id} client:load />
                 </div>
             </div>
         </section>

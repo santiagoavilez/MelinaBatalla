@@ -43,33 +43,32 @@ export default function CourseForm({ groupId }: Props) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
-        window.location.replace('/cursos/descubri-tu-esencia')
 
-        // try {
-        //     const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'accept': 'application/json',
-        //             Authorization: `Bearer ${import.meta.env.PUBLIC_MAILERLITE_API_KEY}`,
-        //         },
-        //         body: JSON.stringify({
-        //             email: values.email,
-        //             fields: { name: values.name, instagram: values.instagram },
-        //             groups: [`${groupId}`],
-        //         })
-        //     })
-        //     if (!response.ok) {
-        //         throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-        //     }
-        //     const data = await response.json();
-        //     console.log(data)
-        //     if (response.ok && !!data) {
-        //         window.location.replace('/')
-        //     }
-        // } catch (error) {
-        //     setOpenError(true)
-        // }
+        try {
+            const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                    Authorization: `Bearer ${import.meta.env.PUBLIC_MAILERLITE_API_KEY}`,
+                },
+                body: JSON.stringify({
+                    email: values.email,
+                    fields: { name: values.name, instagram: values.instagram },
+                    groups: [`${groupId}`],
+                })
+            })
+            if (!response.ok) {
+                throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log(data)
+            if (response.ok && !!data) {
+                window.location.replace('/cursos/descubri-tu-esencia')
+            }
+        } catch (error) {
+            setOpenError(true)
+        }
     }
     return (
         <Form {...form}>
