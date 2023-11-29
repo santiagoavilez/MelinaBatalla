@@ -15,7 +15,7 @@ const MyComponent = () => {
                 autoplay
                 autoplaySpeed={2000}
                 speed={1000}
-                onReady={() => console.log('I am ready')}
+                // onReady={() => console.log('I am ready')}
             >
                 {[1, 2, 3, 4].map((item) => {
                     if (item === 1) {

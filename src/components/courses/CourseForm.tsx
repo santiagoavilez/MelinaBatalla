@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Button } from '@ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@ui/form'
 import { Input } from '@ui/input'
 import SuccessDialog from '@components/home/SuccesDialog'
 import ErrorDialog from '@components/home/ErrorDialog'
@@ -42,7 +42,7 @@ export default function CourseForm({ groupId }: Props) {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        // console.log(values)
 
         try {
             const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
@@ -62,7 +62,7 @@ export default function CourseForm({ groupId }: Props) {
                 throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
             }
             const data = await response.json();
-            console.log(data)
+            // console.log(data)
             if (response.ok && !!data) {
                 window.location.replace('/cursos/descubri-tu-esencia')
             }
