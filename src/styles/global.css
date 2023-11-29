@@ -73,18 +73,41 @@ body {
 		--input: 217.2 32.6% 17.5%;
 		--ring: 212.7 26.8% 83.9%;
 	}
+@media(min-width: 768px){
+	/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #888;
+    border-radius: 0px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #141414;
+    border-radius: 0px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}}
+
 
 	h1 {
-		@apply text-4xl md:text-6xl text-center font-medium;
+		@apply text-4xl md:text-5xl text-center font-medium;
 	}
 
 	h2 {
-		@apply text-2xl md:text-5xl text-center font-medium;
+		@apply text-2xl md:text-4xl text-center font-medium;
 
 	}
 
 	h3 {
-		@apply text-xl md:text-4xl text-center font-medium;
+		@apply text-xl md:text-3xl text-center font-medium;
 	}
 
 	p {

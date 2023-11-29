@@ -24,7 +24,7 @@ const { title, description, videoUrl, colorSection = "blanco" } = Astro.props;
         </div>
         <div class="w-full h-full">
         <div class=" w-full relative grow h-full ">
-           {videoUrl ?<iframe allowfullscreen  class="w-full " height="460" scrolling="no" src={videoUrl} > </iframe>
+           {videoUrl ?<iframe allowfullscreen  class="w-full h-auto min-[340px]:h-64 md:h-[500px] "scrolling="no" src={videoUrl} > </iframe>
             :
             <Image
                 alt={"mentoria-grupald-descubri-tu-esencia"}

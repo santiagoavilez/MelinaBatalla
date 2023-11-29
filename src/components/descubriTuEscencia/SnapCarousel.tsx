@@ -10,7 +10,6 @@ interface props {
 const AdvancedCarousel = ({ images }: props) => {
     const { scrollRef, pages, snapPointIndexes, activePageIndex, next, prev, goTo } =
         useSnapCarousel();
-    console.log("images", pages)
 
     const handleNext = () => {
         if (activePageIndex === pages.length - 1) {
@@ -24,6 +23,7 @@ const AdvancedCarousel = ({ images }: props) => {
         prev();
     }
     return (
+
         <div className='flex flex-col relative w-full md:px-20'>
 
             <ul
@@ -45,12 +45,10 @@ const AdvancedCarousel = ({ images }: props) => {
                         }}
                     >
                         < img
-
                             alt={"Review mentoria grupal"}
                             src={image.src}
                             width={image.width}
                             height={image.height}
-
                         />
                     </li>
                 ))}
@@ -72,7 +70,6 @@ const AdvancedCarousel = ({ images }: props) => {
                             style={i === activePageIndex ? { opacity: 0.5 } : {}}
                             onClick={() => goTo(i)}
                         >
-
                         </button>
                     </li>
                 ))}

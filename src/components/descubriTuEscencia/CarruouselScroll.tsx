@@ -9,8 +9,7 @@ import review4 from "@assets/descubri-tu-escencia/review4.png";
 const MyComponent = () => {
     return (
         <>
-            <h1>This is my component page</h1>
-            <p>Now i am showing my creation scroll carousel</p>
+
 
             <ScrollCarousel
                 autoplay
