@@ -12,6 +12,7 @@ interface Props {
 }
 const { title, description, image } = Astro.props;
 import melinaPortrait from "@assets/Melina-batalla.png";
+const canonicalURL = Astro.url.pathname;
 ---
 
 <html lang="en">
@@ -24,6 +25,8 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 			property="og:description"
 			content={description}
 		/>
+		<link rel="canonical" href={canonicalURL} />
+		<meta property="og:image" content={melinaPortrait.src} />
 		<SEO
 			title={(title as string) || "Melina Battalla"}
 			description={(description as string) || "Melina Battalla"}
@@ -43,6 +46,7 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 				},
 			}}
 		/>
+		<meta property="og:url" content="https://www.example.com/webpage/" />
 		<meta name="description" content={description} />
 		<meta name="robots" content="index, follow" />
 		<meta name="twitter:site" content="summary_large_image" />
