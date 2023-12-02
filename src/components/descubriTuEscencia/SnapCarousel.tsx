@@ -56,10 +56,10 @@ const AdvancedCarousel = ({ images }: props) => {
             {/* <div>
                 {activePageIndex + 1} / {pages.length}
             </div> */}
-            <button className='absolute top-1/2 left-0' onClick={handlePrev}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+            <button className='absolute top-1/2 left-0 md:left-10' onClick={handlePrev}><svg className="w-6 h-6 text-blanco dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
             </svg></button>
-            <button className='absolute top-1/2 right-0' onClick={handleNext}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+            <button className='absolute top-1/2  right-0 md:right-10' onClick={handleNext}><svg className="w-6 h-6 text-blanco dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
             </svg></button>
             <ol className='absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse '>
