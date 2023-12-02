@@ -50,34 +50,39 @@ import review5 from "@assets/descubri-tu-escencia/5.png";
         <CourseClass
             title="Clase 4 "
             description="Al ver esta clase lograrás aprender cómo comunicar tu mensaje para que llegue y conecte profundamente con las personas que buscas ayudar."
-            videoUrl={"https://www.youtube.com/embed/M-7b0w9lgt84Url"}
+            videoUrl={"https://www.youtube.com/embed/M-7b0w9lgt8"}
         />
 
         <CourseClass
             colorSection="negro"
             title="BONUS ÚLTIMA CLASE"
             description="Toda esta información no es nada si no actúas. Quiero que ayudes a miles de personas, que logres vivir de lo que amas, que transmitas tu mensaje sin estrés, que trabajes con las personas que están dispuestas a hacer un cambio, por eso te invito a que veas el último video:"
-        />
+            videoUrl=""
+        >
+            <a
+                class="w-full max-w-lg"
+                href="https://api.whatsapp.com/send?phone=5493774400625"
+                ><Button className="w-full">Quiero Accionar!</Button>
+            </a>
+        </CourseClass>
 
-        
         <!-- <CarouselScroll  client:only="react" />
         <FlowBiteCarousel client:only="react" /> -->
         <section
-    class={`bg-negro text-blanco
+            class={`bg-negro text-blanco
      rounded-md`}
->
-    <div class="container px-0 flex flex-col items-center gap-5">        
-        <div class="h-auto text-3xl mt-5 mx-auto">
-            <h2 class="whitespace-break-spaces">
-                PALABRAS DE AMOR SOBRE MIS ACOMPAÑAMIENTOS
-            </h2>
-        </div>
-        <SnapCarousel
-            images={[review1, review2, review3, review4, review5]}
-            client:only="react"
-        />
-    </div>
-</section>
-        
+        >
+            <div class="container px-0 flex flex-col items-center gap-5">
+                <div class="h-auto text-3xl mt-5 mx-auto">
+                    <h2 class="whitespace-break-spaces">
+                        PALABRAS DE AMOR SOBRE MIS ACOMPAÑAMIENTOS
+                    </h2>
+                </div>
+                <SnapCarousel
+                    images={[review1, review2, review3, review4, review5]}
+                    client:only="react"
+                />
+            </div>
+        </section>
     </main>
 </MainLayout>

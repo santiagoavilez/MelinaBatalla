@@ -2,6 +2,7 @@
 import CustomSection from "@components/ui/CustomSection.astro";
 import mentoriaGrupal from "@assets/mentoria-grupald-descubri-tu-esencia.png";
 import { Image } from "astro:assets";
+import { Button } from "@components/ui/button";
 
 interface Props {
     colorSection?: "negro" | "blanco";
@@ -23,17 +24,28 @@ const { title, description, videoUrl, colorSection = "blanco" } = Astro.props;
             </p>
         </div>
         <div class="w-full h-full">
-        <div class=" w-full relative grow h-full ">
-           {videoUrl ?<iframe allowfullscreen  class="w-full h-auto min-[340px]:h-64 md:h-[500px] "scrolling="no" src={videoUrl} > </iframe>
-            :
-            <Image
-                alt={"mentoria-grupald-descubri-tu-esencia"}
-                src={mentoriaGrupal}
-                class="w-full"
-                format="webp"
-            />
-        }
-        </div>
+            <div class="w-full relative grow h-full">
+                {
+                    videoUrl ? (
+                        <iframe
+                            allowfullscreen
+                            class="w-full h-auto min-[340px]:h-64 md:h-[500px] "
+                            scrolling="no"
+                            src={videoUrl}
+                        >
+                            {" "}
+                        </iframe>
+                    ) : (
+                        <Image
+                            alt={"mentoria-grupald-descubri-tu-esencia"}
+                            src={mentoriaGrupal}
+                            class="w-full"
+                            format="webp"
+                        />
+                    )
+                }
+            </div>
         </div>
     </div>
+    <slot />
 </CustomSection>
