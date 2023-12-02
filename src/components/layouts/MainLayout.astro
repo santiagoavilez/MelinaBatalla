@@ -25,24 +25,25 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			property="og:description"
 			content={description}
 		/>
-		<link rel="canonical" href={canonicalURL} />
 		<meta
 			property="og:image"
-			content={"https://melinabatalla.com/_astro/Melina-batalla.b9244732_1rrRnN.webp"}
+			content={"https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png"}
 		/>
 		<SEO
 			title={(title as string) || "Melina Battalla"}
 			description={(description as string) || "Melina Battalla"}
+			canonical={Astro.url.href}
 			openGraph={{
 				basic: {
 					title: (title as string) || "Melina Battalla",
-					image: "https://melinabatalla.com/_astro/Melina-batalla.b9244732_1rrRnN.webp",
+					image: "https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png",
 					type: "website",
 				},
+
 				image: {
 					secureUrl:
-						"https://melinabatalla.com/_astro/Melina-batalla.b9244732_1rrRnN.webp",
-					url: "https://melinabatalla.com/_astro/Melina-batalla.b9244732_1rrRnN.webp",
+						"https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png",
+					url: "https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png",
 					alt: "Melina Battalla",
 					width: melinaPortrait.width,
 					height: melinaPortrait.height,
