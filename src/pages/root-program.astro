@@ -1,0 +1,18 @@
+---
+import Hero from "@components/root-program/Hero.astro";
+import OfferSection from "@components/root-program/OfferSection.astro";
+import MainLayout from "@components/layouts/MainLayout.astro";
+export const prerender = true;
+---
+
+<MainLayout
+    description={"sitio de melina batalla, comunicadora visual"}
+    title={"Melina Batalla"}
+>
+    <main class="bg-blanco flex flex-col justify-center items-center">
+        <div class="max-w-screen-md">
+            <Hero />
+            <OfferSection />
+        </div>
+    </main>
+</MainLayout>

@@ -4,6 +4,10 @@ import Footer from "@components/Footer.astro";
 import "@fontsource/poppins";
 import "@styles/global.css";
 import { SEO } from "astro-seo";
+import UserButton from "@components/auth/UserButton.astro";
+import SignedIn from "@components/auth/SignedIn.astro";
+import SignedOut from "@components/auth/SignedOut.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
 
 interface Props {
 	title?: string | undefined;
@@ -24,6 +28,8 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 			property="og:description"
 			content={description}
 		/>
+		<meta property="og:locale" content="es_ES" />
+
 		<meta
 			property="og:image"
 			content={"https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png"}
@@ -65,10 +71,18 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 
 	<body class="h-screen bg-blanco">
 		<main class="w-full">
-			<body>
-				<slot />
-			</body>
+			<SignedIn classes="flex flex-row gap-4">
+				<UserButton />
+			</SignedIn>
+			<SignedOut>
+				<SignInButton />
+			</SignedOut>
+			<slot />
 			<Footer />
 		</main>
+		<script>
+			import { initializeClerk } from "../../lib/clerk";
+			initializeClerk();
+		</script>
 	</body>
 </html>

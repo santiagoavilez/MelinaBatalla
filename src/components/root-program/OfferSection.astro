@@ -1,0 +1,31 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { CrossIcon } from "lucide-react";
+import CardOffer from "./CardOffer.astro";
+---
+
+<section class="h-full p-6 sm:p-10">
+    <div class="flex flex-col items-center gap-2">
+        <h2>
+            Si aprovechas <strong> “Root Workshop”</strong> tendrás
+            <strong>acceso inmediato</strong> a lo siguiente:
+        </h2>
+
+        <CardOffer
+            title={"Vende tus servicios holísticos - (Valorado en 97 usd)"}
+            description={"Empezarás a definir y atraer clientes clientes consientes. (Deja de atraer personas que no están comprometidas con su proceso de transformación)."}
+        />
+        <CardOffer
+            title={"Potencia la obtención de clientes - (Valorado en 97 usd)"}
+            description={"La formula para atraer grandes cantidades de personas interesadas en invertir en ti. (Esas personas existen y están esperando tu ayuda)"}
+        />
+        <CardOffer
+            title={"Formula secreta para vender en historias y carruseles - (Valorado en  57usd)"}
+            description={"Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente. (Nunca más publicar cantidades excesivas de contenido sin obtener resultados)."}
+        />
+        <CardOffer
+            title={"De Desconocidos a Clientes - (Valorado en  57usd)"}
+            description={"Aprende como construir y ofrecer un excelente servicio para que tu audiencia desee convertirse en tu cliente de por vida."}
+        />
+    </div>
+</section>

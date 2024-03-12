@@ -1,0 +1,29 @@
+---
+import ButtonCTA from "@components/ui/buttonCTA.astro";
+---
+
+<section class="h-full p-6 sm:p-10 rounded-md">
+    <div class="container px-0 flex flex-col items-center gap-5 text-negro">
+        <div class="flex max-w-lg flex-col gap-2">
+            <h1 class="text-4xl md:text-5xl font-bold">
+                Como usar redes sociales para vender tus servicios sin metodos
+                complejos:
+            </h1>
+            <div class="w-full relative grow h-full">
+                <iframe
+                    allowfullscreen
+                    class="w-full h-auto min-[340px]:h-64 md:h-[500px]"
+                    scrolling="no"
+                    src={"https://www.youtube.com/embed/H7QzEvpmDek"}
+                >
+                    {" "}
+                </iframe>
+            </div>
+            <div class="pt-6 w-full flex justify-center">
+                <ButtonCTA className="motion-safe:animate-bounce ">
+                    Obtener Ahora!
+                </ButtonCTA>
+            </div>
+        </div>
+    </div>
+</section>
