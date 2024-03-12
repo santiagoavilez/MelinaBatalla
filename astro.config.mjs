@@ -13,5 +13,7 @@ export default defineConfig({
   }), react({
     experimentalReactChildren: true
   })],
-  adapter: vercel()
+  adapter: vercel({
+    imageService: false,
+  })
 });
