@@ -45,7 +45,7 @@ dependencies:
     specifier: ^18.2.17
     version: 18.2.21
   astro:
-    specifier: ^4.2.0
+    specifier: ^4.5.0
     version: 4.5.1(typescript@5.4.2)
   astro-seo:
     specifier: ^0.8.0
@@ -59,9 +59,6 @@ dependencies:
   lucide-react:
     specifier: ^0.293.0
     version: 0.293.0(react@18.2.0)
-  nanostores:
-    specifier: ^0.10.0
-    version: 0.10.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -4180,11 +4177,6 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: false
-
-  /nanostores@0.10.0:
-    resolution: {integrity: sha512-Poy5+9wFXOD0jAstn4kv9n686U2BFw48z/W8lms8cS8lcbRz7BU20JxZ3e/kkKQVfRrkm4yLWCUA6GQINdvJCQ==}
-    engines: {node: ^18.0.0 || >=20.0.0}
     dev: false
 
   /napi-build-utils@1.0.2:
