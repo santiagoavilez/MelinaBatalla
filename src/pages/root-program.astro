@@ -2,17 +2,162 @@
 import Hero from "@components/root-program/Hero.astro";
 import OfferSection from "@components/root-program/OfferSection.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
-export const prerender = true;
+import { Button } from "@components/ui/button";
+import Cart from "@components/root-program/Cart.astro";
 ---
 
 <MainLayout
     description={"sitio de melina batalla, comunicadora visual"}
     title={"Melina Batalla"}
 >
-    <main class="bg-blanco flex flex-col justify-center items-center">
-        <div class="max-w-screen-md">
-            <Hero />
-            <OfferSection />
-        </div>
+    <main
+        class="bg-blanco flex flex-col justify-center items-center max-w-screen-md mx-auto"
+    >
+        <Hero />
+        <OfferSection />
+        <Cart />
+        <!-- <Button>
+            <a
+                href="https://nazarena-batalla.lemonsqueezy.com/buy/44ba6cd4-5330-4178-9441-b85e13c4b60e?embed=1"
+                class="lemonsqueezy-button">Buy root-program</a
+            >
+        </Button> -->
     </main>
 </MainLayout>
+
+<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
+<!-- <script
+    is:inline
+    src="https://www.paypal.com/sdk/js?client-id=AQ950gexzsdM0pZIx9q7-6MEOiuNFLuFSdR_3CMZUoW0DSi-w4wYj_EgupZKN5bsh_F8UNMxnCkJ_juq&components=buttons"
+></script>
+
+<script is:inline>
+    // Custom styles object (optional)
+    paypal
+        .Buttons({
+            style: {
+                layout: "vertical",
+                color: "blue",
+                shape: "rect",
+                label: "paypal",
+            },
+        })
+        .render("#paypal-button-container");
+    console.log("paypal funciona");
+
+    const cardFieldsPa = paypal.CardFields({
+        style,
+        createOrder,
+        onApprove,
+    });
+    const styleObject = {
+        input: {
+            "font-size": "16 px",
+            "font-family": "monospace",
+            "font-weight": "lighter",
+            color: "blue",
+        },
+        ".invalid": {
+            color: "purple",
+        },
+        ":hover": {
+            color: "orange",
+        },
+        ".purple": {
+            color: "purple",
+        },
+    };
+    let orderData = {
+        purchase_units: [
+            {
+                amount: {
+                    currency_code: "USD",
+                    value: "17.00",
+                },
+            },
+        ],
+    };
+    // Create the card fields component and define callbacks
+    const cardField = paypal.CardFields({
+        style: styleObject,
+        createOrder: function (data, actions) {
+            return fetch("/api/paypal/order/create/", {
+                method: "post",
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((orderData) => {
+                    return orderData.id;
+                })
+                .catch((err) => {
+                    // Handle an error in the createOrder callback
+                    console.log(err);
+                });
+        },
+        onApprove: function (data, actions) {
+            const { orderID } = data;
+            return fetch("/api/paypal/orders/${orderID}/capture/", {
+                method: "post",
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((orderData) => {
+                    // Redirect to success page
+                });
+        },
+        inputEvents: {
+            onChange: function (data) {
+                // Handle a change event in any of the fields
+            },
+            onFocus: function (data) {
+                // Handle a focus event in any of the fields
+            },
+            onBlur: function (data) {
+                // Handle a blur event in any of the fields
+            },
+            onInputSubmitRequest: function (data) {
+                // Handle an attempt to submit the entire card form
+                // while focusing any of the fields
+            },
+        },
+    });
+    // Define the container for each field and the submit button
+    const cardNameContainer = document.getElementById(
+        "card-name-field-container",
+    ); // Optional field
+    const cardNumberContainer = document.getElementById(
+        "card-number-field-container",
+    );
+    const cardCvvContainer = document.getElementById(
+        "card-cvv-field-container",
+    );
+    const cardExpiryContainer = document.getElementById(
+        "card-expiry-field-container",
+    );
+    const multiCardFieldButton = document.getElementById(
+        "multi-card-field-button",
+    );
+    // Render each field after checking for eligibility
+    console.log(cardField.createOrder());
+    const nameField = cardField.NameField();
+    nameField.render(cardNameContainer);
+    const numberField = cardField.NumberField();
+    numberField.render(cardNumberContainer);
+    const cvvField = cardField.CVVField();
+    cvvField.render(cardCvvContainer);
+    const expiryField = cardField.ExpiryField();
+    expiryField.render(cardExpiryContainer);
+    // Add click listener to the submit button and call the submit function on the CardField component
+    multiCardFieldButton.addEventListener("click", () => {
+        cardField
+            .submit()
+            .then(() => {
+                // Handle a successful payment
+            })
+            .catch((err) => {
+                // Handle an unsuccessful payment
+            });
+    });
+</script> -->

@@ -13,6 +13,7 @@ const { classes } = Astro.props;
         if (clerk !== null && clerk.isReady()) {
             const signedIn = document.querySelectorAll(".auth-signed-in")!;
             if (!!clerk.user) {
+                console.log("User is signed in", clerk);
                 signedIn.forEach((el) => {
                     el.classList.remove("hidden");
                 });

@@ -12,8 +12,9 @@
             const userButton =
                 document.querySelector<HTMLDivElement>("#auth-user-button")!;
             clerk.mountUserButton(userButton, {
-                afterSignOutUrl: "/",
+                afterSignOutUrl: "/cursos/root-program",
             });
+
         }
     });
 </script>

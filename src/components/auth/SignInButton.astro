@@ -1,14 +1,10 @@
 ---
-
+import { Button } from "@components/ui/button";
 ---
 
-<button
-    id="auth-sign-in-button"
-    type="button"
-    class="flex content-center font-semibold text-black transition-colors duration-200 rounded-lg bg-primary-600 hover:bg-primary-700"
->
+<Button id="auth-sign-in-button" className="auth-sign-in-button">
     Iniciar sesión
-</button>
+</Button>
 
 <script>
     import { auth } from "../../lib/authStore";
@@ -16,6 +12,17 @@
     auth.subscribe((clerk) => {
         if (clerk !== null && clerk.isReady()) {
             const signInButton = document.getElementById("auth-sign-in-button");
+            const signInButtons = document.querySelectorAll(
+                ".auth-sign-in-button",
+            )!;
+            signInButtons.forEach((el) => {
+                el.addEventListener("click", () => {
+                    clerk.openSignIn({
+                        afterSignInUrl: "/cursos/root-program",
+                        afterSignUpUrl: "/cursos/root-program",
+                    });
+                });
+            });
             if (signInButton) {
                 signInButton.addEventListener("click", () => {
                     clerk.openSignIn({

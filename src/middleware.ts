@@ -1,21 +1,27 @@
 import clerkClient from '@clerk/clerk-sdk-node'
 
-
-const publishableKey = process.env.PUBLIC_CLERK_PUBLISHABLE_KEY
-const secretKey = process.env.CLERK_SECRET_KEY
+const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
+const secretKey = import.meta.env.CLERK_SECRET_KEY
 
 const protectedPageUrls = ['/cursos/root-program']
 
-export async function onRequest({ request, redirect }: { request: any, redirect: any }, next: any) {
+
+import { defineMiddleware } from "astro:middleware";
+
+// `context` y `next` son automáticamente tipados
+export const onRequest = defineMiddleware(async ({request, redirect}, next) => {
+
     const url = new URL(request.url)
+
+    const isSignedIn = await clerkClient.authenticateRequest({ request, publishableKey, secretKey })
+    console.log('isSignedIn', isSignedIn)
     if (!protectedPageUrls.some(path => url.pathname.startsWith(path))) {
         return next()
     }
 
-    const { isSignedIn } = await clerkClient.authenticateRequest({ request, publishableKey, secretKey })
-    if (!isSignedIn) {
-        return redirect('/')
+    if (!isSignedIn.isSignedIn && isSignedIn.reason !== 'unexpected-error') {
+        return redirect('/iniciar-sesion')
     }
 
     return next()
-};
+});

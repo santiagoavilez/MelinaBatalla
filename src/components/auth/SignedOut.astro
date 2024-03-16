@@ -2,7 +2,8 @@
 
 ---
 
-<div id="auth-signed-out" class="hidden">
+<div id="auth-signed-out" class="hidden auth-signed-out">
+
     <slot />
 </div>
 
@@ -11,11 +12,15 @@
 
     auth.subscribe((clerk) => {
         if (clerk !== null && clerk.isReady()) {
-            const signedOut = document.getElementById("auth-signed-out")!;
+            const signedOut =document.querySelectorAll(".auth-signed-out")!;
             if (clerk.user === null) {
-                signedOut.classList.remove("hidden");
+                 signedOut.forEach((el) => {
+                    el.classList.remove("hidden");
+                });
             } else {
-                signedOut.classList.add("hidden");
+                signedOut.forEach((el) => {
+                    el.classList.add("hidden");
+                });
             }
         }
     });

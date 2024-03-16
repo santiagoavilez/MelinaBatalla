@@ -1,0 +1,52 @@
+---
+import { Button } from "@components/ui/button";
+
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@components/ui/card";
+import { BonusCard } from "./BonusCard";
+import { CartItems } from "./CartItems";
+
+import { bonus } from "@lib/bonusStore";
+import { Separator } from "@components/ui/separator";
+---
+
+<section class="h-full p-6 sm:p-10 flex flex-col  gap-8">
+    <!-- <Card className="bg-negro text-blanco">
+        <CardHeader>
+            <CardTitle className=" text-left">
+                POTENCIADOR DE RESULTADOS
+            </CardTitle>
+        </CardHeader>
+        <CardContent>
+            En este entrenamiento privado, te compartiré como evitar la
+            principal razón de fracaso de porque las/os emprendedoras/es no
+            venden sus servicios como desean. Y como multiplicar tus ganancias
+            x2, x3 o hasta por x4. (Que no te va a llevar más de 30 minutos
+            aplicar).
+        </CardContent>
+        <CardFooter className="font-semibold flex-co items-startl">
+            <div><span class="text-[#7ED957] pr-2">$27.00</span>
+            <span class="line-through"> $47.00</span>
+            </div>
+        </CardFooter>
+    </Card> -->
+    <BonusCard client:visible />
+    <h3 class="text-2xl font-semibold leading-none tracking-tight text-left">
+        Resumen de Compra
+    </h3>
+    <CartItems client:idle />
+    <Button  className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center" >
+
+        <a
+            href="https://nazarena-batalla.lemonsqueezy.com/buy/44ba6cd4-5330-4178-9441-b85e13c4b60e?embed=1"
+            class="lemonsqueezy-button">Completar mi compra</a
+        >
+    </Button>
+</section>
+
+<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>

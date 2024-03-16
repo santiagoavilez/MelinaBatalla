@@ -11,7 +11,9 @@ export default defineConfig({
     applyBaseStyles: false
   }), react({
     experimentalReactChildren: true
-  })],
+  }),
+],
+
   adapter: vercel({
     imageService: false,
   })

@@ -1,4 +1,5 @@
 import Clerk from '@clerk/clerk-js'
+
 import { auth } from './authStore'
 
 
@@ -14,6 +15,7 @@ export const initializeClerk = () => {
         .load()
         .then(() => {
             auth.set(clerk)
+
         })
         .catch(error => console.error(error))
 }

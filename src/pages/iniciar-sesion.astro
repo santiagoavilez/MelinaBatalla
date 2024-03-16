@@ -1,18 +1,13 @@
 ---
-// import { SignIn, SignedIn } from "@clerk/clerk-react";
+import { SignIn, SignedIn } from "@clerk/clerk-react";
 import SignInButton from "@components/auth/SignInButton.astro";
-import SignedIn from "@components/auth/SignedIn.astro";
+import SignedIns from "@components/auth/SignedIn.astro";
 import SignInComponent from "@components/auth/SignInComponent.astro";
 
+import SignedOut from "@components/auth/SignedOut.astro";
 import UserButton from "@components/auth/UserButton.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
-
 import App from "@components/layouts/App";
-import { ClerkProvider, SignIn } from "@clerk/clerk-react";
-import { esES } from "@lib/es-ES";
-import SignedOut from "@components/auth/SignedOut.astro";
-
-const clerkPubKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY;
 ---
 
 <MainLayout
@@ -20,12 +15,8 @@ const clerkPubKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY;
     title={"Melina Batalla"}
 >
     <div class="h-screen flex justify-center items-center">
-        <SignedOut>
-            <App client:only />
-        </SignedOut>
-        <SignedIn>
-            CURSO
-        </SignedIn>
+        <App client:only />
+
 
         <!-- <SignedOut>
             <SignInComponent />
@@ -33,3 +24,7 @@ const clerkPubKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY;
     </div>
 </MainLayout>
 
+<script is:inline>
+    import { initializeClerk } from "../../lib/clerk";
+    initializeClerk();
+</script>
