@@ -9,7 +9,9 @@ const secret = import.meta.env.PUBLIC_LEMON_SECRET_KEY
 export default function CompleteOrder() {
 
     useEffect(() => {
+        if(window) {
         window.createLemonSqueezy()
+        }
     }, [])
 
     const $bonus = useStore(bonus)
