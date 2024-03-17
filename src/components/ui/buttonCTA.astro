@@ -17,10 +17,12 @@ const { className } = Astro.props as {
             //scroll to the cart
             ctaHero.forEach((cta) => {
                 cta.addEventListener("click", () => {
-                    cartContainer.scrollIntoView({ behavior: "smooth" });
+                    cartContainer.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
                 });
             });
         }
     });
 </script>
-
