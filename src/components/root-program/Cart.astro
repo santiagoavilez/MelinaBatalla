@@ -10,12 +10,14 @@ import {
 } from "@components/ui/card";
 import { BonusCard } from "./BonusCard";
 import { CartItems } from "./CartItems";
+import  CompleteOrder  from "./CompleteOrder";
+
 
 import { bonus } from "@lib/bonusStore";
 import { Separator } from "@components/ui/separator";
 ---
 
-<section class="h-full p-6 sm:p-10 flex flex-col  gap-8">
+<section class="h-full p-6 sm:p-10 flex flex-col gap-8">
     <!-- <Card className="bg-negro text-blanco">
         <CardHeader>
             <CardTitle className=" text-left">
@@ -40,13 +42,8 @@ import { Separator } from "@components/ui/separator";
         Resumen de Compra
     </h3>
     <CartItems client:idle />
-    <Button  className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center" >
 
-        <a
-            href="https://nazarena-batalla.lemonsqueezy.com/buy/44ba6cd4-5330-4178-9441-b85e13c4b60e?embed=1"
-            class="lemonsqueezy-button">Completar mi compra</a
-        >
-    </Button>
+    <CompleteOrder client:only />
 </section>
 
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>

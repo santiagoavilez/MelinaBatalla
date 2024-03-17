@@ -11,6 +11,9 @@ module.exports = {
       },
     },
     extend: {
+      transitionProperty: {
+        'height': 'height'
+      },
       colors: {
         blanco: '#F1F1F1',
         primary: '#B3906C',

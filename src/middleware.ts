@@ -14,7 +14,7 @@ export const onRequest = defineMiddleware(async ({request, redirect}, next) => {
     const url = new URL(request.url)
 
     const isSignedIn = await clerkClient.authenticateRequest({ request, publishableKey, secretKey })
-    console.log('isSignedIn', isSignedIn)
+    console.log('isSignedIn', isSignedIn, secretKey)
     if (!protectedPageUrls.some(path => url.pathname.startsWith(path))) {
         return next()
     }
