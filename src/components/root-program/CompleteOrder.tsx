@@ -25,7 +25,6 @@ export default function CompleteOrder() {
                 data: {
                     "type": "checkouts",
                     "attributes": {
-
                         'custom_price': $bonus ? 33200: 28800,
                         "checkout_options": {
                             embed: true,
