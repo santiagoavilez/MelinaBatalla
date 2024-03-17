@@ -1,7 +1,6 @@
 import { Button } from '@components/ui/button'
 import { bonus } from '@lib/bonusStore'
 import { useStore } from '@nanostores/react'
-import { c } from 'dist/_astro/button.76f1ff9e'
 import { useEffect } from 'react'
 
 const secret = import.meta.env.PUBLIC_LEMON_SECRET_KEY
