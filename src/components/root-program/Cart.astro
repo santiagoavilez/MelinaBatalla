@@ -3,7 +3,7 @@
 
 import { BonusCard } from "./BonusCard";
 import { CartItems } from "./CartItems";
-import  {CompleteOrder}  from "./Order";
+import  {CompleteOrder}  from "./order";
 
 
 ---
@@ -16,8 +16,8 @@ import  {CompleteOrder}  from "./Order";
     </h3>
     <CartItems client:idle />
 
-    <CompleteOrder client:idle />
+    <CompleteOrder client:only />
 </section>
 
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
-./Completeorder./Order
+./Completeorder./Order./order
