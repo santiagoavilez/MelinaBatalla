@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 const secret = import.meta.env.PUBLIC_LEMON_SECRET_KEY
 
-export default function CompleteOrder() {
+export  function CompleteOrder() {
 
     useEffect(() => {
         if(window) {

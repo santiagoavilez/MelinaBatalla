@@ -10,7 +10,7 @@ import {
 } from "@components/ui/card";
 import { BonusCard } from "./BonusCard";
 import { CartItems } from "./CartItems";
-import  CompleteOrder  from "./CompleteOrder";
+import  {CompleteOrder}  from "./CompleteOrder";
 
 
 import { bonus } from "@lib/bonusStore";
@@ -43,7 +43,7 @@ import { Separator } from "@components/ui/separator";
     </h3>
     <CartItems client:idle />
 
-    <CompleteOrder client:only />
+    <CompleteOrder client:idle />
 </section>
 
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
