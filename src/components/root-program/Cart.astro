@@ -1,17 +1,17 @@
 ---
-
-
 import { BonusCard } from "./BonusCard";
 import { CartItems } from "./CartItems";
-import  {CompleteOrder}  from "./CompleteOrder";
-
-
+import { CompleteOrder } from "./CompleteOrder";
 ---
 
-<section class="h-full p-6 sm:p-10 flex flex-col gap-8">
-
-    <BonusCard client:visible />
-    <h3 class="text-2xl font-semibold leading-none tracking-tight text-left">
+<section class="h-full p-6 xs:p-10 flex flex-col gap-8 w-full">
+    <div
+        class="duration-[500ms] [animation-iteration-count:infinite] taos:[transform:translate3d(0,200px,0)_scale(1.2)] taos:opacity-0"
+        data-taos-offset="200"
+    >
+        <BonusCard client:visible />
+    </div>
+    <h3 class="text-2xl font-semibold leading-none tracking-tight">
         Resumen de Compra
     </h3>
     <CartItems client:idle />
@@ -20,4 +20,3 @@ import  {CompleteOrder}  from "./CompleteOrder";
 </section>
 
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
-./Completeorder./Order./order./CompleteOrder

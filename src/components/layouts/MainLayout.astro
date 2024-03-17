@@ -71,19 +71,19 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 
 	<body class="h-screen bg-blanco">
 		<main class="w-full">
-			<SignedIn classes="flex flex-row gap-4">
+			<!-- <SignedIn classes="flex flex-row gap-4">
 				<UserButton />
 			</SignedIn>
 			<SignedOut>
 				<SignInButton />
-			</SignedOut>
+			</SignedOut> -->
 			<slot />
 			<Footer />
 		</main>
-
+		<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
+		<script>
+			import { initializeClerk } from "../../lib/clerk";
+			initializeClerk();
+		</script>
 	</body>
 </html>
-<script>
-		import { initializeClerk } from "../../lib/clerk";
-		initializeClerk();
-</script>

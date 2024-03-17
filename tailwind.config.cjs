@@ -1,7 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: {
+    relative: true,
+    transform: (content) => content.replace(/taos:/g, ''),
+    files: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  },
   theme: {
     container: {
       center: true,
@@ -11,8 +15,11 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        "xs": "340px",
+      },
       colors: {
-        blanco: '#F1F1F1',
+        blanco: '#FAF7F7',
         primary: '#B3906C',
         yema: '#E28443',
         negro: '#09090B',
@@ -71,8 +78,17 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require('taos/plugin')
+  ],
+  safelist: [
+    '!duration-[0ms]',
+    '!delay-[0ms]',
+    'html.js :where([class*="taos:"]:not(.taos-init))'
+  ],
+
 }
 
 // mode: 'jit',

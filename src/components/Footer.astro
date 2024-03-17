@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import melinaLogo from "@assets/melina-batalla-logo.png";
+import melinaLogo from "@assets/mblogo-blanco.png";
 const links = [
     {
         text: "Youtube",
@@ -37,12 +37,12 @@ const links = [
             />
             <div class="flex text-left flex-col py-4 md:py-0">
                 <span class="text-blanco"
-                    >Importante: Melina Batalla no garantiza resultados por el
-                    uso de este recurso.
+                    >Descargo de Responsabilidad: Este producto no garantiza la
+                    obtención de resultados.
                 </span>
                 <span class="text-blanco"
-                    >La interpretación y aplicación son responsabilidad del
-                    usuario.</span
+                    >Las referencias al desempeño de una determinada estrategia
+                    no debe ser interpretada como una garantía de resultados.</span
                 >
             </div>
 
@@ -50,15 +50,14 @@ const links = [
             {links.map(({ text, href }) => <a href={href}>{text}</a>)}
         </div> -->
             <!-- <hr class="opacity-50 border-blanco sm:hidden" /> -->
-            <div class="flex">
+            <div class="flex flex-col">
                 <span class="block text-sm text-gray-200 text-center"
-                    >© 2023 Melina Batalla™ All Rights Reserved. &nbsp;
+                    >© 2024 Nazarena Batalla™ All Rights Reserved. &nbsp;
                 </span>
                 <a
-                    href="https://santiagoavilez.com"
                     class="block text-sm text-gray-200 text-center hover:underline"
                 >
-                    Build by: Santiago Avilez</a
+                    Built by: Santiago Avilez</a
                 >
             </div>
         </div>

@@ -72,7 +72,7 @@ export  function CompleteOrder() {
 
 
     return (
-        <Button onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center" >
+        <Button id='complete-order' onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
             Completar mi compra
         </Button>
     )

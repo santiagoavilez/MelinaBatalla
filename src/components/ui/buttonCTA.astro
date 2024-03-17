@@ -1,5 +1,26 @@
 ---
 import { Button } from "./button";
+
+const { className } = Astro.props as {
+    className: string;
+};
 ---
 
-<Button className="motion-safe:animate-bounce "><slot /></Button>
+<Button data-cta-hero className={className}><slot /> </Button>
+
+<script>
+    addEventListener("load", (event) => {
+        const cartContainer = document.getElementById("complete-order");
+        const ctaHero = document.querySelectorAll("[data-cta-hero]");
+
+        if (cartContainer && ctaHero) {
+            //scroll to the cart
+            ctaHero.forEach((cta) => {
+                cta.addEventListener("click", () => {
+                    cartContainer.scrollIntoView({ behavior: "smooth" });
+                });
+            });
+        }
+    });
+</script>
+

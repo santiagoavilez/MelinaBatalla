@@ -1,6 +1,8 @@
 ---
 import Hero from "@components/root-program/Hero.astro";
 import OfferSection from "@components/root-program/OfferSection.astro";
+import BuyNowSection from "@components/root-program/BuyNowSection.astro";
+
 import MainLayout from "@components/layouts/MainLayout.astro";
 import { Button } from "@components/ui/button";
 import Cart from "@components/root-program/Cart.astro";
@@ -11,10 +13,11 @@ import Cart from "@components/root-program/Cart.astro";
     title={"Melina Batalla"}
 >
     <main
-        class="bg-blanco flex flex-col justify-center items-center max-w-screen-md mx-auto"
+        class="bg-white md:my-8 flex flex-col justify-center items-center max-w-[890px] mx-auto"
     >
         <Hero />
         <OfferSection />
+        <BuyNowSection />
         <Cart />
         <!-- <Button>
             <a

@@ -10,17 +10,29 @@ export function CartItems() {
     const $bonus = useStore(bonus)
 
     return (
-        <Card>
+
+        <Card >
             <CardHeader>
-                <CardContent className="font-medium text-lg   relative ">
+                <CardContent className="font-medium text-lg  p-0 relative ">
                     <div className="flex justify-between">
                         <span>Root Program</span>
                         <span>$17.00</span>
                     </div>
-                    <Accordion className='my-4' type="single" value={$bonus ? "item-1" : "" } collapsible>
-                        <AccordionItem value="item-1">
-                            <AccordionContent className="font-medium text-lg ">
-                                <Separator className="my-4" />
+                    <div className="flex justify-between ml-4">
+                        <span>Plantillas</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div className="flex justify-between ml-4">
+                        <span>Guiones</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div className="flex justify-between ml-4">
+                        <span>Salvavidas</span>
+                        <span>$0.00</span>
+                    </div>
+                    <Accordion className='my-1.5' type="single" value={$bonus ? "item-1" : "" } >
+                        <AccordionItem value="item-1" className=''>
+                            <AccordionContent className="pb-1.5 font-medium text-lg -mt-1 ">
                                 <div className="flex justify-between">
                                     <span>Potenciador de Resultados</span>
                                     <span>$27.00</span>
