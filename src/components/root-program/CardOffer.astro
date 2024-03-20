@@ -1,16 +1,57 @@
 ---
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-const { title, description } = Astro.props;
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@components/ui/card";
+import { cn } from "@lib/utils";
+import { cva } from "class-variance-authority";
+const { title, description, modulo, order, variant, className } =
+    Astro.props as {
+        title: string;
+        description: string;
+        modulo: string;
+        variant: "default" | "marron" | null | undefined;
+        className: string;
+        order: "third" | "default";
+    };
+
+const cardVariant = cva(
+    "w-full shadow-xl border-0 rounded-none rounded-tr-[4rem] rounded-bl-[4rem] aspect-square flex items-center max-w-xs text-negro text-center",
+    {
+        variants: {
+            variant: {
+                default: "bg-marmol ",
+                marron: "bg-marron text-blanco ",
+            },
+            order: {
+                third: "md:bg-marmol md:text-negro",
+                fourth: "md:bg-marron md:text-blanco",
+                default: "",
+            },
+        },
+        defaultVariants: {
+            variant: "default",
+            order: "default",
+        },
+    },
+);
 ---
 
-<Card  className="bg-marmol w-full shadow-xl">
-    <CardHeader>
-        <CardTitle className=" text-left">
-            <span class="text-[#7ED957]">+</span>
-            {title}
-        </CardTitle>
-    </CardHeader>
-    <CardContent>
+<div class={`flex flex-col gap-8 items-center `}>
+    <Card className={cn(cardVariant({ variant, order, className }))}>
+        <CardHeader className="px-8">
+            <CardTitle className="text-2xl ">
+                {modulo}
+            </CardTitle>
+            <CardDescription className="text-3xl text-inherit">
+                {title}
+            </CardDescription>
+        </CardHeader>
+    </Card>
+    <p class="text-xl">
         {description}
-    </CardContent>
-</Card>
+    </p>
+</div>

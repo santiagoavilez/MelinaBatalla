@@ -1,0 +1,18 @@
+---
+import { eq } from "astro:db";
+import { Lessons } from "astro:db";
+import { db } from "astro:db";
+
+console.log(Astro.props);
+
+export async function getStaticPaths() {
+    const lessons = await db.select().from(Lessons);
+
+    return lessons.map((lesson) => ({
+        params: { slug: lesson.slug, CourseSlug: lesson.slug },
+        props: { lesson },
+    }));
+}
+---
+
+<div>a</div>

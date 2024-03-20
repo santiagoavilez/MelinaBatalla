@@ -1,34 +1,56 @@
 ---
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import { CrossIcon } from "lucide-react";
+
 import CardOffer from "./CardOffer.astro";
-import SignInButton from "@components/auth/SignInButton.astro";
-import SignedOut from "@components/auth/SignedOut.astro";
+
+import { Lessons } from "astro:db";
+type ILesson = typeof Lessons.$inferSelect;
+
+interface Props {
+    lessons?: ILesson[];
+}
+
+const { lessons } = Astro.props as Props;
 ---
 
 <section class="h-full p-6 xs:p-10 w-full">
     <div class="flex flex-col items-center gap-8">
-        <h2>
-            Si aprovechas <strong> “Root Workshop”</strong> tendrás
-            <strong>acceso inmediato</strong> a lo siguiente:
-        </h2>
 
-        <CardOffer
-            title={"Vende tus servicios holísticos - (Valorado en $97)"}
-            description={"Empezarás a definir y atraer clientes consientes. (Deja de atraer personas que no están comprometidas con su proceso de transformación)."}
-        />
-        <CardOffer
-            title={"Potencia la obtención de clientes - (Valorado en $97)"}
-            description={"La fórmula  para atraer grandes cantidades de personas interesadas en invertir en ti."}
-        />
-        <CardOffer
-            title={"Fórmula secreta para vender en historias y carruseles - (Valorado en $47)"}
-            description={"Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente. (Nunca más publicar cantidades excesivas de contenido sin obtener resultados)."}
-        />
-        <CardOffer
-            title={"De Desconocidos a Clientes - (Valorado en  $47)"}
-            description={"Aprende como construir un servicio único para que tu audiencia desee convertirse en tu cliente de por vida."}
-        />
-
+        <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
+            {
+                lessons?.map((lesson) => (
+                    <CardOffer
+                        modulo={'MODULO ' + lesson.id}
+                        title={lesson.name}
+                        description={lesson.description}
+                        variant={lesson.id % 2 === 0 ? 'marron' : 'default'}
+                        order={lesson.id === 3 ? 'third' : lesson.id === 4 ? 'fourth' : 'default'}
+                    />
+                ))
+            }
+            <CardOffer
+                modulo={"MODULO 1"}
+                title="Atrae clientes  comprometidos con su proceso"
+                description="Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados."
+                variant="marron"
+            />
+            <CardOffer
+                modulo="MODULO 2"
+                title="Aprende a crear contenido funcional sin sacrificar tu paz"
+                description="Nunca más publicar cantidades excesivas de contenido sin obtener resultados y sacrificando tu tiempo. Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente. "
+            />
+            <CardOffer
+                modulo="MODULO 3"
+                title="Obtén seguridad con una estrategia clara"
+                description="Deja de depender de recomendados o  la suerte. Te comparto la estrategia para atraer clientes interesados en invertir en ti."
+                variant="marron"
+                order="third"
+            />
+            <CardOffer
+                modulo="MODULO 4"
+                title="Aprende a enfocar tu energía"
+                description="Que tu energía deje de drenarse en tareas que no están alineadas a tus objetivos. Te comparto en que debes enfocar toda tu energía para obtener resultados."
+                order="fourth"
+            />
+        </div>
     </div>
 </section>

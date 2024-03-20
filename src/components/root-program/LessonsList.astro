@@ -1,0 +1,35 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { Lessons } from "astro:db";
+type ILesson = typeof Lessons.$inferSelect;
+
+interface Props {
+    lessons?: ILesson[];
+}
+
+const { CourseSlug} = Astro.params as {
+    CourseSlug: string;
+};
+const { lessons } = Astro.props as Props;
+---
+
+<Card>
+    <CardHeader className="flex-row justify-between">
+        <CardTitle>Lecciones</CardTitle>
+        <div class="">pasos</div>
+    </CardHeader>
+    <CardContent>
+        <p>Estas son las lecciones que tienes disponibles</p>
+        <ul class="">
+            {
+                lessons?.map((lesson) => (
+                    <li>
+                        <a href={`/cursos/${CourseSlug}/${lesson.slug}`}>
+                            {lesson.name}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </CardContent>
+</Card>

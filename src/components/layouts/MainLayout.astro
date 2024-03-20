@@ -15,6 +15,7 @@ interface Props {
 	image?: string | undefined;
 }
 const { title, description, image } = Astro.props;
+const url = Astro.url.searchParams.get("url");
 import melinaPortrait from "@assets/Melina-batalla.png";
 ---
 
@@ -69,8 +70,8 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 		<title>{title}</title>
 	</head>
 
-	<body class="h-screen bg-blanco">
-		<main class="w-full">
+	<body class="h-screen bg-blanco w-full">
+		<div class="w-full ">
 			<!-- <SignedIn classes="flex flex-row gap-4">
 				<UserButton />
 			</SignedIn>
@@ -79,8 +80,8 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 			</SignedOut> -->
 			<slot />
 			<Footer />
-		</main>
-		<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
+		</div>
+		<script src="https://unpkg.com/taos@1.0.5/dist/taos.js" defer></script>
 		<script>
 			import { initializeClerk } from "../../lib/clerk";
 			initializeClerk();

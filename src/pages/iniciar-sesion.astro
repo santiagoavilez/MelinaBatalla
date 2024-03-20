@@ -7,7 +7,7 @@ import SignInComponent from "@components/auth/SignInComponent.astro";
 import SignedOut from "@components/auth/SignedOut.astro";
 import UserButton from "@components/auth/UserButton.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
-import App from "@components/layouts/App";
+import App from "@components/layouts/Iniciar-sesion";
 ---
 
 <MainLayout
@@ -28,3 +28,4 @@ import App from "@components/layouts/App";
     import { initializeClerk } from "../../lib/clerk";
     initializeClerk();
 </script>
+@components/layouts/Iniciar-sesion

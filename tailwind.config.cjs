@@ -17,6 +17,7 @@ module.exports = {
     extend: {
       screens: {
         "xs": "340px",
+        "xxl": "1280px",
       },
       colors: {
         blanco: '#FAF7F7',
@@ -24,6 +25,7 @@ module.exports = {
         yema: '#E28443',
         negro: '#09090B',
         marmol: '#EDE9DE',
+        marron: '#E09E71',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

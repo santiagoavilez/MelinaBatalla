@@ -16,6 +16,7 @@ export  function CompleteOrder() {
     const $bonus = useStore(bonus)
 
     const handleCompleteOrder = () => {
+
         fetch('https://api.lemonsqueezy.com/v1/checkouts', {
             method: 'POST',
             headers: {
@@ -34,7 +35,8 @@ export  function CompleteOrder() {
                         "checkout_data": {
                             'discount_code': $bonus ? 'IXNJK2MA' :'A2MZY0MA',
                             "custom": {
-                                "user_id": '123'
+                                "user_id": '123',
+                                "bonus": $bonus ? 'true' : 'false',
                             },
                         },
                     },
