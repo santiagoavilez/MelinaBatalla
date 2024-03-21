@@ -2,19 +2,23 @@
 
 ---
 
-<div id="auth-user-button"></div>
+<div transition-persist id="auth-user-button"></div>
 
-<script>
+<script >
     import { auth } from "../../lib/authStore";
+    document.addEventListener("astro:page-load", () => {
 
-    auth.subscribe((clerk) => {
-        if (clerk !== null && clerk.isReady()) {
-            const userButton =
-                document.querySelector<HTMLDivElement>("#auth-user-button")!;
-            clerk.mountUserButton(userButton, {
-                afterSignOutUrl: "/cursos/root-program",
-            });
 
-        }
+
+        auth.subscribe((clerk) => {
+            if (clerk !== null && clerk.isReady()) {
+                console.log("Clerk is ready", clerk);
+                const userButton =
+                    document.querySelector<HTMLDivElement>("#auth-user-button")!;
+                clerk.mountUserButton(userButton, {
+                    afterSignOutUrl: "/cursos/root-program",
+                });
+            }
+        });
     });
 </script>

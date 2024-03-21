@@ -1,13 +1,8 @@
 ---
-import { SignIn, SignedIn } from "@clerk/clerk-react";
-import SignInButton from "@components/auth/SignInButton.astro";
-import SignedIns from "@components/auth/SignedIn.astro";
-import SignInComponent from "@components/auth/SignInComponent.astro";
 
-import SignedOut from "@components/auth/SignedOut.astro";
-import UserButton from "@components/auth/UserButton.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
 import App from "@components/layouts/Iniciar-sesion";
+const invitationkey = Astro.url.searchParams.get("__clerk_ticket");
 ---
 
 <MainLayout
@@ -15,12 +10,8 @@ import App from "@components/layouts/Iniciar-sesion";
     title={"Melina Batalla"}
 >
     <div class="h-screen flex justify-center items-center">
-        <App client:only />
+        <App invitationkey={invitationkey} client:only />
 
-
-        <!-- <SignedOut>
-            <SignInComponent />
-        </SignedOut> -->
     </div>
 </MainLayout>
 
@@ -28,4 +19,3 @@ import App from "@components/layouts/Iniciar-sesion";
     import { initializeClerk } from "../../lib/clerk";
     initializeClerk();
 </script>
-@components/layouts/Iniciar-sesion

@@ -1,4 +1,3 @@
-import { reference } from 'astro:content';
 import { column, defineDb, defineTable } from 'astro:db';
 const Users = defineTable({
   columns: {

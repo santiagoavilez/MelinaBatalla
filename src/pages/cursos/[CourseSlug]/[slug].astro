@@ -1,18 +1,29 @@
 ---
+import CoursesLayout from "@components/layouts/CoursesLayout.astro";
 import { eq } from "astro:db";
+import { and } from "astro:db";
 import { Lessons } from "astro:db";
 import { db } from "astro:db";
 
-console.log(Astro.props);
+console.log(Astro.params.slug);
 
-export async function getStaticPaths() {
-    const lessons = await db.select().from(Lessons);
-
-    return lessons.map((lesson) => ({
-        params: { slug: lesson.slug, CourseSlug: lesson.slug },
-        props: { lesson },
-    }));
-}
+const [lesson] = await db
+    .select()
+    .from(Lessons)
+    .where(
+        and(
+            eq(Lessons.slug, Astro?.params?.slug as string),
+            eq(Lessons.courseSlug, Astro?.params?.CourseSlug as string),
+        ),
+    );
+console.log(lesson);
 ---
 
-<div>a</div>
+<CoursesLayout>
+    <div class="h-full">
+        <section class="h-screen">
+            <h1>{lesson.name}</h1>
+            <p>{lesson.description}</p>
+        </section>
+    </div>
+</CoursesLayout>

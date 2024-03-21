@@ -1,7 +1,6 @@
 ---
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import { Lessons } from "astro:db";
-type ILesson = typeof Lessons.$inferSelect;
+import type { ILesson } from "db/types";
 
 interface Props {
     lessons?: ILesson[];

@@ -9,10 +9,26 @@ interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	image?: string | undefined;
+	lessons?: ILesson[];
 }
 const { title, description, image } = Astro.props;
-const url = Astro.url.searchParams.get("url");
 import melinaPortrait from "@assets/Melina-batalla.png";
+import CoursesNav from "@components/nav/CoursesNav.astro";
+import { ViewTransitions } from "astro:transitions";
+import LessonsList from "@components/root-program/LessonsList.astro";
+import type { ILesson } from "db/types";
+import { Lessons } from "astro:db";
+import { db } from "astro:db";
+import { eq } from "astro:db";
+
+const { CourseSlug } = Astro.params;
+
+const lessons = await db
+	.select()
+	.from(Lessons)
+	.where(eq(Lessons.courseSlug, CourseSlug as string));
+
+console.log(lessons);
 ---
 
 <html lang="en">
@@ -64,20 +80,24 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 		<link rel="icon" type="image/svg+xml" href="/MBlogo.svg" />
 		<meta name="title" property="og:title" content={title} />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 
-	<body class=" bg-blanco w-full">
+	<body  class="bg-blanco w-full">
 		<div class="w-full h-full min-h-svh justify-between flex flex-col">
-			<!-- <SignedIn classes="flex flex-row gap-4">
-				<UserButton />
-			</SignedIn>
-			<SignedOut>
-				<SignInButton />
-			</SignedOut> -->
-			<slot />
+			<CoursesNav />
+			<div class="flex justify-between w-full">
+				<div class="w-80 hidden md:flex" id="sideBar">
+					<LessonsList lessons={lessons} />
+				</div>
+				<div transition:animate="slide" >
+					<slot />
+				</div>
+			</div>
+
 			<Footer />
 		</div>
-s		<script>
+		<script>
 			import { initializeClerk } from "../../lib/clerk";
 			initializeClerk();
 		</script>

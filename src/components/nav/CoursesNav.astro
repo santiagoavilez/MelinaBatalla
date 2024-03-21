@@ -1,0 +1,29 @@
+---
+import { Button } from "@components/ui/button";
+import melinaLogo from "@assets/mblogo.png";
+import { Image } from "astro:assets";
+import UserButton from "@components/auth/UserButton.astro";
+import ProfileDropdown from "@components/auth/ProfileDropdown";
+---
+
+<nav class="bg-blanco w-full z-40 border-gray-800/75">
+    <div class="flex items-center justify-between px-6 md:px-20 py-1">
+        <>
+
+        <a href="/cursos/root-program">
+            <Image
+                alt={"melina batalla logo"}
+                src={melinaLogo}
+                height={28}
+                format="webp"
+            />
+        </a>
+        <div>
+
+        </div>
+        </>
+        <div>
+            <ProfileDropdown transition:persist client:only />
+        </div>
+    </div>
+</nav>
