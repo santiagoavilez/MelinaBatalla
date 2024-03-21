@@ -4,4 +4,5 @@
 /// <reference types="astro-clerk-auth/env" />
 interface ImportMetaEnv {
     readonly BUILDER_API_PUBLIC_KEY: string;
+    readonly LEMON_SECRET_KEY: string;
 }

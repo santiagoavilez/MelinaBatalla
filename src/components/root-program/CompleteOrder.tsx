@@ -3,7 +3,7 @@ import { bonus } from '@lib/bonusStore'
 import { useStore } from '@nanostores/react'
 import { useEffect } from 'react'
 
-const secret = import.meta.env.PUBLIC_LEMON_SECRET_KEY
+const secret = import.meta.env.LEMON_SECRET_KEY
 
 export  function CompleteOrder() {
 
