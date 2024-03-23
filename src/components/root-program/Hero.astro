@@ -1,12 +1,15 @@
 ---
 import ButtonCTA from "@components/ui/buttonCTA.astro";
+import PandaButton from "./PandaButton.astro";
 // import melinaLogo from "@assets/mblogo.png";
 // import { Image } from "astro:assets";
 ---
 
-<section class="h-full p-6  w-full rounded-b-xl xxl:rounded-xl bg-marmol">
+<section class="h-full p-6 w-full rounded-b-xl xxl:rounded-xl bg-marmol">
     <div class="px-0 flex flex-col items-center gap-4 text-negro">
-        <div class="text-left md:text-center flex flex-col gap-2 md:gap-1 pt-4 md:pt-0">
+        <div
+            class="text-left md:text-center flex flex-col gap-2 md:gap-1 pt-4 md:pt-0"
+        >
             <span class="md:text-xl text-lg leading-4">
                 Atención emprendedoras holísticas:
             </span>
@@ -21,22 +24,47 @@ import ButtonCTA from "@components/ui/buttonCTA.astro";
             </span>
         </div>
 
-        <div class="w-full pt-6 md:pt-0 -mb-28 md:-mb-32 relative grow h-full max-w-xl">
+        <div
+            class="w-full pt-6 md:pt-0 -mb-28 md:-mb-32 relative grow h-full max-w-xl"
+        >
             <iframe
-                allowfullscreen
-                title="venta"
+                id="panda-05c02b32-7443-4047-8b82-a33bddfce763"
+                src="https://player-vz-c8120ef3-31f.tv.pandavideo.com/embed/?v=05c02b32-7443-4047-8b82-a33bddfce763&iosFakeFullscreen=true"
+                style="border:none;"
+                allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
+                allowfullscreen="true"
                 class="w-full aspect-video rounded-lg"
-                src="https://www.youtube.com/embed/H7QzEvpmDek"
-            >
-                {" "}
-            </iframe>
+                fetchpriority="high"></iframe>
         </div>
     </div>
 </section>
-<section class="pt-32 md:pt-32 pb-2 w-full flex justify-center">
-    <ButtonCTA
+<section class="pt-32 md:pt-32 pb-2 w-full flex flex-col justify-center">
+    <!-- <ButtonCTA
         className="h-16 px-12 text-xl md:text-2xl shadow-2xl shadow-gray-400 mx-8 "
+        client:load
     >
         Obtener Ahora!
-    </ButtonCTA>
+    </ButtonCTA> -->
+    <PandaButton />
 </section>
+<script is:inline>
+    if (
+        !document.querySelector(
+            'script[src="https://player.pandavideo.com.br/api.v2.js"]',
+        )
+    ) {
+        let s = document.createElement("script");
+        s.src = "https://player.pandavideo.com.br/api.v2.js";
+        s.async = true;
+        document.head.appendChild(s);
+    }
+    window.pandascripttag = window.pandascripttag || [];
+    window.pandascripttag.push(function () {
+        const panda_id_player = "panda-05c02b32-7443-4047-8b82-a33bddfce763";
+        const p = new PandaPlayer(panda_id_player, {
+            onReady() {
+                p.loadWindowScreen({ panda_id_player });
+            },
+        });
+    });
+</script>

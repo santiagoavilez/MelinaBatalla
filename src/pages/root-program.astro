@@ -6,9 +6,9 @@ import BuyNowSection from "@components/root-program/BuyNowSection.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
 import { Button } from "@components/ui/button";
 import Cart from "@components/root-program/Cart.astro";
-import { db, Courses, Lessons, eq } from "astro:db";
+import { db, Course, Lesson, eq } from "astro:db";
 
-const lessons = await db.select().from(Lessons).where(eq(Lessons.courseId, 1));
+const lessons = await db.select().from(Lesson).where(eq(Lesson.courseId, 1));
 ---
 
 <MainLayout

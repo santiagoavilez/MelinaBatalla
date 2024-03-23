@@ -13,22 +13,28 @@ interface Props {
 }
 const { title, description, image } = Astro.props;
 import melinaPortrait from "@assets/Melina-batalla.png";
+import nazaPortrait from "@assets/root-program/naza-root-program.png";
+
 import CoursesNav from "@components/nav/CoursesNav.astro";
 import { ViewTransitions } from "astro:transitions";
 import LessonsList from "@components/root-program/LessonsList.astro";
 import type { ILesson } from "db/types";
-import { Lessons } from "astro:db";
+import { Lesson } from "astro:db";
 import { db } from "astro:db";
 import { eq } from "astro:db";
+import { Image } from "astro:assets";
+import { CardTitle } from "@components/ui/card";
+import { Button } from "@components/ui/button";
+import { InstagramIcon, PlusIcon } from "lucide-react";
+import { Separator } from "@components/ui/separator";
+import ProfileDropdown from "@components/auth/ProfileDropdown";
 
 const { CourseSlug } = Astro.params;
 
 const lessons = await db
 	.select()
-	.from(Lessons)
-	.where(eq(Lessons.courseSlug, CourseSlug as string));
-
-console.log(lessons);
+	.from(Lesson)
+	.where(eq(Lesson.courseSlug, CourseSlug as string));
 ---
 
 <html lang="en">
@@ -83,19 +89,76 @@ console.log(lessons);
 		<ViewTransitions />
 	</head>
 
-	<body  class="bg-blanco w-full">
-		<div class="w-full h-full min-h-svh justify-between flex flex-col">
-			<CoursesNav />
-			<div class="flex justify-between w-full">
-				<div class="w-80 hidden md:flex" id="sideBar">
-					<LessonsList lessons={lessons} />
+	<body class="bg-marmol w-full">
+		<div class="w-full h-full min-h-screen">
+			<div class="flex w-full">
+				<div
+					class="w-full max-w-64 hidden md:flex flex-col items-start justify-between gap-12"
+					id="sideBar"
+				>
+					<div class="flex flex-col gap-4">
+						<div
+							class="flex flex-col items-start w-full gap-2 p-6 pb-0"
+						>
+							<a href="/cursos/root-program" class="w-full">
+								<Image
+									alt={"Nazarena Batalla en un retrato de estudio."}
+									src={nazaPortrait}
+									width={100}
+									format="webp"
+									class={"rounded-full cursor-pointer w-20 h-20 shadow-lg"}
+								/>
+							</a>
+							<CardTitle
+								className="text-left text-xl leading-6 pb-3"
+							>
+								Nazarena Batalla Mentora de Emprendedoras
+							</CardTitle>
+							<Button
+								className=" px-6  h-14 bg-blanco group rounded-lg hover:scale-105 transition-transform  border-l-8  border-primary hover:bg-blanco flex justify-between w-full max-w-52 shadow-lg"
+							>
+								<span class="text-left leading-5 text-xl"
+									>Agendar Sesion</span
+								>
+								<PlusIcon
+									className="bg-primary  rounded-full p-2 w-10 h-10 	stroke-negro shadow-2xl shadow-green-700	"
+								/>
+							</Button>
+							<Separator className="bg-negro/20 mt-4 px-6" />
+						</div>
+
+						<LessonsList lessons={lessons} />
+					</div>
+					<footer class="flex flex-col p-6">
+						<ProfileDropdown
+							transition:persist
+							client:only="react"
+						/>
+						<span
+							class="inline-flex gap-2 my-2 underline cursor-pointer"
+							><InstagramIcon />@nazarenabatalla
+						</span>
+						<Separator className="bg-negro/20 my-2" />
+						<span class="inline-flex gap-2 text-sm">
+							© 2024 Nazarena Batalla™
+						</span>
+						<span class="block text-sm">
+							All Rights Reserved. &nbsp;
+						</span>
+
+						<!-- <SignedIn>
+
+							<UserButton />
+						</SignedIn> -->
+					</footer>
 				</div>
-				<div transition:animate="slide" >
+				<div
+					transition:animate="slide"
+					class="bg-blanco w-full min-h-screen h-full rounded-l-[3rem]"
+				>
 					<slot />
 				</div>
 			</div>
-
-			<Footer />
 		</div>
 		<script>
 			import { initializeClerk } from "../../lib/clerk";

@@ -10,7 +10,7 @@ interface Props {
 }
 
 function App({ children, invitationkey }: Props) {
-
+    console.log('clerkPubKey', clerkPubKey)
     const appearance = {
         elements: {
             footer: { 'display': 'none' },

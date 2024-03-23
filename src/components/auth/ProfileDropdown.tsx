@@ -1,4 +1,4 @@
-import { useUser } from "@clerk/clerk-react";
+import { ClerkProvider, RedirectToSignIn, SignOutButton } from "@clerk/clerk-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,31 +11,45 @@ import {
 import { auth } from "../../lib/authStore";
 import { useStore } from "@nanostores/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
+import { Button } from "@components/ui/button";
+
 export default function ProfileDropdown() {
-    const clerk = useStore(auth);
-    console.log(clerk);
-  return (
-      <DropdownMenu modal={false}>
-          <DropdownMenuTrigger><Avatar
-              className="cursor-pointer"
+    const clerk = useStore(auth)
+    console.log('clerk', clerk)
+    const handleSignOut = async () => {
+        clerk?.signOut(
+        ).then(() => {
+            console.log('signOut')
+            window.location.reload()
+             Astro.redirect('/iniciar-sesion')
+        }).catch((error) => {
+            console.log('error', error)
+        })
+        auth.set(null)
+    }
 
-          >
 
-              <AvatarImage src={'https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yZFlkT3VtZjR6ODdIdktYZTVOaG1tVkJSVFYiLCJyaWQiOiJ1c2VyXzJkeEc5S3NNYlNTU2NsUW52SXlweTV4SjBOdSJ9'} />
-              <AvatarFallback>
-                  <div className="animate-spin rounded-full  border-b-2 border-gray-900"></div>
-              </AvatarFallback>
-          </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-          </DropdownMenuContent>
-      </DropdownMenu>
+    return (
 
-  )
+        <DropdownMenu modal={false}>
+            <DropdownMenuTrigger><Avatar
+                className="cursor-pointer"
+            >
+                <AvatarImage src={clerk?.user?.imageUrl} />
+                <AvatarFallback>
+                    <div className="animate-spin rounded-full  border-b-2 border-gray-900"></div>
+                </AvatarFallback>
+            </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem >
+                    <span className="cursor-pointer" onClick={handleSignOut}>Cerrar sesión</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+
+
+    )
 }

@@ -1,29 +1,180 @@
 ---
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
+import MarkCompleted from "@components/lessons/MarkCompleted";
 import { eq } from "astro:db";
+import { desc } from "astro:db";
+import { gt } from "astro:db";
+import { asc } from "astro:db";
+import { LessonProgress } from "astro:db";
 import { and } from "astro:db";
-import { Lessons } from "astro:db";
+import { Lesson } from "astro:db";
 import { db } from "astro:db";
+import { Play } from "lucide-react";
 
-console.log(Astro.params.slug);
-
+// console.log(Astro.params.slug);
+const { userId, bonus } = Astro.locals;
 const [lesson] = await db
     .select()
-    .from(Lessons)
+    .from(Lesson)
     .where(
         and(
-            eq(Lessons.slug, Astro?.params?.slug as string),
-            eq(Lessons.courseSlug, Astro?.params?.CourseSlug as string),
+            eq(Lesson.slug, Astro?.params?.slug as string),
+            eq(Lesson.courseSlug, Astro?.params?.CourseSlug as string),
         ),
     );
+
+const { slug, CourseSlug } = Astro.params;
+console.log(slug);
+
+const [userProgress] = await db
+    .select()
+    .from(LessonProgress)
+    .where(
+        and(
+            eq(LessonProgress.lessonId, lesson.id),
+            eq(LessonProgress.userId, userId as string),
+        ),
+    );
+
+const lessonscompleted = await db
+    .select()
+    .from(LessonProgress)
+    .where(eq(LessonProgress.userId, userId as string));
+
+console.log("lessonscompleted", lessonscompleted);
+
+const isCompleted = userProgress ? true : false;
+console.log("isCompleted", isCompleted);
+const [lastCompletedLesson] = await db
+    .select()
+    .from(LessonProgress)
+    .where(eq(LessonProgress.userId, userId as string))
+    .orderBy(desc(LessonProgress.id))
+    .limit(1);
+
+const lastAvailableLessonId = lastCompletedLesson
+    ? lastCompletedLesson.lessonId
+    : 1;
+const lastAvailableLessonSlug = lastCompletedLesson
+    ? lastCompletedLesson.lessonSlug
+    : "atrae-clientes-comprometidos"; // Reemplaza 'default-slug' con el slug de la primera lección
+
+const isPotenciador = lesson.slug === "potenciador";
+const isFirtstLesson = lesson.id === 1;
+const isAvailable = lesson.id <= lastAvailableLessonId + 1;
+console.log("isAvailable", isAvailable, lesson.id, lastAvailableLessonId);
+const canbeViewed = isFirtstLesson || isAvailable || isPotenciador;
+console.log("canbeViewed", canbeViewed);
+console.log("slug", slug);
+console.log("lastCompletedLesson ", lastCompletedLesson);
+
+console.log("lastAvailableLessonId", lastAvailableLessonSlug);
+
+const [nextLesson] = await db
+    .select()
+    .from(Lesson)
+    .where(gt(Lesson.id, lesson.id))
+    .orderBy(asc(Lesson.id))
+    .limit(1);
+
+const nextLessonSlug = nextLesson ? nextLesson.slug : null;
+
+console.log("nextLessonSlug", nextLessonSlug);
+
+if (!canbeViewed) {
+    return Astro.redirect(`/cursos/${CourseSlug}/${lastAvailableLessonSlug}`);
+}
 console.log(lesson);
+
+// console.log(user);
 ---
 
 <CoursesLayout>
-    <div class="h-full">
-        <section class="h-screen">
-            <h1>{lesson.name}</h1>
-            <p>{lesson.description}</p>
-        </section>
+    <div class="h-full w-full">
+        {
+            lesson.slug === "potenciador" ? (
+                bonus === "true" ? (
+                    <section
+                        transition:persist
+                        class="w-full p-6 md:p-10 flex flex-col justify-start gap-10 "
+                    >
+                        <div class="w-full flex flex-col items-center gap-4">
+                            {" "}
+                            potenciador
+                            <div transition:persist id="embed-iframe" />
+                        </div>
+                    </section>
+                ) : (
+                    <section
+                        transition:persist
+                        class="w-full p-6 md:p-10 flex flex-col justify-start gap-10 "
+                    >
+                        <div class="w-full flex flex-col items-center gap-4">
+                            {" "}
+                            Compra el potenciador mamu
+                        </div>
+                    </section>
+                )
+            ) : (
+                <section class="h-full p-6 md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
+                    <div class="w-full flex items-center gap-4">
+                        <iframe
+                            allowfullscreen
+                            title="venta"
+                            class="w-full aspect-video rounded-xl"
+                            src="https://www.youtube.com/embed/H7QzEvpmDek"
+                        >
+                            {" "}
+                        </iframe>
+                    </div>
+                </section>
+            )
+        }
     </div>
+    <div class="text-left flex flex-col items-start w-full pl-10">
+        <h1
+            class="inline-flex items-center text-2xl xl:text-3xl font-semibold gap-3"
+        >
+            <Play className="fill-negro " />Modulo {lesson.id}: {lesson.name}
+        </h1>
+        <p class="text-left pb-4">{lesson.description}</p>
+        {
+            !isCompleted && (
+                <MarkCompleted
+                    client:load
+                    lessonId={lesson.id}
+                    userId={userId as string}
+                    lessonSlug={slug as string}
+                    nextLessonSlug={nextLessonSlug}
+                />
+            )
+        }
+    </div>
+
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </CoursesLayout>
+
+<script is:inline>
+    document.addEventListener("astro:before-swap", (ev) => {
+        // Pasa el documento entrante para establecer el tema en él
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            const element = document.getElementById("embed-iframe");
+            const options = {
+                uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
+            };
+            const callback = (EmbedController) => {};
+            IFrameAPI.createController(element, options, callback);
+        };
+    });
+    document.addEventListener("astro:page-load", (ev) => {
+        // Pasa el documento entrante para establecer el tema en él
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            const element = document.getElementById("embed-iframe");
+            const options = {
+                uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
+            };
+            const callback = (EmbedController) => {};
+            IFrameAPI.createController(element, options, callback);
+        };
+    });
+</script>

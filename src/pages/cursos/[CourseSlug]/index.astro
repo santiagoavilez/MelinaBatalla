@@ -1,7 +1,7 @@
 ---
 // import { SignIn, SignedIn } from "@clerk/clerk-react";
 import SignedIn from "@components/auth/SignedIn.astro";
-import { db, Courses, Lessons, eq } from "astro:db";
+import { db, Course, Lesson, eq } from "astro:db";
 
 import UserButton from "@components/auth/UserButton.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
@@ -17,14 +17,14 @@ console.log("invitationkey", invitationkey);
 const { CourseSlug } = Astro.params;
 const [course] = await db
     .select()
-    .from(Courses)
-    .where(eq(Courses.slug, CourseSlug as string));
+    .from(Course)
+    .where(eq(Course.slug, CourseSlug as string));
 
 console.log("course", course);
 const lessons = await db
     .select()
-    .from(Lessons)
-    .where(eq(Lessons.courseId, course.id));
+    .from(Lesson)
+    .where(eq(Lesson.courseId, course.id));
 ---
 
 <CoursesLayout
@@ -32,22 +32,19 @@ const lessons = await db
     title={"Melina Batalla"}
     lessons={lessons}
 >
-    <div class="h-full flex justify-center items-center ">
-
-
-            <div class="flex justify-between">
-
-                <div
-                    class="xxl:my-8 flex flex-col gap-10 mx-auto px-0 text-left max-w-screen-lg"
+    <div class="h-full min-h-svh flex justify-center items-center">
+        <div class="flex justify-between">
+            <div
+                class="xxl:my-8 flex flex-col gap-10 mx-auto px-0 text-left max-w-screen-lg"
+            >
+                <h1
+                    class="text-6xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
                 >
-                    <h1
-                        class="text-6xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
-                    >
-                        {course.name}
-                    </h1>
-                    <span>{course.description}</span>
-                    <LessonsList lessons={lessons} />
-                </div>
+                    {course.name}
+                </h1>
+                <span>{course.description}</span>
+                <LessonsList lessons={lessons} />
             </div>
+        </div>
     </div>
 </CoursesLayout>

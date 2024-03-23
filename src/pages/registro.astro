@@ -1,0 +1,18 @@
+---
+import MainLayout from "@components/layouts/MainLayout.astro";
+import App from "@components/layouts/Iniciar-sesion";
+import Register from "@components/auth/register";
+const params = Astro.url.searchParams;
+const name = params.get("name")!;
+const email = params.get("email")!;
+const bonus = params.get("bonus");
+---
+
+<MainLayout
+    description={"sitio de melina batalla, comunicadora visual"}
+    title={"Melina Batalla"}
+>
+    <div class="h-screen flex justify-center items-center">
+        <Register name={name} bonus={bonus} email={email} client:only />
+    </div>
+</MainLayout>

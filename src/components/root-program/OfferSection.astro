@@ -1,9 +1,8 @@
 ---
 
+import type { ILesson } from "db/types";
 import CardOffer from "./CardOffer.astro";
 
-import { Lessons } from "astro:db";
-type ILesson = typeof Lessons.$inferSelect;
 
 interface Props {
     lessons?: ILesson[];

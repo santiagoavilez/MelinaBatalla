@@ -1,18 +1,18 @@
-import { db, Courses, Lessons } from 'astro:db';
+import { db, Course, Lesson } from 'astro:db';
 
 
 // https://astro.build/db/seed
 export default async function seed() {
 	// TODO
 
-	await db.insert(Courses).values([{
+	await db.insert(Course).values([{
 		id: 1,
 		name: 'Root Program',
 		slug: 'root-program',
 		description: 'este es un curso.'
 	}])
 
-	await db.insert(Lessons).values([
+	await db.insert(Lesson).values([
 		{
 			id: 1,
 			courseId: 1,
@@ -27,7 +27,6 @@ export default async function seed() {
 			name: 'Aprende a crear contenido funcional sin sacrificar tu paz',
 			slug: 'crea-contenido-funcional',
 			courseSlug: 'root-program',
-
 			description: 'Nunca más publicar cantidades excesivas de contenido sin obtener resultados y sacrificando tu tiempo. Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente.'
 		},
 		{
@@ -46,6 +45,24 @@ export default async function seed() {
 			courseSlug: 'root-program',
 			description: 'Que tu energía deje de drenarse en tareas que no están alineadas a tus objetivos. Te comparto en que debes enfocar toda tu energía para obtener resultados.'
 		},
+		{
+			id: 5,
+			courseId: 1,
+			name: 'Salvavidas',
+			slug: 'salvavidas',
+			courseSlug: 'root-program',
+			description: 'Salvavidas en caso de emergencia.'
+		},
+		{
+
+			id: 6,
+			courseId: 1,
+			name: 'Potenciador',
+			slug: 'potenciador',
+			courseSlug: 'root-program',
+			description: 'Salvavidas en caso de emergencia.'
+		},
+
 		// {
 		// 	id: 5,
 		// 	courseId: 1,

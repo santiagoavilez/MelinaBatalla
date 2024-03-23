@@ -3,7 +3,7 @@
 import SignInButton from "@components/auth/SignInButton.astro";
 import SignedIn from "@components/auth/SignedIn.astro";
 import SignInComponent from "@components/auth/SignInComponent.astro";
-import { db, Courses, Lessons, eq } from "astro:db";
+import { db, Course, Lesson, eq } from "astro:db";
 
 import UserButton from "@components/auth/UserButton.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
@@ -25,13 +25,13 @@ const invitationkey = Astro.url.searchParams.get("__clerk_ticket");
 console.log("invitationkey", invitationkey);
 const [course] = await db
     .select()
-    .from(Courses)
-    .where(eq(Courses.slug, "root-program"));
+    .from(Course)
+    .where(eq(Course.slug, "root-program"));
 
 const lessons = await db
     .select()
-    .from(Lessons)
-    .where(eq(Lessons.courseId, course.id));
+    .from(Lesson)
+    .where(eq(Lesson.courseId, course.id));
 console.log("courses", course);
 console.log("courses", lessons);
 ---

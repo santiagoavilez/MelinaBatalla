@@ -1,82 +1,53 @@
 import { column, defineDb, defineTable } from 'astro:db';
-const Users = defineTable({
+import l from 'dist/_astro/ToTop.71ff91db';
+export const Course = defineTable({
   columns: {
-    id: column.number({ primaryKey: true }),
-    email: column.text({ unique: true}),
-    firstName: column.text(),
-    lastName: column.text(),
-    password: column.text(),
-    LessonsCompleted: column.number({ references() {
-      return Lessons.columns.id
-    }}),
-    coursesEnrolled: column.number({ references: () => Courses.columns.id}),
-    coursesCompleted: column.number({ references: () => Courses.columns.id}),
-  }
-})
-
-
-export const Courses = defineTable({
-  columns: {
-    id: column.number({ primaryKey: true, unique: true, autoIncrement: true, optional: false}),
+    id: column.number({ primaryKey: true, unique: true, autoIncrement: true, optional: false }),
     slug: column.text({ unique: true, optional: false }),
-    name: column.text({optional: false}),
-
-    description: column.text({optional: false}),
+    name: column.text({ optional: false }),
+    description: column.text({ optional: false }),
   }
 })
 
-const Lessons = defineTable({
+const Lesson = defineTable({
   columns: {
-    id: column.number({ primaryKey: true , unique: true}),
-    courseId: column.number({references: () => Courses.columns.id}),
-    courseSlug: column.text({references: () => Courses.columns.slug}),
+    id: column.number({ primaryKey: true, unique: true }),
+    courseId: column.number({ references: () => Course.columns.id }),
+    courseSlug: column.text({ references: () => Course.columns.slug }),
     name: column.text(),
-    slug: column.text(),
+    slug: column.text({unique: true}),
     description: column.text(),
   }
 })
 
-
-
-
-const LessonsCompleted = defineTable({
+const LessonProgress = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
-    userId: column.number({references: () => Users.columns.id}),
-    lessonId: column.number({references: () => Lessons.columns.id}),
+    userId: column.text(),
+    lessonId: column.number({ references: () => Lesson.columns.id }),
+    lessonSlug: column.text({ references: () => Lesson.columns.slug }),
+    status: column.text(), // Add this line
   }
 })
 
 
-const CoursesCompleted = defineTable({
+const Enrollment = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
-    userId: column.number({references: () => Users.columns.id}),
-    courseId: column.number({references: () => Courses.columns.id}),
+    courseId: column.number({ references: () => Course.columns.id }),
+    userId: column.text(),
   }
 })
-
-const Enrollments = defineTable({
-  columns: {
-    id: column.number({ primaryKey: true }),
-    courseId: column.number({references: () => Courses.columns.id}),
-    userId: column.number({references: () => Users.columns.id}),
-  }
-})
-
-
 
 // https://astro.build/db/config
-const db = defineDb({
+export default defineDb({
   tables: {
-    Users,
-    Courses,
-    Lessons,
-    Enrollments,
-    CoursesCompleted,
-    LessonsCompleted
+    Course,
+    Lesson,
+    Enrollment,
+    LessonProgress
   }
 });
 
 
-export default db;
+

@@ -1,34 +1,53 @@
 ---
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { LessonProgress } from "astro:db";
+import { eq } from "astro:db";
+import { db } from "astro:db";
 import type { ILesson } from "db/types";
+import { completedLessonsStore } from "@lib/bonusStore";
+import LessonsItem from "./LessonsItem";
+import ListItems from "./ListItems";
 
 interface Props {
     lessons?: ILesson[];
 }
 
-const { CourseSlug} = Astro.params as {
+const { CourseSlug, slug } = Astro.params as {
     CourseSlug: string;
+    slug: string;
 };
 const { lessons } = Astro.props as Props;
+
+//console.log("locals", Astro.locals);
+
+const { userId } = Astro.locals;
+
+// const lessonscompleted = await db
+//     .select()
+//     .from(LessonProgress)
+//     .where(eq(LessonProgress.userId, userId as string));
+
+//  console.log("lessonscompleted", lessonscompleted);
+
+// console.log("cokkies", Astro.cookies.get("__session"));
+
+// const sessionid = Astro.cookies.get("__session");
+
+// const session = await clerk.sessions.getSession(sessionid?.value as string);
+// console.log("session", session);
+// Query the lessonscompleted table to find orders completed by a user
 ---
 
-<Card>
-    <CardHeader className="flex-row justify-between">
-        <CardTitle>Lecciones</CardTitle>
-        <div class="">pasos</div>
-    </CardHeader>
-    <CardContent>
-        <p>Estas son las lecciones que tienes disponibles</p>
-        <ul class="">
-            {
-                lessons?.map((lesson) => (
-                    <li>
-                        <a href={`/cursos/${CourseSlug}/${lesson.slug}`}>
-                            {lesson.name}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </CardContent>
-</Card>
+<section class="pl-6 pr-6">
+    <h4 class="font-semibold text-xl pb-2">Contenido del curso</h4>
+    {
+        !!lessons && (
+            <ListItems
+                client:only
+                userId={userId as string}
+                lessons={lessons}
+                CourseSlug={CourseSlug}
+                slug={slug}
+            />
+        )
+    }
+</section>

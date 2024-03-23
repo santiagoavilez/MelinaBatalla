@@ -49,6 +49,9 @@ export const POST: APIRoute = async ({ request }) => {
                     },
                     ignoreExisting: true,
                 });
+
+
+
                 console.log(invitation);
                 // const newUser = await clerkClient.users.createUser({
                 //     firstName: firstName,

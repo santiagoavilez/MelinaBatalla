@@ -1,0 +1,32 @@
+---
+import type { ILesson } from "db/types";
+import { Circle, Play } from "lucide-react";
+import CircleCompletedLesson from "./CircleCompletedLesson";
+import { completedLessonsStore } from "@lib/bonusStore";
+interface Props {
+    lesson: ILesson;
+}
+const { CourseSlug, slug } = Astro.params as {
+    CourseSlug: string;
+    slug: string;
+};
+const { lesson } = Astro.props as Props;
+
+const completed = completedLessonsStore.get();
+const isCompleted = completed[lesson.id] ? "completado" : "no disponible";
+---
+
+<li
+    transition:animate={slug === lesson.slug ? "slide" : "none"}
+    class={`w-full pl-2 pr-6  flex items-center justify-between gap-2 ${slug === lesson.slug ? "bg-blanco rounded-l-xl z-20 shadow-xl" : ""}`}
+>
+    <a
+        class="font-medium text-lg flex items-center justify-between gap-2"
+        href={`/cursos/${CourseSlug}/${lesson.slug}`}
+    >
+        <Play className="fill-negro w-[14px]" /> Modulo{" "}
+        {lesson.id}
+        {isCompleted}
+    </a>
+    <CircleCompletedLesson client:load lessonId={lesson.id} />
+</li>

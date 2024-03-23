@@ -8,7 +8,7 @@ const { classes } = Astro.props;
 
 <script>
     import { auth } from "../../lib/authStore";
-
+    console.log("Auth", auth.get());
     auth.subscribe((clerk) => {
         if (clerk !== null && clerk.isReady()) {
             const signedIn = document.querySelectorAll(".auth-signed-in")!;
