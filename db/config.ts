@@ -1,5 +1,4 @@
 import { column, defineDb, defineTable } from 'astro:db';
-import l from 'dist/_astro/ToTop.71ff91db';
 export const Course = defineTable({
   columns: {
     id: column.number({ primaryKey: true, unique: true, autoIncrement: true, optional: false }),
