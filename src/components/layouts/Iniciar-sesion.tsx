@@ -30,8 +30,7 @@ function App({ children, invitationkey }: Props) {
                 ></SignUp> :
                     <SignIn
                         redirectUrl={"/cursos/root-program"}
-                        key={"sign-in-key"}
-
+                        key={"sign-in-key-e"}
                         afterSignUpUrl={"/cursos/root-program"}
                         afterSignInUrl={"/cursos/root-program"}
                         appearance={appearance}

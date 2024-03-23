@@ -70,7 +70,7 @@ import SignInButton from "@components/auth/SignInButton.astro";
 		<title>{title}</title>
 	</head>
 
-	<body class=" bg-blanco w-full">
+	<body class="bg-blanco w-full">
 		<div class="w-full h-full min-h-svh justify-between flex flex-col">
 			<!-- <SignedIn >
 				<UserButton />
@@ -80,6 +80,7 @@ import SignInButton from "@components/auth/SignInButton.astro";
 			</SignedOut> -->
 			<slot />
 			<Footer />
+			<script src="https://unpkg.com/taos@1.0.5/dist/taos.js"></script>
 		</div>
 		<script>
 			import { initializeClerk } from "../../lib/clerk";

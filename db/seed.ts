@@ -19,6 +19,7 @@ export default async function seed() {
 			name: 'Atrae clientes comprometidos con su proceso',
 			slug: 'atrae-clientes-comprometidos',
 			courseSlug: 'root-program',
+			video_id: '157078f4-55dd-48fd-8fee-02ce9d9efb2a',
 			description: 'Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados.'
 		},
 		{
@@ -27,6 +28,7 @@ export default async function seed() {
 			name: 'Aprende a crear contenido funcional sin sacrificar tu paz',
 			slug: 'crea-contenido-funcional',
 			courseSlug: 'root-program',
+			video_id: '6c12a662-2f97-4619-99ca-c12dc749c496',
 			description: 'Nunca más publicar cantidades excesivas de contenido sin obtener resultados y sacrificando tu tiempo. Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente.'
 		},
 		{
@@ -35,6 +37,7 @@ export default async function seed() {
 			name: 'Obtén seguridad con una estrategia clara',
 			slug: 'obten-seguridad',
 			courseSlug: 'root-program',
+			video_id: 'dd5b01c6-7991-46ea-8fea-422d1e6e4dc8',
 			description: 'Deja de depender de recomendados o la suerte. Te comparto la estrategia para atraer clientes interesados en invertir en ti.'
 		},
 		{
@@ -43,6 +46,7 @@ export default async function seed() {
 			name: 'Aprende a enfocar tu energía',
 			slug: 'enfoca-tu-energia',
 			courseSlug: 'root-program',
+			video_id: '422a4efc-df65-4e4d-bd82-bcbf49733630',
 			description: 'Que tu energía deje de drenarse en tareas que no están alineadas a tus objetivos. Te comparto en que debes enfocar toda tu energía para obtener resultados.'
 		},
 		{
@@ -50,6 +54,7 @@ export default async function seed() {
 			courseId: 1,
 			name: 'Salvavidas',
 			slug: 'salvavidas',
+			video_id: 'e215758c-39a4-4aa3-9a4e-0a15aa46ab19',
 			courseSlug: 'root-program',
 			description: 'Salvavidas en caso de emergencia.'
 		},

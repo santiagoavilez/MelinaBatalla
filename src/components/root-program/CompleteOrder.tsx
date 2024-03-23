@@ -3,12 +3,15 @@ import { bonus } from '@lib/bonusStore'
 import { useStore } from '@nanostores/react'
 import { useEffect } from 'react'
 
-const secret = import.meta.env.LEMON_SECRET_KEY
+
+const secret = import.meta.env.PUBLIC_LEMON_API_KEY
 
 export  function CompleteOrder() {
 
+
     useEffect(() => {
         if(window) {
+
         window.createLemonSqueezy()
         }
     }, [])
@@ -33,7 +36,7 @@ export  function CompleteOrder() {
                             "button_color": "#2DD272"
                         },
                         "checkout_data": {
-                            'discount_code': $bonus ? 'IXNJK2MA' :'A2MZY0MA',
+                            'discount_code': $bonus ? 'E1NZEXMW' :'EWOTQZMW',
                             "custom": {
                                 "user_id": '123',
                                 "bonus": $bonus ? 'true' : 'false',
@@ -50,7 +53,7 @@ export  function CompleteOrder() {
                         "variant": {
                             "data": {
                                 "type": "variants",
-                                "id": "295602"
+                                "id": "307170"
                             },
                         }
                     }

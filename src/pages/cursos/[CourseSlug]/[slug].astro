@@ -1,6 +1,8 @@
 ---
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
+import Classvideo from "@components/root-program/Classvideo.astro";
+import Potenciador from "@components/root-program/Potenciador.astro";
 import { eq } from "astro:db";
 import { desc } from "astro:db";
 import { gt } from "astro:db";
@@ -118,20 +120,13 @@ console.log(lesson);
             ) : (
                 <section class="h-full p-6 md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
-                        <iframe
-                            allowfullscreen
-                            title="venta"
-                            class="w-full aspect-video rounded-xl"
-                            src="https://www.youtube.com/embed/H7QzEvpmDek"
-                        >
-                            {" "}
-                        </iframe>
+                        <Classvideo videoId={lesson.video_id} />
                     </div>
                 </section>
             )
         }
     </div>
-    <div class="text-left flex flex-col items-start w-full pl-10">
+    <div class="text-left flex flex-col items-start w-full md:px-10 p-6">
         <h1
             class="inline-flex items-center text-2xl xl:text-3xl font-semibold gap-3"
         >

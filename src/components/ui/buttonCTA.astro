@@ -9,11 +9,10 @@ const { className } = Astro.props as {
 <Button data-cta-hero className={className}><slot /> </Button>
 
 <script>
-    document.addEventListener("astro:page-load", (ev) => {
-        // Pasa el documento entrante para establecer el tema en él
+    window.addEventListener("load", (event) => {
+
         const cartContainer = document.getElementById("complete-order")!;
         const ctaHero = document.querySelectorAll("[data-cta-hero]");
-
         if (cartContainer && ctaHero) {
             //scroll to the cart
             ctaHero.forEach((cta) => {
@@ -25,4 +24,5 @@ const { className } = Astro.props as {
             });
         }
     });
+    // Pasa el documento entrante para establecer el tema en él
 </script>

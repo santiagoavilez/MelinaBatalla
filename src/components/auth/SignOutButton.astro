@@ -1,0 +1,30 @@
+---
+const {className} = Astro.props
+---
+
+<div id="sing-out-button" class:list={["cursor-pointer",className ]}><slot /></div>
+
+<script>
+    import { auth } from "@lib/authStore";
+    import { navigate } from "astro:transitions/client";
+
+    const signOutButton = document.getElementById("sing-out-button");
+
+    auth.listen((clerk) => {
+        if (!clerk) return;
+        signOutButton?.addEventListener("click", () => {
+            clerk
+                ?.signOut()
+                .then(() => {
+                    console.log("signOut");
+
+                    window.location.reload();
+                    navigate("/iniciar-sesion");
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                });
+            auth.set(null);
+        });
+    });
+</script>

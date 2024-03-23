@@ -15,6 +15,7 @@ const Lesson = defineTable({
     courseSlug: column.text({ references: () => Course.columns.slug }),
     name: column.text(),
     slug: column.text({unique: true}),
+    video_id: column.text({optional: true}),
     description: column.text(),
   }
 })

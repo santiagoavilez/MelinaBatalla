@@ -1,6 +1,5 @@
 ---
-import Nav from "@components/nav/Nav.astro";
-import Footer from "@components/Footer.astro";
+
 import "@fontsource/poppins";
 import "@styles/global.css";
 import { SEO } from "astro-seo";
@@ -28,6 +27,8 @@ import { Button } from "@components/ui/button";
 import { InstagramIcon, PlusIcon } from "lucide-react";
 import { Separator } from "@components/ui/separator";
 import ProfileDropdown from "@components/auth/ProfileDropdown";
+import SideBarHeader from "./root-program/SideBarHeader.astro";
+import SideBarFooter from "./root-program/SideBarFooter.astro";
 
 const { CourseSlug } = Astro.params;
 
@@ -97,60 +98,13 @@ const lessons = await db
 					id="sideBar"
 				>
 					<div class="flex flex-col gap-4">
-						<div
-							class="flex flex-col items-start w-full gap-2 p-6 pb-0"
-						>
-							<a href="/cursos/root-program" class="w-full">
-								<Image
-									alt={"Nazarena Batalla en un retrato de estudio."}
-									src={nazaPortrait}
-									width={100}
-									format="webp"
-									class={"rounded-full cursor-pointer w-20 h-20 shadow-lg"}
-								/>
-							</a>
-							<CardTitle
-								className="text-left text-xl leading-6 pb-3"
-							>
-								Nazarena Batalla Mentora de Emprendedoras
-							</CardTitle>
-							<Button
-								className=" px-6  h-14 bg-blanco group rounded-lg hover:scale-105 transition-transform  border-l-8  border-primary hover:bg-blanco flex justify-between w-full max-w-52 shadow-lg"
-							>
-								<span class="text-left leading-5 text-xl"
-									>Agendar Sesion</span
-								>
-								<PlusIcon
-									className="bg-primary  rounded-full p-2 w-10 h-10 	stroke-negro shadow-2xl shadow-green-700	"
-								/>
-							</Button>
-							<Separator className="bg-negro/20 mt-4 px-6" />
-						</div>
+
+						<SideBarHeader ></SideBarHeader>
 
 						<LessonsList lessons={lessons} />
 					</div>
-					<footer class="flex flex-col p-6">
-						<ProfileDropdown
-							transition:persist
-							client:only="react"
-						/>
-						<span
-							class="inline-flex gap-2 my-2 underline cursor-pointer"
-							><InstagramIcon />@nazarenabatalla
-						</span>
-						<Separator className="bg-negro/20 my-2" />
-						<span class="inline-flex gap-2 text-sm">
-							© 2024 Nazarena Batalla™
-						</span>
-						<span class="block text-sm">
-							All Rights Reserved. &nbsp;
-						</span>
 
-						<!-- <SignedIn>
-
-							<UserButton />
-						</SignedIn> -->
-					</footer>
+					<SideBarFooter />
 				</div>
 				<div
 					transition:animate="slide"

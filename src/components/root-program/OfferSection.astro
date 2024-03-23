@@ -15,17 +15,7 @@ const { lessons } = Astro.props as Props;
     <div class="flex flex-col items-center gap-8">
 
         <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
-            {
-                lessons?.map((lesson) => (
-                    <CardOffer
-                        modulo={'MODULO ' + lesson.id}
-                        title={lesson.name}
-                        description={lesson.description}
-                        variant={lesson.id % 2 === 0 ? 'marron' : 'default'}
-                        order={lesson.id === 3 ? 'third' : lesson.id === 4 ? 'fourth' : 'default'}
-                    />
-                ))
-            }
+
             <CardOffer
                 modulo={"MODULO 1"}
                 title="Atrae clientes  comprometidos con su proceso"

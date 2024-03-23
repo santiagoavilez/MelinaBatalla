@@ -27,9 +27,9 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
         variants: {
             status: {
                 blanco: "bg-blanco rounded-xl z-20 shadow-xl",
-                gris: "blanco/30 text-negro/40 rounded-xl z-20   cursor-not-allowed",
-                marron: "blanco/80 text-negro/80  hover:blanco rounded-xl z-20  cursor-pointer",
-                yema: "blanco/80 text-negro/80 hover:blanco  rounded-xl z-20  cursor-pointer",
+                gris: " text-negro/40 rounded-xl z-20   cursor-not-allowed",
+                marron: " text-negro/80  hover:bg-blanco hover:shadow-xl transition-all rounded-xl z-20  cursor-pointer",
+                yema: " text-negro/80 hover:bg-blanco hover:shadow-xl transition-all  rounded-xl z-20  cursor-pointer",
             },
         },
         defaultVariants: {

@@ -1,0 +1,10 @@
+---
+const { videoId } = Astro.props as { videoId: string };
+---
+
+<iframe
+    id={`panda-${videoId}`}
+    src={`https://player-vz-c8120ef3-31f.tv.pandavideo.com/embed/?v=${videoId}`}
+    allowfullscreen="true"
+    class="w-full aspect-video rounded-lg"
+    fetchpriority="high"></iframe>

@@ -20,7 +20,6 @@ export const onRequest = defineMiddleware(async ({redirect, request, locals}, ne
     const requestState = await clerk.authenticateRequest({ request, publishableKey, secretKey })
     const auth = requestState.toAuth()
     if (auth?.userId) {
-
         locals.userId = auth?.userId
         const email = auth?.sessionClaims.userEmail as string
         const {bonus} = auth?.sessionClaims.public_metadata as { bonus: string }
@@ -31,14 +30,18 @@ export const onRequest = defineMiddleware(async ({redirect, request, locals}, ne
         console.log('private page')
         return redirect('/root-program')
     }
-
+    if (requestState.isSignedIn && url.pathname === '/iniciar-sesion') {
+        console.log('logueado')
+        return redirect('/cursos/root-program')
+    }
     if (!protectedPageUrls.some(path => url.pathname.startsWith(path))) {
         return next()
     }
     if (!requestState.isSignedIn && url.pathname !== '/iniciar-sesion') {
-
+        console.log('no logueado')
         return redirect('/iniciar-sesion')
     }
+
 
 
     return next()
