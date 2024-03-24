@@ -45,13 +45,6 @@ const [userProgress] = await db
         ),
     );
 
-const lessonscompleted = await db
-    .select()
-    .from(LessonProgress)
-    .where(eq(LessonProgress.userId, userId as string));
-
-console.log("lessonscompleted", lessonscompleted);
-
 const isCompleted = userProgress ? true : false;
 console.log("isCompleted", isCompleted);
 const [lastCompletedLesson] = await db
@@ -60,17 +53,21 @@ const [lastCompletedLesson] = await db
     .where(eq(LessonProgress.userId, userId as string))
     .orderBy(desc(LessonProgress.id))
     .limit(1);
+let lastAvailableLessonId = 1;
+let lastAvailableLessonSlug = "atrae-clientes-comprometidos";
+if (lastCompletedLesson) {
+    const [availablelesson] = await db
+        .select({ slug: Lesson.slug, id: Lesson.id })
+        .from(Lesson)
+        .where(eq(Lesson.id, lastCompletedLesson.id + 1))
+        .limit(1);
+    lastAvailableLessonId = availablelesson ? availablelesson.id : 1;
+    lastAvailableLessonSlug = availablelesson
+        ? availablelesson.slug
+        : "atrae-clientes-comprometidos";
+}
 
-const [availablelesson] = await db
-    .select({ slug: Lesson.slug, id: Lesson.id })
-    .from(Lesson)
-    .where(eq(Lesson.id, lastCompletedLesson.id + 1))
-    .limit(1);
-
-const lastAvailableLessonId = availablelesson ? availablelesson.id : 1;
-const lastAvailableLessonSlug = availablelesson
-    ? availablelesson.slug
-    : "atrae-clientes-comprometidos"; // Reemplaza 'default-slug' con el slug de la primera lección
+// Reemplaza 'default-slug' con el slug de la primera lección
 
 const isPotenciador = lesson.slug === "potenciador";
 const isFirtstLesson = lesson.id === 1;
