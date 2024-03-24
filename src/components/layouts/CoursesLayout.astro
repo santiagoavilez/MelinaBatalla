@@ -1,5 +1,4 @@
 ---
-
 import "@fontsource/poppins";
 import "@styles/global.css";
 import { SEO } from "astro-seo";
@@ -15,7 +14,7 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 import nazaPortrait from "@assets/root-program/naza-root-program.png";
 
 import CoursesNav from "@components/nav/CoursesNav.astro";
-import { ViewTransitions } from "astro:transitions";
+import { slide, ViewTransitions } from "astro:transitions";
 import LessonsList from "@components/root-program/LessonsList.astro";
 import type { ILesson } from "db/types";
 import { Lesson } from "astro:db";
@@ -29,6 +28,7 @@ import { Separator } from "@components/ui/separator";
 import ProfileDropdown from "@components/auth/ProfileDropdown";
 import SideBarHeader from "./root-program/SideBarHeader.astro";
 import SideBarFooter from "./root-program/SideBarFooter.astro";
+import NavBar from "./root-program/NavBar.astro";
 
 const { CourseSlug } = Astro.params;
 
@@ -98,8 +98,7 @@ const lessons = await db
 					id="sideBar"
 				>
 					<div class="flex flex-col gap-4">
-
-						<SideBarHeader ></SideBarHeader>
+						<SideBarHeader />
 
 						<LessonsList lessons={lessons} />
 					</div>
@@ -107,10 +106,15 @@ const lessons = await db
 					<SideBarFooter />
 				</div>
 				<div
-					transition:animate="slide"
-					class="bg-blanco w-full min-h-screen h-full rounded-l-[3rem]"
+					transition:animate={slide({ duration: "0.7s" })}
+					class="bg-marmol w-full min-h-screen h-full md:rounded-l-[3rem]"
 				>
-					<slot />
+					<NavBar transition:persist lessons={lessons} />
+					<div
+						class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+					>
+						<slot />
+					</div>
 				</div>
 			</div>
 		</div>

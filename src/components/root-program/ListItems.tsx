@@ -55,7 +55,7 @@ export default function ListItems({ lessons, userId, slug, CourseSlug, children 
             {lessons.map((lesson, index) => (
                 <li className="relative z-10" key={lesson.id}>
                     {index !== lessons.length - 1 && (
-                        <div className="absolute z-0 w-full h-1/3 border-l border-negro/20  right-full left-6 -bottom-1/3"></div>
+                        <div className="absolute -z-10 w-full h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3"></div>
                     )}
                     <LessonsItem lesson={lesson}
                         CourseSlug={CourseSlug}

@@ -3,8 +3,9 @@ import CoursesLayout from "@components/layouts/CoursesLayout.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
 import Classvideo from "@components/root-program/Classvideo.astro";
 import Potenciador from "@components/root-program/Potenciador.astro";
-import { eq } from "astro:db";
+import { eq, lt } from "astro:db";
 import { desc } from "astro:db";
+import { Course } from "astro:db";
 import { gt } from "astro:db";
 import { asc } from "astro:db";
 import { LessonProgress } from "astro:db";
@@ -13,6 +14,12 @@ import { Lesson } from "astro:db";
 import { db } from "astro:db";
 import { Play } from "lucide-react";
 
+const { slug, CourseSlug } = Astro.params;
+console.log("slug", slug);
+console.log("CourseSlug", CourseSlug);
+if (!slug || !CourseSlug) {
+    return Astro.redirect("/404");
+}
 // console.log(Astro.params.slug);
 const { userId, bonus } = Astro.locals;
 const [lesson] = await db
@@ -20,14 +27,14 @@ const [lesson] = await db
     .from(Lesson)
     .where(
         and(
-            eq(Lesson.slug, Astro?.params?.slug as string),
-            eq(Lesson.courseSlug, Astro?.params?.CourseSlug as string),
+            eq(Lesson.slug, slug as string),
+            eq(Lesson.courseSlug, CourseSlug as string),
         ),
     );
 
-const { slug, CourseSlug } = Astro.params;
-console.log(slug);
-
+if (!lesson) {
+    return Astro.redirect("/cursos/root-program/404");
+}
 const [userProgress] = await db
     .select()
     .from(LessonProgress)
@@ -54,11 +61,15 @@ const [lastCompletedLesson] = await db
     .orderBy(desc(LessonProgress.id))
     .limit(1);
 
-const lastAvailableLessonId = lastCompletedLesson
-    ? lastCompletedLesson.lessonId
-    : 1;
-const lastAvailableLessonSlug = lastCompletedLesson
-    ? lastCompletedLesson.lessonSlug
+const [availablelesson] = await db
+    .select({ slug: Lesson.slug, id: Lesson.id })
+    .from(Lesson)
+    .where(eq(Lesson.id, lastCompletedLesson.id + 1))
+    .limit(1);
+
+const lastAvailableLessonId = availablelesson ? availablelesson.id : 1;
+const lastAvailableLessonSlug = availablelesson
+    ? availablelesson.slug
     : "atrae-clientes-comprometidos"; // Reemplaza 'default-slug' con el slug de la primera lección
 
 const isPotenciador = lesson.slug === "potenciador";
@@ -68,25 +79,31 @@ console.log("isAvailable", isAvailable, lesson.id, lastAvailableLessonId);
 const canbeViewed = isFirtstLesson || isAvailable || isPotenciador;
 console.log("canbeViewed", canbeViewed);
 console.log("slug", slug);
-console.log("lastCompletedLesson ", lastCompletedLesson);
+// console.log("lastCompletedLesson ", lastCompletedLesson);
 
 console.log("lastAvailableLessonId", lastAvailableLessonSlug);
 
 const [nextLesson] = await db
-    .select()
+    .select({ slug: Lesson.slug })
     .from(Lesson)
     .where(gt(Lesson.id, lesson.id))
     .orderBy(asc(Lesson.id))
     .limit(1);
+const [previusLesson] = await db
+    .select({ slug: Lesson.slug })
+    .from(Lesson)
+    .where(lt(Lesson.id, lesson.id))
+    .orderBy(desc(Lesson.id))
+    .limit(1);
 
 const nextLessonSlug = nextLesson ? nextLesson.slug : null;
-
-console.log("nextLessonSlug", nextLessonSlug);
+const previusLessonSlug = previusLesson ? previusLesson.slug : null;
+// console.log("nextLessonSlug", nextLessonSlug);
 
 if (!canbeViewed) {
     return Astro.redirect(`/cursos/${CourseSlug}/${lastAvailableLessonSlug}`);
 }
-console.log(lesson);
+// console.log(lesson);
 
 // console.log(user);
 ---
@@ -118,7 +135,7 @@ console.log(lesson);
                     </section>
                 )
             ) : (
-                <section class="h-full p-6 md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
+                <section class="h-full p-6   md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
                         <Classvideo videoId={lesson.video_id} />
                     </div>
@@ -126,24 +143,27 @@ console.log(lesson);
             )
         }
     </div>
+    {
+        (
+            <MarkCompleted
+                client:load
+                lessonId={lesson.id}
+                userId={userId as string}
+                lessonSlug={slug as string}
+                nextLessonSlug={nextLessonSlug}
+                previusLessonSlug={previusLessonSlug}
+            />
+        )
+    }
     <div class="text-left flex flex-col items-start w-full md:px-10 p-6">
         <h1
-            class="inline-flex items-center text-2xl xl:text-3xl font-semibold gap-3"
+            class="inline-flex items-center text-2xl xl:text-3xl font-semibold pb-4 gap-3"
         >
-            <Play className="fill-negro " />Modulo {lesson.id}: {lesson.name}
+            <Play className="fill-negro hidden md:block " />Modulo {lesson.id}: {
+                lesson.name
+            }
         </h1>
         <p class="text-left pb-4">{lesson.description}</p>
-        {
-            !isCompleted && (
-                <MarkCompleted
-                    client:load
-                    lessonId={lesson.id}
-                    userId={userId as string}
-                    lessonSlug={slug as string}
-                    nextLessonSlug={nextLessonSlug}
-                />
-            )
-        }
     </div>
 
     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>

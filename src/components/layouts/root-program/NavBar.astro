@@ -1,3 +1,30 @@
 ---
+import LessonsList from "@components/root-program/LessonsList.astro";
+import NavButton from "./NavButton";
+
+import nazaPortrait from "@assets/root-program/naza-root-program.png";
+import { Image } from "astro:assets";
+const { lessons } = Astro.props;
+const { CourseSlug, slug } = Astro.params;
+const { userId } = Astro.locals;
 ---
 
+<nav class="md:hidden bg-marmol px-1 py-1 ">
+    <NavButton
+        client:load
+        CourseSlug={CourseSlug as string}
+        slug={slug as string}
+        lessons={lessons}
+        userId={userId as string}
+    >
+        <a href="/cursos/root-program" class="w-full">
+            <Image
+                alt={"Nazarena Batalla en un retrato de estudio."}
+                src={nazaPortrait}
+                width={100}
+                format="webp"
+                class={"rounded-full cursor-pointer w-20 h-20 shadow-lg"}
+            />
+        </a>
+    </NavButton>
+</nav>
