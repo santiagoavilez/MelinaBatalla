@@ -1,0 +1,26 @@
+---
+---
+
+<section
+    transition:persist
+    class="w-full p-6 md:p-10 flex flex-col justify-start gap-10"
+>
+    <div class="w-full flex flex-col items-center gap-4">
+        {" "}
+        potenciador
+        <div transition:persist id="embed-iframe"></div>
+    </div>
+    <script is:inline>
+        document.addEventListener("astro:page-load", (ev) => {
+            // Pasa el documento entrante para establecer el tema en él
+            window.onSpotifyIframeApiReady = (IFrameAPI) => {
+                const element = document.getElementById("embed-iframe");
+                const options = {
+                    uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
+                };
+                const callback = (EmbedController) => {};
+                IFrameAPI.createController(element, options, callback);
+            };
+        });
+    </script>
+</section>

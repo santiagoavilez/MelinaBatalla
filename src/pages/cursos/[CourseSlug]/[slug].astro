@@ -1,5 +1,6 @@
 ---
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
+import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
 import Classvideo from "@components/root-program/Classvideo.astro";
 import Potenciador from "@components/root-program/Potenciador.astro";
@@ -100,9 +101,7 @@ const previusLessonSlug = previusLesson ? previusLesson.slug : null;
 if (!canbeViewed) {
     return Astro.redirect(`/cursos/${CourseSlug}/${lastAvailableLessonSlug}`);
 }
-// console.log(lesson);
 
-// console.log(user);
 ---
 
 <CoursesLayout>
@@ -110,16 +109,7 @@ if (!canbeViewed) {
         {
             lesson.slug === "potenciador" ? (
                 bonus === "true" ? (
-                    <section
-                        transition:persist
-                        class="w-full p-6 md:p-10 flex flex-col justify-start gap-10 "
-                    >
-                        <div class="w-full flex flex-col items-center gap-4">
-                            {" "}
-                            potenciador
-                            <div transition:persist id="embed-iframe" />
-                        </div>
-                    </section>
+                    <BonusSpotify />
                 ) : (
                     <section
                         transition:persist
@@ -166,27 +156,3 @@ if (!canbeViewed) {
     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </CoursesLayout>
 
-<script is:inline>
-    document.addEventListener("astro:before-swap", (ev) => {
-        // Pasa el documento entrante para establecer el tema en él
-        window.onSpotifyIframeApiReady = (IFrameAPI) => {
-            const element = document.getElementById("embed-iframe");
-            const options = {
-                uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
-            };
-            const callback = (EmbedController) => {};
-            IFrameAPI.createController(element, options, callback);
-        };
-    });
-    document.addEventListener("astro:page-load", (ev) => {
-        // Pasa el documento entrante para establecer el tema en él
-        window.onSpotifyIframeApiReady = (IFrameAPI) => {
-            const element = document.getElementById("embed-iframe");
-            const options = {
-                uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
-            };
-            const callback = (EmbedController) => {};
-            IFrameAPI.createController(element, options, callback);
-        };
-    });
-</script>
