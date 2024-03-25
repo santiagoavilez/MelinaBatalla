@@ -1,13 +1,9 @@
+import { getLessons } from "@components/root-program/LessonsList.astro";
 import type { APIRoute } from "astro";
-import { db, eq, Lesson, LessonProgress } from "astro:db";
+import { db, eq, LessonProgress } from "astro:db";
 
-export const getLessons = async () => {
-    const lessons = await db
-        .select({ id: Lesson.id, name: Lesson.name, slug: Lesson.slug })
-        .from(Lesson);
-    return lessons;
-};
-export const GET: APIRoute = async ({  locals}) => {
+
+export const GET: APIRoute = async ({ locals }) => {
     try {
         const { userId } = locals
         const lessonscompleted = await db
@@ -25,12 +21,9 @@ export const GET: APIRoute = async ({  locals}) => {
             ...lesson,
             isCompleted: progressMap.has(lesson.id)
         }));
-
         console.log("lessonsWithProgress", lessonsWithProgress);
         return new Response(JSON.stringify({
-            lessonscompleted: lessonscompleted,
-            lessons: lessonsWithProgress,
-            map: progressMap,
+            lessons: lessonsWithProgress
         })
         )
     }
@@ -44,4 +37,3 @@ export const GET: APIRoute = async ({  locals}) => {
         });
     }
 }
-

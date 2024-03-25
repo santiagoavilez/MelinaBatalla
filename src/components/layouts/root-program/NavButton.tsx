@@ -4,14 +4,14 @@ import { Separator } from '@components/ui/separator'
 import { Button } from '@components/ui/button'
 import ListItems from '@components/root-program/ListItems'
 import type { ILesson } from 'db/types'
+import ListItemsProvider from '@components/root-program/Queryprovider'
 
 interface Props {
     children: any;
-    "client:load": true;
     slug: string;
     CourseSlug: string
     userId: string
-    lessons: ILesson[]
+    lessons: Pick<ILesson, "id" | "name" | "slug">[]
 }
 
 export default function NavButton({ children, slug, CourseSlug, userId, lessons }: Props) {
@@ -40,9 +40,7 @@ export default function NavButton({ children, slug, CourseSlug, userId, lessons 
                 </SheetHeader>
                 <Separator className="bg-negro/20 my-4 " />
                 <div className='max-w-52' >
-                    <ListItems
-                        userId={userId as string}
-                        lessons={lessons}
+                    <ListItemsProvider
                         CourseSlug={CourseSlug}
                         slug={slug}
                     />

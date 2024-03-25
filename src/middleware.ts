@@ -37,12 +37,11 @@ export const onRequest = defineMiddleware(async ({redirect, request, locals}, ne
     if (!protectedPageUrls.some(path => url.pathname.startsWith(path))) {
         return next()
     }
+
     if (!requestState.isSignedIn && url.pathname !== '/iniciar-sesion') {
-        console.log('no logueado')
+        console.log('no logueado', !requestState.isSignedIn)
         return redirect('/iniciar-sesion')
     }
-
-
 
     return next()
 });

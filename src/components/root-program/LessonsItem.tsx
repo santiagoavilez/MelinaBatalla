@@ -1,5 +1,5 @@
 import type { ILesson } from 'db/types';
-import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted } from '@lib/bonusStore';
+import { $lessonsatom, completedLessonsStore, getLessonStatus, isPreviousLessonCompleted } from '@lib/bonusStore';
 import { useStore } from '@nanostores/react';
 import { Check, CheckCircle2, Circle, LockKeyholeIcon, Play } from 'lucide-react';
 import CircleCompletedLesson from './CircleCompletedLesson';
@@ -14,12 +14,18 @@ interface Props {
     CourseSlug: string;
 }
 
+
+
 function LessonsItem({ lesson, slug, CourseSlug }: Props) {
     const completedLessonIds = useStore(completedLessonsStore);
-
+    const lesonarrays = useStore($lessonsatom);
+    const previuslesson = lesonarrays[lesson.id - 1] ? lesonarrays[lesson.id - 1]  : null;
+    // console.log("lesson", lesonarrays[lesson.id - 1].isCompleted, lesson.id );
     // console.log(completedLessonIds); // Verifica que el store se inicialice correctamente
-    const isAvailable = lesson.id === 1 || !!completedLessonIds[lesson.id - 1];
-    const isFirts = lesson.id === 1 || lesson.id === 6;
+    const isAvailable = lesson.id === 0 || previuslesson?.isCompleted;
+
+    console.log("isAvailable", isAvailable, lesson.id, previuslesson?.id, previuslesson?.isCompleted);
+    const isFirts = lesson.id === 0 || lesson.id === 5;
     const canbeViewed = isAvailable || isFirts;
 
     const isDisabled = !isAvailable;
@@ -82,7 +88,7 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
                         <Check className=" w-4 stroke-yema " />
                     )
                 }
-                {lesson.id < 5 ? ("Módulo " +lesson.id): lesson.name}
+                {lesson.id < 4 ? ("Módulo " +(lesson.id +1)): lesson.name}
 
 
             </div>

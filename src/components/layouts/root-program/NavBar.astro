@@ -4,14 +4,21 @@ import NavButton from "./NavButton";
 
 import nazaPortrait from "@assets/root-program/naza-root-program.png";
 import { Image } from "astro:assets";
-const { lessons } = Astro.props;
+import { Lesson, db, eq } from "astro:db";
 const { CourseSlug, slug } = Astro.params;
 const { userId } = Astro.locals;
+
+//console.log("locals", Astro.locals);
+
+const lessons = await db
+    .select({ id: Lesson.id, name: Lesson.name, slug: Lesson.slug })
+    .from(Lesson)
+    .where(eq(Lesson.courseSlug, CourseSlug as string));
 ---
 
-<nav class="md:hidden bg-marmol px-1 py-1 ">
+<nav class="md:hidden bg-marmol px-1 py-1">
     <NavButton
-        client:load
+        client:visible
         CourseSlug={CourseSlug as string}
         slug={slug as string}
         lessons={lessons}

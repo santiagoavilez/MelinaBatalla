@@ -2,19 +2,15 @@
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
 import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
-import Classvideo from "@components/root-program/Classvideo.astro";
 
 import { Play } from "lucide-react";
 
-import { eq, lt, desc, gt, asc, and } from "astro:db";
+import { eq, desc, and } from "astro:db";
 import { Lesson, LessonProgress, db } from "astro:db";
+import Classvideo from "@components/root-program/Classvideo";
 
 const { slug, CourseSlug } = Astro.params;
 const { userId, bonus } = Astro.locals;
-
-if (!slug || !CourseSlug) {
-    return Astro.redirect("/404");
-}
 
 const getLesson = async () => {
     const [lesson] = await db
@@ -28,6 +24,10 @@ const getLesson = async () => {
         );
     return lesson;
 };
+const lesson = await getLesson();
+if (!lesson) {
+    return Astro.redirect("/cursos/root-program/404");
+}
 
 const getUserProgress = async (lessonId: number) => {
     const [userProgress] = await db
@@ -42,72 +42,7 @@ const getUserProgress = async (lessonId: number) => {
     return userProgress ? true : false;
 };
 
-const getLastCompletedLesson = async () => {
-    const [lastCompletedLesson] = await db
-        .select()
-        .from(LessonProgress)
-        .where(eq(LessonProgress.userId, userId as string))
-        .orderBy(desc(LessonProgress.id))
-        .limit(1);
-    return lastCompletedLesson;
-};
-
-const getAvailableLesson = async (lastCompletedLessonId: number) => {
-    const [availablelesson] = await db
-        .select({ slug: Lesson.slug, id: Lesson.id })
-        .from(Lesson)
-        .where(eq(Lesson.id, lastCompletedLessonId + 1))
-        .limit(1);
-    return availablelesson;
-};
-
-const getNextAndPreviousLesson = async (lessonId: number) => {
-    const [nextLesson] = await db
-        .select({ slug: Lesson.slug })
-        .from(Lesson)
-        .where(gt(Lesson.id, lessonId))
-        .orderBy(asc(Lesson.id))
-        .limit(1);
-    const [previusLesson] = await db
-        .select({ slug: Lesson.slug })
-        .from(Lesson)
-        .where(lt(Lesson.id, lessonId))
-        .orderBy(desc(Lesson.id))
-        .limit(1);
-    return { nextLesson, previusLesson };
-};
-
-const lesson = await getLesson();
-if (!lesson) {
-    return Astro.redirect("/cursos/root-program/404");
-}
-
-const [isCompleted, lastCompletedLesson, { nextLesson, previusLesson }] =
-    await Promise.all([
-        getUserProgress(lesson.id),
-        getLastCompletedLesson(),
-        getNextAndPreviousLesson(lesson.id),
-    ]);
-const nextLessonSlug = nextLesson ? nextLesson.slug : null;
-const previusLessonSlug = previusLesson ? previusLesson.slug : null;
-let lastAvailableLessonId = 1;
-let lastAvailableLessonSlug = "atrae-clientes-comprometidos";
-if (lastCompletedLesson) {
-    const availablelesson = await getAvailableLesson(lastCompletedLesson.id);
-    lastAvailableLessonId = availablelesson ? availablelesson.id : 1;
-    lastAvailableLessonSlug = availablelesson
-        ? availablelesson.slug
-        : "atrae-clientes-comprometidos";
-}
-
-const isPotenciador = lesson.slug === "potenciador";
-const isFirtstLesson = lesson.id === 1;
-const isAvailable = lesson.id <= lastAvailableLessonId + 1;
-const canbeViewed = isFirtstLesson || isAvailable || isPotenciador;
-
-if (!canbeViewed) {
-    return Astro.redirect(`/cursos/${CourseSlug}/${lastAvailableLessonSlug}`);
-}
+const isCompleted = await getUserProgress(lesson.id);
 ---
 
 <CoursesLayout>
@@ -130,7 +65,12 @@ if (!canbeViewed) {
             ) : (
                 <section class="h-full p-6   md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
-                        <Classvideo videoId={lesson.video_id} />
+                        <Classvideo
+                            transition:persist
+                            client:only
+                            lessonId={lesson.id}
+                            videoId={lesson.video_id as string}
+                        />
                     </div>
                 </section>
             )
@@ -138,21 +78,20 @@ if (!canbeViewed) {
     </div>
 
     <MarkCompleted
+        isCompleted={isCompleted}
         client:only
         lessonId={lesson.id}
         userId={userId as string}
         lessonSlug={slug as string}
-        nextLessonSlug={nextLessonSlug}
-        previusLessonSlug={previusLessonSlug}
     />
 
     <div class="text-left flex flex-col items-start w-full md:px-10 p-6">
         <h1
             class="inline-flex items-center text-2xl xl:text-3xl font-semibold pb-4 gap-3"
         >
-            <Play className="fill-negro hidden md:block " />Modulo {lesson.id}: {
-                lesson.name
-            }
+            <Play className="fill-negro hidden md:block " />Modulo {
+                lesson.id + 1
+            }: {lesson.name}
         </h1>
         <p class="text-left pb-4">{lesson.description}</p>
     </div>

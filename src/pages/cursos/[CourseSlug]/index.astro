@@ -29,12 +29,15 @@ const lessons = await db
     .select()
     .from(Lesson)
     .where(eq(Lesson.courseId, course.id));
+
+
+
 ---
 
 <CoursesLayout
     description={"sitio de melina batalla, comunicadora visual"}
     title={"Melina Batalla"}
-    lessons={lessons}
+
 >
     <div class="h-full min-h-svh flex justify-center items-center">
         <div class="flex justify-between px-6">

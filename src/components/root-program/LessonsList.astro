@@ -1,25 +1,24 @@
 ---
 import { LessonProgress } from "astro:db";
-import { eq } from "astro:db";
-import { db } from "astro:db";
-import type { ILesson } from "db/types";
 import { completedLessonsStore } from "@lib/bonusStore";
-import LessonsItem from "./LessonsItem";
 import ListItems from "./ListItems";
+import type { ILesson } from "db/types";
+import { Lesson, db, eq } from "astro:db";
+import ListItemsProvider from "./Queryprovider";
 
 interface Props {
-    lessons?: Pick<ILesson, 'id'|'name'| 'slug'>[];
+    lessons?: Pick<ILesson, "id" | "name" | "slug">[];
 }
 
 const { CourseSlug, slug } = Astro.params as {
     CourseSlug: string;
     slug: string;
 };
-const { lessons } = Astro.props as Props;
-
 //console.log("locals", Astro.locals);
 
-const { userId } = Astro.locals;
+
+
+
 
 // const lessonscompleted = await db
 //     .select()
@@ -40,11 +39,9 @@ const { userId } = Astro.locals;
 <section class="pl-6 pr-6">
     <h4 class="font-semibold text-xl pb-2">Contenido del curso</h4>
     {
-        !!lessons && (
-            <ListItems
+         (
+            <ListItemsProvider
                 client:only
-                userId={userId as string}
-                lessons={lessons}
                 CourseSlug={CourseSlug}
                 slug={slug}
             />
