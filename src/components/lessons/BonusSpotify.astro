@@ -2,13 +2,13 @@
 ---
 
 <section
-    transition:persist
+
     class="w-full p-6 md:p-10 flex flex-col justify-start gap-10"
 >
     <div class="w-full flex flex-col items-center gap-4">
         {" "}
         potenciador
-        <div transition:persist id="embed-iframe"></div>
+        <div  id="embed-iframe"></div>
     </div>
     <script is:inline>
         document.addEventListener("astro:page-load", (ev) => {
@@ -23,4 +23,6 @@
             };
         });
     </script>
+     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+
 </section>

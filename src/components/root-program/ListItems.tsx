@@ -6,7 +6,7 @@ import type { JsxChild } from 'typescript';
 
 
 interface Props {
-    lessons: ILesson[];
+    lessons: Pick<ILesson, 'id' | 'name' | 'slug'>[];
     slug: string;
     CourseSlug: string;
     userId: string;

@@ -8,7 +8,7 @@ import LessonsItem from "./LessonsItem";
 import ListItems from "./ListItems";
 
 interface Props {
-    lessons?: ILesson[];
+    lessons?: Pick<ILesson, 'id'|'name'| 'slug'>[];
 }
 
 const { CourseSlug, slug } = Astro.params as {

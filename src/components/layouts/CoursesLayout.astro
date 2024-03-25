@@ -33,7 +33,7 @@ import NavBar from "./root-program/NavBar.astro";
 const { CourseSlug } = Astro.params;
 
 const lessons = await db
-	.select()
+	.select({id: Lesson.id, name: Lesson.name, slug: Lesson.slug})
 	.from(Lesson)
 	.where(eq(Lesson.courseSlug, CourseSlug as string));
 ---

@@ -9,7 +9,7 @@ import { navigate } from 'astro:transitions/client';
 import { useEffect } from 'react';
 
 interface Props {
-    lesson: ILesson;
+    lesson: Pick<ILesson, 'id' | 'name' | 'slug'>;
     slug: string;
     CourseSlug: string;
 }

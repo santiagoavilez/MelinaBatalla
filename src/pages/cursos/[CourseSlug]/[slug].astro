@@ -3,105 +3,111 @@ import CoursesLayout from "@components/layouts/CoursesLayout.astro";
 import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
 import Classvideo from "@components/root-program/Classvideo.astro";
-import Potenciador from "@components/root-program/Potenciador.astro";
-import { eq, lt } from "astro:db";
-import { desc } from "astro:db";
-import { Course } from "astro:db";
-import { gt } from "astro:db";
-import { asc } from "astro:db";
-import { LessonProgress } from "astro:db";
-import { and } from "astro:db";
-import { Lesson } from "astro:db";
-import { db } from "astro:db";
+
 import { Play } from "lucide-react";
 
+import { eq, lt, desc, gt, asc, and } from "astro:db";
+import { Lesson, LessonProgress, db } from "astro:db";
+
 const { slug, CourseSlug } = Astro.params;
-console.log("slug", slug);
-console.log("CourseSlug", CourseSlug);
+const { userId, bonus } = Astro.locals;
+
 if (!slug || !CourseSlug) {
     return Astro.redirect("/404");
 }
-// console.log(Astro.params.slug);
-const { userId, bonus } = Astro.locals;
-const [lesson] = await db
-    .select()
-    .from(Lesson)
-    .where(
-        and(
-            eq(Lesson.slug, slug as string),
-            eq(Lesson.courseSlug, CourseSlug as string),
-        ),
-    );
 
-if (!lesson) {
-    return Astro.redirect("/cursos/root-program/404");
-}
-const [userProgress] = await db
-    .select()
-    .from(LessonProgress)
-    .where(
-        and(
-            eq(LessonProgress.lessonId, lesson.id),
-            eq(LessonProgress.userId, userId as string),
-        ),
-    );
+const getLesson = async () => {
+    const [lesson] = await db
+        .select()
+        .from(Lesson)
+        .where(
+            and(
+                eq(Lesson.slug, slug as string),
+                eq(Lesson.courseSlug, CourseSlug as string),
+            ),
+        );
+    return lesson;
+};
 
-const isCompleted = userProgress ? true : false;
-console.log("isCompleted", isCompleted);
-const [lastCompletedLesson] = await db
-    .select()
-    .from(LessonProgress)
-    .where(eq(LessonProgress.userId, userId as string))
-    .orderBy(desc(LessonProgress.id))
-    .limit(1);
-let lastAvailableLessonId = 1;
-let lastAvailableLessonSlug = "atrae-clientes-comprometidos";
-if (lastCompletedLesson) {
+const getUserProgress = async (lessonId: number) => {
+    const [userProgress] = await db
+        .select()
+        .from(LessonProgress)
+        .where(
+            and(
+                eq(LessonProgress.lessonId, lessonId),
+                eq(LessonProgress.userId, userId as string),
+            ),
+        );
+    return userProgress ? true : false;
+};
+
+const getLastCompletedLesson = async () => {
+    const [lastCompletedLesson] = await db
+        .select()
+        .from(LessonProgress)
+        .where(eq(LessonProgress.userId, userId as string))
+        .orderBy(desc(LessonProgress.id))
+        .limit(1);
+    return lastCompletedLesson;
+};
+
+const getAvailableLesson = async (lastCompletedLessonId: number) => {
     const [availablelesson] = await db
         .select({ slug: Lesson.slug, id: Lesson.id })
         .from(Lesson)
-        .where(eq(Lesson.id, lastCompletedLesson.id + 1))
+        .where(eq(Lesson.id, lastCompletedLessonId + 1))
         .limit(1);
+    return availablelesson;
+};
+
+const getNextAndPreviousLesson = async (lessonId: number) => {
+    const [nextLesson] = await db
+        .select({ slug: Lesson.slug })
+        .from(Lesson)
+        .where(gt(Lesson.id, lessonId))
+        .orderBy(asc(Lesson.id))
+        .limit(1);
+    const [previusLesson] = await db
+        .select({ slug: Lesson.slug })
+        .from(Lesson)
+        .where(lt(Lesson.id, lessonId))
+        .orderBy(desc(Lesson.id))
+        .limit(1);
+    return { nextLesson, previusLesson };
+};
+
+const lesson = await getLesson();
+if (!lesson) {
+    return Astro.redirect("/cursos/root-program/404");
+}
+
+const [isCompleted, lastCompletedLesson, { nextLesson, previusLesson }] =
+    await Promise.all([
+        getUserProgress(lesson.id),
+        getLastCompletedLesson(),
+        getNextAndPreviousLesson(lesson.id),
+    ]);
+const nextLessonSlug = nextLesson ? nextLesson.slug : null;
+const previusLessonSlug = previusLesson ? previusLesson.slug : null;
+let lastAvailableLessonId = 1;
+let lastAvailableLessonSlug = "atrae-clientes-comprometidos";
+if (lastCompletedLesson) {
+    const availablelesson = await getAvailableLesson(lastCompletedLesson.id);
     lastAvailableLessonId = availablelesson ? availablelesson.id : 1;
     lastAvailableLessonSlug = availablelesson
         ? availablelesson.slug
         : "atrae-clientes-comprometidos";
 }
 
-// Reemplaza 'default-slug' con el slug de la primera lección
-
 const isPotenciador = lesson.slug === "potenciador";
 const isFirtstLesson = lesson.id === 1;
 const isAvailable = lesson.id <= lastAvailableLessonId + 1;
-console.log("isAvailable", isAvailable, lesson.id, lastAvailableLessonId);
 const canbeViewed = isFirtstLesson || isAvailable || isPotenciador;
-console.log("canbeViewed", canbeViewed);
-console.log("slug", slug);
-// console.log("lastCompletedLesson ", lastCompletedLesson);
-
-console.log("lastAvailableLessonId", lastAvailableLessonSlug);
-
-const [nextLesson] = await db
-    .select({ slug: Lesson.slug })
-    .from(Lesson)
-    .where(gt(Lesson.id, lesson.id))
-    .orderBy(asc(Lesson.id))
-    .limit(1);
-const [previusLesson] = await db
-    .select({ slug: Lesson.slug })
-    .from(Lesson)
-    .where(lt(Lesson.id, lesson.id))
-    .orderBy(desc(Lesson.id))
-    .limit(1);
-
-const nextLessonSlug = nextLesson ? nextLesson.slug : null;
-const previusLessonSlug = previusLesson ? previusLesson.slug : null;
-// console.log("nextLessonSlug", nextLessonSlug);
 
 if (!canbeViewed) {
     return Astro.redirect(`/cursos/${CourseSlug}/${lastAvailableLessonSlug}`);
 }
-
 ---
 
 <CoursesLayout>
@@ -130,18 +136,16 @@ if (!canbeViewed) {
             )
         }
     </div>
-    {
-        (
-            <MarkCompleted
-                client:load
-                lessonId={lesson.id}
-                userId={userId as string}
-                lessonSlug={slug as string}
-                nextLessonSlug={nextLessonSlug}
-                previusLessonSlug={previusLessonSlug}
-            />
-        )
-    }
+
+    <MarkCompleted
+        client:only
+        lessonId={lesson.id}
+        userId={userId as string}
+        lessonSlug={slug as string}
+        nextLessonSlug={nextLessonSlug}
+        previusLessonSlug={previusLessonSlug}
+    />
+
     <div class="text-left flex flex-col items-start w-full md:px-10 p-6">
         <h1
             class="inline-flex items-center text-2xl xl:text-3xl font-semibold pb-4 gap-3"
@@ -152,7 +156,4 @@ if (!canbeViewed) {
         </h1>
         <p class="text-left pb-4">{lesson.description}</p>
     </div>
-
-    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </CoursesLayout>
-
