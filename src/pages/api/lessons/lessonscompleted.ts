@@ -10,35 +10,21 @@ export const getLessons = async () => {
 export const GET: APIRoute = async ({  locals}) => {
     try {
         const { userId } = locals
-        const lessonscompleted = await db
-            .select()
-            .from(LessonProgress)
-            .where(eq(LessonProgress.userId, userId as string));
-        //  console.log("lessonscompleted", lessonscompleted);
-        const lessons = await getLessons();
 
-        const progressMap = new Map(lessonscompleted.map(lp => [lp.lessonId, lp]));
-
-        // Agrega el campo isCompleted a las lecciones
-
-        const lessonsWithProgress = lessons.map(lesson => ({
-            ...lesson,
-            isCompleted: progressMap.has(lesson.id)
-        }));
 
         const lessonswithCompleted = await db.
-        selectDistinct({
+        select({
             id: Lesson.id,
             name: Lesson.name,
             slug: Lesson.slug,
-            isCompleted: LessonProgress.status
+            isCompleted: eq(LessonProgress.status, 'completado')
         }).
         from(Lesson).
         leftJoin(LessonProgress, and(eq(LessonProgress.userId,userId as string),eq(LessonProgress.lessonId,Lesson.id)))
 
         console.log("lessonswithCompleted", lessonswithCompleted);
         return new Response(JSON.stringify({
-            lessons: lessonsWithProgress,
+            lessons: lessonswithCompleted,
         })
         )
     }
