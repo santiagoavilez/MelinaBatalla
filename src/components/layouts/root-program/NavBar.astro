@@ -1,28 +1,19 @@
 ---
-import LessonsList from "@components/root-program/LessonsList.astro";
 import NavButton from "./NavButton";
 
 import nazaPortrait from "@assets/root-program/naza-root-program.png";
 import { Image } from "astro:assets";
-import { Lesson, db, eq } from "astro:db";
-const { CourseSlug, slug } = Astro.params;
-const { userId } = Astro.locals;
+const {  slug } = Astro.params;
 
 //console.log("locals", Astro.locals);
 
-const lessons = await db
-    .select({ id: Lesson.id, name: Lesson.name, slug: Lesson.slug })
-    .from(Lesson)
-    .where(eq(Lesson.courseSlug, CourseSlug as string));
+
 ---
 
 <nav class="md:hidden bg-marmol px-1 py-1">
     <NavButton
         client:visible
-        CourseSlug={CourseSlug as string}
         slug={slug as string}
-        lessons={lessons}
-        userId={userId as string}
     >
         <a href="/cursos/root-program" class="w-full">
             <Image

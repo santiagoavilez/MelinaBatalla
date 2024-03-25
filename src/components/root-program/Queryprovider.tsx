@@ -14,64 +14,56 @@ import ListItems from './ListItems';
 
 interface Props {
     slug: string;
-    CourseSlug: string;
     children?: JsxChild;
 
 }
 
  const queryClient = new QueryClient()
 
-export default function ListItemsProvider({  slug, CourseSlug }: Props) {
+export default function ListItemsProvider({  slug }: Props) {
 
-    useEffect(() => {
-        // Realiza una solicitud al servidor para obtener los datos cuando el componente se monta
-        fetch('/api/lessons/lessonscompleted').then(response => {
+    // useEffect(() => {
+    //     // Realiza una solicitud al servidor para obtener los datos cuando el componente se monta
+    //     fetch('/api/lessons/lessonscompleted').then(response => {
 
-            // console.log(response);
-            return response.json();
+    //         // console.log(response);
+    //         return response.json();
 
-        })
-            .then((data: {
-                lessonscompleted: ILessonProgress[],
-                lessons: {
-                    isCompleted: boolean;
-                    id: number;
-                    name: string;
-                    slug: string;
-                }[],
-                map: Map<number, {
-                    isCompleted: boolean;
-                    id: number;
-                    name: string;
-                    slug: string;
-                }>
-            }) => {
-                // console.log(data  );
-                if (!data?.lessonscompleted) return;
-                const completedLessonIds = data?.lessonscompleted.reduce(
-                    (record, lesson) => {
-                        record[lesson.lessonId] = "completado"; // or any other string property of the lesson
-                        return record;
-                    },
-                    {} as Record<number, string>,
-                );
-                // console.log(completedLessonIds);
-                completedLessonsStore.set(completedLessonIds);
-                console.log(data.lessons);
-                $lessonsatom.set(data.lessons);
-            });
+    //     })
+    //         .then((data: {
+    //             lessonscompleted: ILessonProgress[],
+    //             lessons: {
+    //                 isCompleted: boolean;
+    //                 id: number;
+    //                 name: string;
+    //                 slug: string;
+    //             }[],
+    //         }) => {
+    //              console.log(data  );
+    //             if (!data?.lessonscompleted) return;
+    //             const completedLessonIds = data?.lessonscompleted.reduce(
+    //                 (record, lesson) => {
+    //                     record[lesson.lessonId] = "completado"; // or any other string property of the lesson
+    //                     return record;
+    //                 },
+    //                 {} as Record<number, string>,
+    //             );
+    //             // console.log(completedLessonIds);
+    //             completedLessonsStore.set(completedLessonIds);
+    //             console.log(data.lessons);
+    //             $lessonsatom.set(data.lessons);
+    //         });
 
-        return () => {
-            $lessonsatom.set([]);
-        }
-    }, []);
+    //     return () => {
+    //         $lessonsatom.set([]);
+    //     }
+    // }, []);
 
 
 
      return (
          <QueryClientProvider client={queryClient}>
              <ListItems
-                 CourseSlug={CourseSlug}
                  slug={slug} />
          </QueryClientProvider>
      )

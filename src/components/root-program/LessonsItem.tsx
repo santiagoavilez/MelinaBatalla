@@ -1,30 +1,23 @@
 import type { ILesson } from 'db/types';
-import { $lessonsatom, completedLessonsStore, getLessonStatus, isPreviousLessonCompleted } from '@lib/bonusStore';
+import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted } from '@lib/bonusStore';
 import { useStore } from '@nanostores/react';
-import { Check, CheckCircle2, Circle, LockKeyholeIcon, Play } from 'lucide-react';
-import CircleCompletedLesson from './CircleCompletedLesson';
+import { Check, Circle, LockKeyholeIcon, Play } from 'lucide-react';
 import { cn } from '@lib/utils';
 import { cva } from 'class-variance-authority';
 import { navigate } from 'astro:transitions/client';
-import { useEffect } from 'react';
 
 interface Props {
     lesson: Pick<ILesson, 'id' | 'name' | 'slug'>;
     slug: string;
-    CourseSlug: string;
 }
 
 
 
-function LessonsItem({ lesson, slug, CourseSlug }: Props) {
+function LessonsItem({ lesson, slug }: Props) {
     const completedLessonIds = useStore(completedLessonsStore);
-    const lesonarrays = useStore($lessonsatom);
-    const previuslesson = lesonarrays[lesson.id - 1] ? lesonarrays[lesson.id - 1]  : null;
-    // console.log("lesson", lesonarrays[lesson.id - 1].isCompleted, lesson.id );
-    // console.log(completedLessonIds); // Verifica que el store se inicialice correctamente
-    const isAvailable = lesson.id === 0 || previuslesson?.isCompleted;
 
-    console.log("isAvailable", isAvailable, lesson.id, previuslesson?.id, previuslesson?.isCompleted);
+    // console.log(completedLessonIds); // Verifica que el store se inicialice correctamente
+    const isAvailable = lesson.id === 0 || !!completedLessonIds[lesson.id - 1];
     const isFirts = lesson.id === 0 || lesson.id === 5;
     const canbeViewed = isAvailable || isFirts;
 
@@ -67,7 +60,7 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
                 }
                 else {
                     console.log("Navegando a la lección ", lesson.id);
-                    navigate(`/cursos/${CourseSlug}/${lesson.slug}`)
+                    navigate(`/cursos/root-program/${lesson.slug}`)
 
                 }
             }}
@@ -88,7 +81,7 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
                         <Check className=" w-4 stroke-yema " />
                     )
                 }
-                {lesson.id < 4 ? ("Módulo " +(lesson.id +1)): lesson.name}
+                {lesson.id < 4 ? ("Módulo " +(lesson.id+ 1)): lesson.name}
 
 
             </div>

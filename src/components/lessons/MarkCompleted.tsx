@@ -1,4 +1,3 @@
-import { Button } from "@components/ui/button"
 import { $lessonsatom, addLessonCompleted, addLessonCompletedTomap, completedLessonsStore } from "@lib/bonusStore"
 import { useStore } from "@nanostores/react"
 import { navigate } from "astro:transitions/client"
@@ -11,16 +10,18 @@ export interface MarkCompletedProps {
     lessonId: number
     nextLessonSlug?: string | null
     previusLessonSlug?: string | null
-    isCompleted: boolean
 }
 
 
 
 
 
-export default function MarkCompleted({ lessonSlug, userId, lessonId, isCompleted }: MarkCompletedProps) {
+export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkCompletedProps) {
     const $storeLessons = useStore(completedLessonsStore)
     const isinStore = $storeLessons[lessonId] ? true : false;
+    const isfirtsOrbonus = lessonId === 0 || lessonId === 5 ? true : false;
+    console.log('isinStore', isinStore);
+
     const handleCompleted = async () => {
         addLessonCompleted({ id: lessonId, status: 'completado' });
 
@@ -51,41 +52,55 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId, isComplete
 
     }
     const arraylessons = useStore($lessonsatom)
-    console.log('isCompleted', isCompleted);
+
     // go to previus class using the history to go back sumulating the back button
     const handlePreviusClass = async () => {
-        let lastAvailable = arraylessons[0].slug
-        const lastLessonAvailable = arraylessons.findLast((lesson) => lesson.isCompleted === true);
-        if (lastLessonAvailable) {
-            lastAvailable = arraylessons[lastLessonAvailable.id + 1]?.slug || lastAvailable;
+        let lastAvailable = arraylessons[0]?.slug
+        if(lessonId === 1) {
+            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
+            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
+            history.back();
+            return
         }
+        if (arraylessons[lessonId - 2]?.isCompleted) {
+            lastAvailable = arraylessons[lessonId - 1]?.slug
+            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
+            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
+            history.back();
+            return
+        }
+        // Encuentra la última lección completada con un ID menor que el ID de la lección actual
+        const sortedLessons = [...arraylessons]?.sort((a, b) => a.id - b.id);
 
-        console.log('going to back', arraylessons, lastLessonAvailable);
+        // Encuentra la primera lección que no esté completada
+        const nextLesson = sortedLessons.find(lesson => !lesson.isCompleted);
 
+        if (nextLesson) {
+            lastAvailable = nextLesson.slug;
+        }
         history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
         history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
         history.back();
 
     }
     const handleNextClass = () => {
-        console.log('going to next',arraylessons, arraylessons[lessonId + 1].slug);
         navigate(`/cursos/root-program/${arraylessons[lessonId + 1].slug}`)
     }
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <div className="flex justify-between w-full px-6 md:px-10 md:max-w-screen-xl" >
                 <div >{(lessonId !== 0 || $storeLessons[lessonId - 2]) && <div className="cursor-pointer hover:text-primary" onClick={handlePreviusClass}><MoveLeftIcon /></div>}</div>
-                <div >{arraylessons[lessonId - 1]?.isCompleted && (
-                    !isCompleted || arraylessons[lessonId-1]?.isCompleted === false ? (
-                        <span
+                <div >{
+                    !isinStore ? (
+                        (isfirtsOrbonus || $storeLessons[lessonId - 1]) && <span
                             className="text-sm font-normal inline-flex gap-2 cursor-pointer hover:text-primary" onClick={handleCompleted}>
                             <Check />Marcar como completado
                         </span>
                     ) :
                         <span className="inline-flex gap-2 text-primary">
                             <Check className="" /> Completado
-                        </span>)}</div>
-                <div > {lessonId !== 5 && (isinStore || $storeLessons[lessonId + 1]) && <div className="cursor-pointer hover:text-primary" onClick={handleNextClass}><MoveRightIcon /> </div>}</div>
+                        </span>}</div>
+                <div > {lessonId !== 5 && (isinStore) && <div className="cursor-pointer hover:text-primary" onClick={handleNextClass}><MoveRightIcon /> </div>}</div>
             </div>
         </Suspense>
     )

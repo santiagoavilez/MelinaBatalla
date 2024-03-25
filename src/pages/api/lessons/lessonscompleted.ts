@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, eq, Lesson, LessonProgress } from "astro:db";
+import { and, db, eq, Lesson, LessonProgress } from "astro:db";
 
 export const getLessons = async () => {
     const lessons = await db
@@ -26,11 +26,19 @@ export const GET: APIRoute = async ({  locals}) => {
             isCompleted: progressMap.has(lesson.id)
         }));
 
-        console.log("lessonsWithProgress", lessonsWithProgress);
+        const lessonswithCompleted = await db.
+        selectDistinct({
+            id: Lesson.id,
+            name: Lesson.name,
+            slug: Lesson.slug,
+            isCompleted: LessonProgress.status
+        }).
+        from(Lesson).
+        leftJoin(LessonProgress, and(eq(LessonProgress.userId,userId as string),eq(LessonProgress.lessonId,Lesson.id)))
+
+        console.log("lessonswithCompleted", lessonswithCompleted);
         return new Response(JSON.stringify({
-            lessonscompleted: lessonscompleted,
             lessons: lessonsWithProgress,
-            map: progressMap,
         })
         )
     }

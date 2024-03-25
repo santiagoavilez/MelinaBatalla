@@ -1,7 +1,7 @@
 ---
 import { CardTitle } from "@components/ui/card";
 import { Button } from "@components/ui/button";
-import { PlusIcon } from "lucide-react";
+import { FileStack, PlusIcon } from "lucide-react";
 import { Separator } from "@components/ui/separator";
 import nazaPortrait from "@assets/root-program/naza-root-program.png";
 import { Image } from "astro:assets";
@@ -28,5 +28,10 @@ import { Image } from "astro:assets";
             className="bg-primary  rounded-full p-2 w-10 h-10 	stroke-negro shadow-2xl shadow-green-700	"
         />
     </Button>
+    <Separator className="bg-negro/20 my-4 px-6" />
+    <a href="/cursos/root-program/recursos" class="text-left inline-flex gap-2 text-lg leading-6">
+        <FileStack className=" w-4 " />
+         Recursos
+    </a>
     <Separator className="bg-negro/20 mt-4 px-6" />
 </div>

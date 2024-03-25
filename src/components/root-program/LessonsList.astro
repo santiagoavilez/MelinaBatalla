@@ -10,8 +10,7 @@ interface Props {
     lessons?: Pick<ILesson, "id" | "name" | "slug">[];
 }
 
-const { CourseSlug, slug } = Astro.params as {
-    CourseSlug: string;
+const {  slug } = Astro.params as {
     slug: string;
 };
 //console.log("locals", Astro.locals);
@@ -42,7 +41,6 @@ const { CourseSlug, slug } = Astro.params as {
          (
             <ListItemsProvider
                 client:only
-                CourseSlug={CourseSlug}
                 slug={slug}
             />
         )

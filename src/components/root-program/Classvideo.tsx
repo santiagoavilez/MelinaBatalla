@@ -1,5 +1,6 @@
 
-import { $lessonsatom } from "@lib/bonusStore";
+import { Skeleton } from "@components/ui/skeleton";
+import {  completedLessonsStore } from "@lib/bonusStore";
 import { useStore } from "@nanostores/react";
 import { AlertCircleIcon } from "lucide-react";
 
@@ -10,9 +11,9 @@ export default function Classvideo({ videoId, lessonId }: {
     lessonId: number;
 }) {
 
-    const lessonsArray = useStore($lessonsatom);
-    const isAvailable = lessonsArray[lessonId - 1]?.isCompleted || lessonId === 0;
-    console.log('isAvailable', isAvailable);
+    const lessonsArray = useStore(completedLessonsStore);
+    console.log('lessonsArray', lessonsArray);
+    const isAvailable = !!lessonsArray[lessonId - 1] || lessonId === 0;
 
     return (
         <>
@@ -32,7 +33,7 @@ export default function Classvideo({ videoId, lessonId }: {
                 ></iframe>
             </div>
                 :
-                <div id="alert-video" className="w-full aspect-video  bg-marmol rounded-lg">
+                <div id="alert-video" className="w-full aspect-video  animate-pulse  bg-marmol rounded-lg">
                     <div
                         className="w-full md:text-2xl flex md:flex-col gap-2 justify-center text-center items-center h-full p-4 md:px-20"
                     >

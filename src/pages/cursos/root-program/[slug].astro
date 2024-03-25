@@ -6,7 +6,7 @@ import MarkCompleted from "@components/lessons/MarkCompleted";
 import { Play } from "lucide-react";
 
 import { eq, desc, and } from "astro:db";
-import { Lesson, LessonProgress, db } from "astro:db";
+import { Lesson, db } from "astro:db";
 import Classvideo from "@components/root-program/Classvideo";
 
 const { slug, CourseSlug } = Astro.params;
@@ -16,33 +16,13 @@ const getLesson = async () => {
     const [lesson] = await db
         .select()
         .from(Lesson)
-        .where(
-            and(
-                eq(Lesson.slug, slug as string),
-                eq(Lesson.courseSlug, CourseSlug as string),
-            ),
-        );
+        .where(eq(Lesson.slug, slug as string));
     return lesson;
 };
 const lesson = await getLesson();
 if (!lesson) {
     return Astro.redirect("/cursos/root-program/404");
 }
-
-const getUserProgress = async (lessonId: number) => {
-    const [userProgress] = await db
-        .select()
-        .from(LessonProgress)
-        .where(
-            and(
-                eq(LessonProgress.lessonId, lessonId),
-                eq(LessonProgress.userId, userId as string),
-            ),
-        );
-    return userProgress ? true : false;
-};
-
-const isCompleted = await getUserProgress(lesson.id);
 ---
 
 <CoursesLayout>
@@ -66,7 +46,6 @@ const isCompleted = await getUserProgress(lesson.id);
                 <section class="h-full p-6   md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
                         <Classvideo
-                            transition:persist
                             client:only
                             lessonId={lesson.id}
                             videoId={lesson.video_id as string}
@@ -78,7 +57,6 @@ const isCompleted = await getUserProgress(lesson.id);
     </div>
 
     <MarkCompleted
-        isCompleted={isCompleted}
         client:only
         lessonId={lesson.id}
         userId={userId as string}

@@ -81,17 +81,18 @@ import NavBar from "./root-program/NavBar.astro";
 					<div class="flex flex-col gap-4">
 						<SideBarHeader />
 
-						<LessonsList  />
+						<LessonsList />
 					</div>
 
 					<SideBarFooter />
 				</div>
 				<div
-					transition:animate={slide({ duration: "0.7s" })}
+
+					transition:animate={"slide"}
 					class="bg-marmol w-full min-h-screen h-full md:rounded-l-[3rem]"
 				>
 					<nav class="md:hidden bg-marmol px-1 py-1">
-						<NavBar transition:persist  />
+						<NavBar transition:persist />
 					</nav>
 					<div
 						class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"

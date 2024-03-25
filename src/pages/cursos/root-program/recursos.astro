@@ -1,0 +1,27 @@
+---
+import LessonsList from "@components/root-program/LessonsList.astro";
+import CoursesLayout from "@components/layouts/CoursesLayout.astro";
+
+
+---
+
+<CoursesLayout
+    description={"sitio de melina batalla, comunicadora visual"}
+    title={"Melina Batalla"}
+>
+    <div class="h-full min-h-svh flex justify-center items-center">
+        <div class="flex justify-between px-6">
+            <div
+                class="xxl:my-8 flex flex-col gap-10 mx-auto px-0 text-left max-w-screen-lg"
+            >
+                <h1
+                    class="text-6xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
+                >
+                    Root program
+                </h1>
+                <span>este es un curso.</span>
+                <LessonsList />
+            </div>
+        </div>
+    </div>
+</CoursesLayout>
