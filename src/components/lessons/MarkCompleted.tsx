@@ -57,37 +57,34 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkComp
     const handlePreviusClass = async () => {
         let lastAvailable = arraylessons[0]?.slug
         if(lessonId === 1) {
-            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
-            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
-            history.back();
+            navigate(`/cursos/root-program/${lastAvailable}`)
             return
         }
-        if (arraylessons[lessonId - 2]?.isCompleted) {
+        if ($storeLessons[lessonId - 2]) {
+            console.log('storeLessons', $storeLessons[lessonId - 2]);
             lastAvailable = arraylessons[lessonId - 1]?.slug
-            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
-            history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
-            history.back();
+            navigate(`/cursos/root-program/${lastAvailable}`)
             return
         }
+        const maxKey = Math.max(...Object.keys($storeLessons).map(Number));
+        console.log('maxKey', maxKey);
         // Encuentra la última lección completada con un ID menor que el ID de la lección actual
-        const sortedLessons = [...arraylessons]?.sort((a, b) => a.id - b.id);
+        const nextLesson = arraylessons[maxKey+1]
 
         // Encuentra la primera lección que no esté completada
-        const nextLesson = sortedLessons.find(lesson => !lesson.isCompleted);
 
         if (nextLesson) {
             lastAvailable = nextLesson.slug;
         }
-        history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
-        history.pushState({}, '', `/cursos/root-program/${lastAvailable}`);
-        history.back();
+        navigate(`/cursos/root-program/${lastAvailable}`)
+
 
     }
     const handleNextClass = () => {
         navigate(`/cursos/root-program/${arraylessons[lessonId + 1].slug}`)
     }
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+
             <div className="flex justify-between w-full px-6 md:px-10 md:max-w-screen-xl" >
                 <div >{(lessonId !== 0 || $storeLessons[lessonId - 2]) && <div className="cursor-pointer hover:text-primary" onClick={handlePreviusClass}><MoveLeftIcon /></div>}</div>
                 <div >{
@@ -102,6 +99,6 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkComp
                         </span>}</div>
                 <div > {lessonId !== 5 && (isinStore) && <div className="cursor-pointer hover:text-primary" onClick={handleNextClass}><MoveRightIcon /> </div>}</div>
             </div>
-        </Suspense>
+
     )
 }

@@ -24,6 +24,8 @@ export default function ListItems({ slug, children }: Props) {
     const lesonarrays = useStore($lessonsatom);
     const lessonsquery = useQuery({
         queryKey: ['lessons'], queryFn: () => {
+
+
             return fetch('/api/lessons/lessonscompleted').then(response => {
 
                 // console.log(response);
@@ -31,29 +33,21 @@ export default function ListItems({ slug, children }: Props) {
 
             })
                 .then((data: {
-                    lessons: {
-                        isCompleted: boolean;
-                        id: number;
-                        name: string;
-                        slug: string;
-                    }[]
+                    lessons: ILessonProgress[]
                 }) => {
-                    // console.log(data  );
+                     console.log(data  );
                     const completedLessonIds = data?.lessons.reduce(
                         (record, lesson) => {
-                            if (lesson.isCompleted) {
-                                record[lesson.id] = "completado"; // or any other string property of the lesson
-                            }
+                            record[lesson.lessonId] = "completado";
                             return record;
                         },
                         {} as Record<number, string>,
                     );
                     completedLessonsStore.set(completedLessonIds);
-                    $lessonsatom.set(data.lessons);
+                    // $lessonsatom.set(data.lessons);
                     return data.lessons;
                 });
         },
-
     })
 
 
@@ -64,7 +58,6 @@ export default function ListItems({ slug, children }: Props) {
 
             {
                 lessonsquery.isLoading ? <Loader2 className={`animate-spin `} /> :
-
 
                     lesonarrays?.map((lesson, index) => (
                         <li className="relative z-10" key={lesson.id}>

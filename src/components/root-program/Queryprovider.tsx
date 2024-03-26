@@ -18,53 +18,15 @@ interface Props {
 
 }
 
- const queryClient = new QueryClient()
+const queryClient = new QueryClient()
 
-export default function ListItemsProvider({  slug }: Props) {
-
-    // useEffect(() => {
-    //     // Realiza una solicitud al servidor para obtener los datos cuando el componente se monta
-    //     fetch('/api/lessons/lessonscompleted').then(response => {
-
-    //         // console.log(response);
-    //         return response.json();
-
-    //     })
-    //         .then((data: {
-    //             lessonscompleted: ILessonProgress[],
-    //             lessons: {
-    //                 isCompleted: boolean;
-    //                 id: number;
-    //                 name: string;
-    //                 slug: string;
-    //             }[],
-    //         }) => {
-    //              console.log(data  );
-    //             if (!data?.lessonscompleted) return;
-    //             const completedLessonIds = data?.lessonscompleted.reduce(
-    //                 (record, lesson) => {
-    //                     record[lesson.lessonId] = "completado"; // or any other string property of the lesson
-    //                     return record;
-    //                 },
-    //                 {} as Record<number, string>,
-    //             );
-    //             // console.log(completedLessonIds);
-    //             completedLessonsStore.set(completedLessonIds);
-    //             console.log(data.lessons);
-    //             $lessonsatom.set(data.lessons);
-    //         });
-
-    //     return () => {
-    //         $lessonsatom.set([]);
-    //     }
-    // }, []);
+export default function ListItemsProvider({ slug }: Props) {
 
 
-
-     return (
-         <QueryClientProvider client={queryClient}>
-             <ListItems
-                 slug={slug} />
-         </QueryClientProvider>
-     )
- }
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ListItems
+                slug={slug} />
+        </QueryClientProvider>
+    )
+}

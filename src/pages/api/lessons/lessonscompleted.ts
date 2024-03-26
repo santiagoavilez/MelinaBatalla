@@ -10,26 +10,29 @@ export const getLessons = async () => {
 export const GET: APIRoute = async ({  locals}) => {
     try {
         const { userId } = locals
+        const lessonscompleted = await db
+            .select()
+            .from(LessonProgress)
+            .where(eq(LessonProgress.userId, userId as string));
 
+        // const lessonswithCompleted = await db.
+        // select({
+        //     id: Lesson.id,
+        //     name: Lesson.name,
+        //     slug: Lesson.slug,
+        //     isCompleted: eq(LessonProgress.status, 'completado')
+        // }).
+        // from(Lesson).
+        // leftJoin(LessonProgress, and(eq(LessonProgress.userId,userId as string),eq(LessonProgress.lessonId,Lesson.id)))
 
-        const lessonswithCompleted = await db.
-        select({
-            id: Lesson.id,
-            name: Lesson.name,
-            slug: Lesson.slug,
-            isCompleted: eq(LessonProgress.status, 'completado')
-        }).
-        from(Lesson).
-        leftJoin(LessonProgress, and(eq(LessonProgress.userId,userId as string),eq(LessonProgress.lessonId,Lesson.id)))
-
-        console.log("lessonswithCompleted", lessonswithCompleted);
+        // console.log("lessonswithCompleted", lessonswithCompleted);
         return new Response(JSON.stringify({
-            lessons: lessonswithCompleted,
+            lessons: lessonscompleted,
         })
         )
     }
     catch (error) {
-        // console.error('Error:', error);
+         console.log('Error:', error);
         return new Response(JSON.stringify({
             error: error
         }), {

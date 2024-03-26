@@ -3,6 +3,7 @@
 
 import LessonsList from "@components/root-program/LessonsList.astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
+const { userEmail } = Astro.locals;
 ---
 
 <CoursesLayout
@@ -19,7 +20,12 @@ import CoursesLayout from "@components/layouts/CoursesLayout.astro";
                 >
                     Root program
                 </h1>
-                <span>este es un curso.</span>
+                <div>
+                    Bienvenida {userEmail}
+                    "Si no puedes volar, corre; si no puedes correr, camina; si no
+                    puedes caminar, gatea, pero sigue avanzando hacia tu meta". Martin
+                    Luther King.
+                </div>
                 <LessonsList />
             </div>
         </div>

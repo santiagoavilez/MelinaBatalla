@@ -10,14 +10,10 @@ interface Props {
     lessons?: Pick<ILesson, "id" | "name" | "slug">[];
 }
 
-const {  slug } = Astro.params as {
+const { slug } = Astro.params as {
     slug: string;
 };
 //console.log("locals", Astro.locals);
-
-
-
-
 
 // const lessonscompleted = await db
 //     .select()
@@ -37,12 +33,5 @@ const {  slug } = Astro.params as {
 
 <section class="pl-6 pr-6">
     <h4 class="font-semibold text-xl pb-2">Contenido del curso</h4>
-    {
-         (
-            <ListItemsProvider
-                client:only
-                slug={slug}
-            />
-        )
-    }
+    {(<ListItemsProvider transition:persist-props client:only slug={slug} />)}
 </section>
