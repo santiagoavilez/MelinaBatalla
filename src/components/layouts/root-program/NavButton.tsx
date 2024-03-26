@@ -3,10 +3,8 @@ import { FileStack, InstagramIcon, Menu, PlusIcon } from 'lucide-react'
 import { Separator } from '@components/ui/separator'
 import { Button } from '@components/ui/button'
 import ListItems from '@components/root-program/ListItems'
-import type { ILesson } from 'db/types'
-import ListItemsProvider from '@components/root-program/Queryprovider'
-import nazaPortrait from "@assets/root-program/naza-root-program.png";
-import { Image } from "astro:assets";
+import { useState } from 'react'
+
 
 interface Props {
     children: any;
@@ -14,9 +12,11 @@ interface Props {
 }
 
 export default function NavButton({ children, slug }: Props) {
-    return (
+    const [isOpen, setIsOpen] = useState(false)
+    const wait = () => new Promise((resolve) => setTimeout(resolve, 500));
 
-        <Sheet>
+    return (
+        <Sheet open={isOpen} onOpenChange={setIsOpen} >
             <SheetTrigger   ><Menu className='w-10' width={32} height={32} /> </SheetTrigger>
             <SheetContent side={'left'} className="w-3/4 max-w-72 p-4 justify-between flex flex-col">
                 <SheetHeader className='pb-4'>
@@ -43,8 +43,13 @@ export default function NavButton({ children, slug }: Props) {
 
                     </div>
 
-                    <div className='max-w-52' >
-                        <ListItemsProvider
+                    <div className='max-w-52' onClick={(event) => {
+                        wait().then(() => setIsOpen(false));
+                        event.preventDefault();
+                    }}
+ >
+                        <ListItems
+
                             slug={slug}
                         />
                     </div>

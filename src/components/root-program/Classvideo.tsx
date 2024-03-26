@@ -1,6 +1,6 @@
 
 import { Skeleton } from "@components/ui/skeleton";
-import {  completedLessonsStore } from "@lib/bonusStore";
+import {  completedLessonsStore, persistentCompletedLessons } from "@lib/bonusStore";
 import { useStore } from "@nanostores/react";
 import { AlertCircleIcon } from "lucide-react";
 
@@ -11,9 +11,9 @@ export default function Classvideo({ videoId, lessonId }: {
     lessonId: number;
 }) {
 
-    const lessonsArray = useStore(completedLessonsStore);
+    const lessonsArray = useStore(persistentCompletedLessons);
     console.log('lessonsArray', lessonsArray);
-    const isAvailable = !!lessonsArray[lessonId - 1] || lessonId === 0;
+    const isAvailable = lessonsArray?.[lessonId - 1] || lessonId === 0;
 
     return (
         <>

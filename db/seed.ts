@@ -64,6 +64,7 @@ export default async function seed() {
 			name: 'Potenciador',
 			slug: 'potenciador',
 			courseSlug: 'root-program',
+			video_id: 'a',
 			description: 'Salvavidas en caso de emergencia.'
 		},
 

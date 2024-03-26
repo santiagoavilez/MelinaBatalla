@@ -7,8 +7,9 @@ interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	image?: string | undefined;
+	slug?: string;
 }
-const { title, description } = Astro.props;
+const { title, description, slug } = Astro.props;
 import melinaPortrait from "@assets/Melina-batalla.png";
 
 import { slide, ViewTransitions } from "astro:transitions";
@@ -17,6 +18,8 @@ import LessonsList from "@components/root-program/LessonsList.astro";
 import SideBarHeader from "./root-program/SideBarHeader.astro";
 import SideBarFooter from "./root-program/SideBarFooter.astro";
 import NavBar from "./root-program/NavBar.astro";
+import { getLessons } from "src/pages/api/lessons/lessonscompleted";
+const lessons = await getLessons();
 ---
 
 <html lang="en">
@@ -81,14 +84,13 @@ import NavBar from "./root-program/NavBar.astro";
 					<div class="flex flex-col gap-4">
 						<SideBarHeader />
 
-						<LessonsList />
+						<LessonsList lessons={lessons} slug={slug} />
 					</div>
 
 					<SideBarFooter />
 				</div>
 				<div
-					transition:animate={slide({ duration: "0.5s" })}
-					transition:name="slide"
+					transition:animate={slide({ duration: "0.9s" })}
 					class="bg-marmol w-full min-h-screen h-full md:rounded-l-[3rem]"
 				>
 					<nav class="md:hidden bg-marmol px-1 py-1">

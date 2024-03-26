@@ -3,7 +3,8 @@
 
 import LessonsList from "@components/root-program/LessonsList.astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
-const { userEmail } = Astro.locals;
+const { userName } = Astro.locals;
+export const prerender = true;
 ---
 
 <CoursesLayout
@@ -16,17 +17,16 @@ const { userEmail } = Astro.locals;
                 class="xxl:my-8 flex flex-col gap-10 mx-auto px-0 text-left max-w-screen-lg"
             >
                 <h1
-                    class="text-6xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
+                    class="text-4xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
                 >
-                    Root program
+                    Bienvenida a Root program {userName}
                 </h1>
                 <div>
-                    Bienvenida {userEmail}
-                    "Si no puedes volar, corre; si no puedes correr, camina; si no
-                    puedes caminar, gatea, pero sigue avanzando hacia tu meta". Martin
-                    Luther King.
+                    "Si no puedes volar, corre; si no puedes correr, camina; si
+                    no puedes caminar, gatea, pero sigue avanzando hacia tu
+                    meta". Martin Luther King.
                 </div>
-                <LessonsList />
+                <!-- <LessonsList transition:persist/> -->
             </div>
         </div>
     </div>

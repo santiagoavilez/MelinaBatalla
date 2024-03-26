@@ -1,4 +1,4 @@
-import { $lessonsatom, addLessonCompleted, addLessonCompletedTomap, completedLessonsStore } from "@lib/bonusStore"
+import { $lessonsatom, addLessonCompleted, addLessonCompletedTomap, completedLessonsStore, persistentCompletedLessons } from "@lib/bonusStore"
 import { useStore } from "@nanostores/react"
 import { navigate } from "astro:transitions/client"
 import { Check, MoveLeftIcon, MoveRightIcon } from "lucide-react"
@@ -17,14 +17,21 @@ export interface MarkCompletedProps {
 
 
 export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkCompletedProps) {
-    const $storeLessons = useStore(completedLessonsStore)
-    const isinStore = $storeLessons[lessonId] ? true : false;
-    const isfirtsOrbonus = lessonId === 0 || lessonId === 5 ? true : false;
-    console.log('isinStore', isinStore);
+    const persistCompleted = useStore(persistentCompletedLessons)
+    console.log('persistCompleted', persistCompleted);
+    const isinStore = persistCompleted && persistCompleted[lessonId] ? true : false;
+    const isfirtsOrbonus = lessonId === 0 || lessonId === 5;
+    console.log('isinStore', isinStore, isfirtsOrbonus, lessonId === 0 || lessonId === 5 );
 
     const handleCompleted = async () => {
+        const newCompleted = { id: lessonId, isCompleted: 'completado' , slug: lessonSlug}
         addLessonCompleted({ id: lessonId, status: 'completado' });
-
+        if(!persistCompleted || persistCompleted.length === 0){
+            persistentCompletedLessons.set([newCompleted])
+        }
+        else{
+            persistentCompletedLessons.set([...persistCompleted, newCompleted])
+        }
         addLessonCompletedTomap({ id: lessonId });
 
         try {
@@ -60,16 +67,15 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkComp
             navigate(`/cursos/root-program/${lastAvailable}`)
             return
         }
-        if ($storeLessons[lessonId - 2]) {
-            console.log('storeLessons', $storeLessons[lessonId - 2]);
+        if ( persistCompleted && persistCompleted[lessonId - 2]) {
+            console.log('persistCompleted', persistCompleted[lessonId - 2]);
             lastAvailable = arraylessons[lessonId - 1]?.slug
             navigate(`/cursos/root-program/${lastAvailable}`)
             return
         }
-        const maxKey = Math.max(...Object.keys($storeLessons).map(Number));
-        console.log('maxKey', maxKey);
-        // Encuentra la última lección completada con un ID menor que el ID de la lección actual
-        const nextLesson = arraylessons[maxKey+1]
+        const sortedLessons = [...persistCompleted!]?.sort((a, b) => a.id - b.id);
+        const nextLesson = sortedLessons.find(lesson => !lesson.isCompleted);
+
 
         // Encuentra la primera lección que no esté completada
 
@@ -86,10 +92,10 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkComp
     return (
 
             <div className="flex justify-between w-full px-6 md:px-10 md:max-w-screen-xl" >
-                <div >{(lessonId !== 0 || $storeLessons[lessonId - 2]) && <div className="cursor-pointer hover:text-primary" onClick={handlePreviusClass}><MoveLeftIcon /></div>}</div>
+                <div >{(lessonId !== 0 || (persistCompleted && persistCompleted[lessonId - 2])) && <div className="cursor-pointer hover:text-primary" onClick={handlePreviusClass}><MoveLeftIcon /></div>}</div>
                 <div >{
                     !isinStore ? (
-                        (isfirtsOrbonus || $storeLessons[lessonId - 1]) && <span
+                        (isfirtsOrbonus || ( persistCompleted && persistCompleted[lessonId - 1])) && <span
                             className="text-sm font-normal inline-flex gap-2 cursor-pointer hover:text-primary" onClick={handleCompleted}>
                             <Check />Marcar como completado
                         </span>

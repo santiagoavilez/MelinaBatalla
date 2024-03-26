@@ -1,14 +1,23 @@
-import { atom, deepMap, map } from 'nanostores'
+import { atom, map } from 'nanostores'
 
 export const bonus = atom<boolean | 'indeterminate'>(false)
 
+import { persistentAtom } from '@nanostores/persistent'
+
 export const completedLessonsStore = map<Record<number,string>>({});
 
-export const $lessons = deepMap({lessons:[{
+export type CompletedLessonsStore ={
+    status: 'completado' | 'no disponible' | 'disponible'
+}
 
-}]})
 
-export const $lessonsmap = map<Record<number, { slug: string, id: number, name: string, isCompleted: boolean }>>()
+
+export const persistentCompletedLessons = persistentAtom<{ id: number, isCompleted: string, slug: string }[] | null>('completedLessons', null, {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+})
+
+
 
 
 export const $lessonsatom = atom<{ slug: string, id: number, name: string, isCompleted: boolean }[]>([

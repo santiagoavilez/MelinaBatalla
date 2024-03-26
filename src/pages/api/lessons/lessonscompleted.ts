@@ -1,3 +1,4 @@
+import { auth } from "@lib/authStore";
 import type { APIRoute } from "astro";
 import { and, db, eq, Lesson, LessonProgress } from "astro:db";
 
@@ -7,9 +8,12 @@ export const getLessons = async () => {
         .from(Lesson);
     return lessons;
 };
-export const GET: APIRoute = async ({  locals}) => {
+export const POST: APIRoute = async ({ request}) => {
     try {
-        const { userId } = locals
+        const body = await request.json();
+        console.log("body", body);
+        const { userId } = body as { userId: string };
+        console.log("userId", userId);
         const lessonscompleted = await db
             .select()
             .from(LessonProgress)

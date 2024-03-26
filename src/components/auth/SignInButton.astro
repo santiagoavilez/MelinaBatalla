@@ -5,13 +5,19 @@ import { Button } from "@components/ui/button";
 <Button id="auth-sign-in-button" className="auth-sign-in-button">
     Iniciar sesión
 </Button>
+<div id="mountsing"></div>
 
 <script>
     import { auth } from "../../lib/authStore";
 
     auth.subscribe((clerk) => {
         if (clerk !== null && clerk.isReady()) {
+
             const signInButton = document.getElementById("auth-sign-in-button");
+            const divsing = document.getElementById(
+                "amountsing",
+            ) as HTMLDivElement;
+
             const signInButtons = document.querySelectorAll(
                 ".auth-sign-in-button",
             )!;

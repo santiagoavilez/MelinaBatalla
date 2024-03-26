@@ -20,5 +20,6 @@ declare namespace App {
         userId?: string;
         userEmail?: string;
         bonus?: string;
+        userName: string;
     }
 }

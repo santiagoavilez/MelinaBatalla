@@ -20,59 +20,77 @@ export  function CompleteOrder() {
 
     const handleCompleteOrder = () => {
 
-        fetch('https://api.lemonsqueezy.com/v1/checkouts', {
+        // fetch('https://api.lemonsqueezy.com/v1/checkouts', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${secret}`
+        //     },
+        //     body: JSON.stringify({
+        //         data: {
+        //             "type": "checkouts",
+        //             "attributes": {
+        //                 'custom_price': $bonus ? 33200: 28800,
+        //                 "checkout_options": {
+        //                     embed: true,
+        //                     "button_color": "#2DD272"
+        //                 },
+        //                 "checkout_data": {
+        //                     'discount_code': $bonus ? 'E1NZEXMW' :'EWOTQZMW',
+        //                     "custom": {
+        //                         "user_id": '123',
+        //                         "bonus": $bonus ? 'true' : 'false',
+        //                     },
+        //                 },
+        //             },
+        //             "relationships": {
+        //                 "store": {
+        //                     "data": {
+        //                         "type": "stores",
+        //                         "id": "76058"
+        //                     }
+        //                 },
+        //                 "variant": {
+        //                     "data": {
+        //                         "type": "variants",
+        //                         "id": "307170"
+        //                     },
+        //                 }
+        //             }
+        //         }
+        //     })
+        // })
+        //     .then(response => response.json())
+        //     .then(( response ) => {
+        //         console.log('data:', response);
+        //         const url = response?.data?.attributes.url;
+        //         if (url) {
+        //             window.LemonSqueezy.Url.Open(url);
+        //         }
+
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
+
+        fetch('/api/checkout', {
             method: 'POST',
+            body: JSON.stringify({
+                bonus: $bonus
+            }),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${secret}`
             },
-            body: JSON.stringify({
-                data: {
-                    "type": "checkouts",
-                    "attributes": {
-                        'custom_price': $bonus ? 33200: 28800,
-                        "checkout_options": {
-                            embed: true,
-                            "button_color": "#2DD272"
-                        },
-                        "checkout_data": {
-                            'discount_code': $bonus ? 'E1NZEXMW' :'EWOTQZMW',
-                            "custom": {
-                                "user_id": '123',
-                                "bonus": $bonus ? 'true' : 'false',
-                            },
-                        },
-                    },
-                    "relationships": {
-                        "store": {
-                            "data": {
-                                "type": "stores",
-                                "id": "76058"
-                            }
-                        },
-                        "variant": {
-                            "data": {
-                                "type": "variants",
-                                "id": "307170"
-                            },
-                        }
-                    }
-                }
-            })
-        })
-            .then(response => response.json())
-            .then(( response ) => {
-                console.log('data:', response);
-                const url = response?.data?.attributes.url;
-                if (url) {
-                    window.LemonSqueezy.Url.Open(url);
-                }
+        }).then(response => response.json()).then((response) => {
+            console.log('data:', response);
+            const url = response?.url;
+            if (url) {
+                window.LemonSqueezy.Url.Open(url);
+            }
 
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
 

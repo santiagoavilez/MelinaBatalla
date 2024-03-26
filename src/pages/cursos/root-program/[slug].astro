@@ -1,4 +1,5 @@
 ---
+import type { GetStaticPaths } from "astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
 import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
@@ -8,27 +9,41 @@ import { Play } from "lucide-react";
 import { eq, desc, and } from "astro:db";
 import { Lesson, db } from "astro:db";
 import Classvideo from "@components/root-program/Classvideo";
+import SignedIn from "@components/auth/SignedIn.astro";
 
-const { slug, CourseSlug } = Astro.params;
 const { userId, bonus } = Astro.locals;
 
-const getLesson = async () => {
-    const [lesson] = await db
-        .select()
-        .from(Lesson)
-        .where(eq(Lesson.slug, slug as string));
-    return lesson;
+export const getStaticPaths = async () => {
+    const lessons = await db
+        .select({
+            slug: Lesson.slug,
+        })
+        .from(Lesson);
+
+    return lessons.map((lesson) => ({
+        params: { slug: lesson.slug },
+    }));
 };
-const lesson = await getLesson();
-if (!lesson) {
-    return Astro.redirect("/cursos/root-program/404");
-}
+
+const { slug } = Astro.params;
+const [lesson] = await db
+    .select({
+        id: Lesson.id,
+        name: Lesson.name,
+        description: Lesson.description,
+        video_id: Lesson.video_id,
+    })
+    .from(Lesson)
+    .where(eq(Lesson.slug, slug))
+    .limit(1);
+
+export const prerender = true;
 ---
 
-<CoursesLayout>
+<CoursesLayout slug={slug}>
     <div class="h-full w-full">
         {
-            lesson.slug === "potenciador" ? (
+            slug === "potenciador" ? (
                 bonus === "true" ? (
                     <BonusSpotify />
                 ) : (
@@ -45,11 +60,15 @@ if (!lesson) {
             ) : (
                 <section class="h-full p-6   md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
-                        <Classvideo
-                            client:only
-                            lessonId={lesson.id}
-                            videoId={lesson.video_id as string}
-                        />
+                        <SignedIn>
+                            <iframe
+                                id={`panda-${lesson?.video_id}`}
+                                title="clase de video"
+                                src={`https://player-vz-c8120ef3-31f.tv.pandavideo.com/embed/?v=${lesson?.video_id}`}
+                                class="w-full aspect-video rounded-lg"
+                                allowfullscreen
+                            />
+                        </SignedIn>
                     </div>
                 </section>
             )

@@ -1,5 +1,5 @@
 import type { ILesson } from 'db/types';
-import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted } from '@lib/bonusStore';
+import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted, persistentCompletedLessons } from '@lib/bonusStore';
 import { useStore } from '@nanostores/react';
 import { Check, Circle, LockKeyholeIcon, Play } from 'lucide-react';
 import { cn } from '@lib/utils';
@@ -14,10 +14,12 @@ interface Props {
 
 
 function LessonsItem({ lesson, slug }: Props) {
-    const completedLessonIds = useStore(completedLessonsStore);
+    const completedLessonIds = useStore(persistentCompletedLessons);
+    if(slug=== lesson.slug) console.log("slug", slug, lesson.slug, lesson.id, )
+
 
     // console.log(completedLessonIds); // Verifica que el store se inicialice correctamente
-    const isAvailable = lesson.id === 0 || !!completedLessonIds[lesson.id - 1];
+    const isAvailable = lesson.id === 0 ||  !!completedLessonIds?.[lesson.id - 1];
     const isFirts = lesson.id === 0 || lesson.id === 5;
     const canbeViewed = isAvailable || isFirts;
 
@@ -37,9 +39,10 @@ function LessonsItem({ lesson, slug }: Props) {
     });
     let statusVariant : "blanco" | "gris" | "marron" |"yema"= "gris";
     if (slug === lesson.slug) {
+        console.log("actual", slug, lesson.slug, lesson.id,)
         statusVariant = "blanco";
     }
-    else if (completedLessonIds[lesson.id] === 'completado') {
+    else if (completedLessonIds?.[lesson.id]?.isCompleted === 'completado') {
         statusVariant = "yema";
     }
     else if (canbeViewed) {
@@ -53,13 +56,13 @@ function LessonsItem({ lesson, slug }: Props) {
         <div
             className={cn(variant({ status: statusVariant }))}
             onClick={(e) => {
-                console.log("status", lesson.id, isDisabled);
+                console.log("status", lesson.id, isDisabled, slug);
                 if (!canbeViewed || slug === lesson.slug) {
                     console.log("No puedes navegar a esta lección ", lesson.id, canbeViewed);
                     e.preventDefault();
                 }
                 else {
-                    console.log("Navegando a la lección ", lesson.id);
+                    console.log("Navegando a la lección ", lesson.slug);
                     navigate(`/cursos/root-program/${lesson.slug}`)
 
                 }
@@ -75,7 +78,7 @@ function LessonsItem({ lesson, slug }: Props) {
                     <CheckCircle2 className=" w-8 stroke-yema " />
                 )} */}
                 {
-                    !completedLessonIds[lesson.id] ? (
+                    (!completedLessonIds?.[lesson.id]) ? (
                         canbeViewed ? <Play className=" w-4 fill-negro"  /> : <LockKeyholeIcon className=" w-4" />
                     ) :  (
                         <Check className=" w-4 stroke-yema " />

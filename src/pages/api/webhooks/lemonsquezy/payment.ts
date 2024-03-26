@@ -32,8 +32,6 @@ export const POST: APIRoute = async ({ request }) => {
             const bonus = body.meta.custom_data.bonus;
             const emailAddress = body.data.attributes.user_email;
             const userName = body.data.attributes.user_name;
-            const firstName = userName.split(" ")[0];
-            const lastName = userName.split(" ")[1];
             const isSuccessful = body.data.attributes.status === "paid";
 
             if (isSuccessful) {
@@ -45,7 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
                     redirectUrl: 'https://2a60-181-230-166-180.ngrok-free.app/cursos/root-program',
                     publicMetadata: {
                         "bonus": bonus,
-
+                        "userName": userName,
                     },
                     ignoreExisting: true,
                 });
@@ -53,19 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
 
 
                 console.log(invitation);
-                // const newUser = await clerkClient.users.createUser({
-                //     firstName: firstName,
-                //     lastName: lastName,
-                //     publicMetadata:{
-                //         bonus: bonus,
-                //         isSuccessful: isSuccessful,
-                //     },
-                //     emailAddress: [emailAddress],
-                // });
-                // clerkClient.signInTokens.createSignInToken({
-                //     userId: newUser.id,
-                //     expiresInSeconds: 1000 * 60 * 60 * 24 * 7 * 4 * 3, // 3 months
-                // });
+
             }
         }
 
@@ -78,11 +64,4 @@ export const POST: APIRoute = async ({ request }) => {
         return Response.json({ message: "Server error" }, { status: 500 });
     }
 
-}
-
-export const GET: APIRoute = ({ params, request }) => {
-    return new Response(JSON.stringify({
-        message: "This was a GET!"
-    })
-    )
 }

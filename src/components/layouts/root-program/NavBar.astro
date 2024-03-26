@@ -3,18 +3,13 @@ import NavButton from "./NavButton";
 
 import nazaPortrait from "@assets/root-program/naza-root-program.png";
 import { Image } from "astro:assets";
-const {  slug } = Astro.params;
+const { slug } = Astro.params;
 
 //console.log("locals", Astro.locals);
-
-
 ---
 
-<nav class="md:hidden bg-marmol px-1 py-1">
-    <NavButton
-        client:visible
-        slug={slug as string}
-    >
+<nav  class="md:hidden bg-marmol px-1 py-1">
+    <NavButton client:visible slug={slug as string}>
         <a href="/cursos/root-program" class="w-full">
             <Image
                 alt={"Nazarena Batalla en un retrato de estudio."}

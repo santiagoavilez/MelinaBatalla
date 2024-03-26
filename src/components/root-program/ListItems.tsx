@@ -1,15 +1,9 @@
-import { useEffect } from 'react';
 import LessonsItem from './LessonsItem';
-import { $courseSlug, $lesonSlug, $lessons, $lessonsatom, $lessonsmap, completedLessonsStore } from '@lib/bonusStore';
-import type { ILesson, ILessonProgress } from 'db/types';
+import {  $lessonsatom } from '@lib/bonusStore';
 import type { JsxChild } from 'typescript';
-import {
-    QueryClient,
-    QueryClientProvider,
-    useQuery,
-} from '@tanstack/react-query'
+
 import { useStore } from '@nanostores/react';
-import { Loader2 } from 'lucide-react';
+import { auth } from '@lib/authStore';
 
 
 interface Props {
@@ -22,52 +16,24 @@ export default function ListItems({ slug, children }: Props) {
 
 
     const lesonarrays = useStore($lessonsatom);
-    const lessonsquery = useQuery({
-        queryKey: ['lessons'], queryFn: () => {
+    const clerk = useStore(auth);
 
-
-            return fetch('/api/lessons/lessonscompleted').then(response => {
-
-                // console.log(response);
-                return response.json();
-
-            })
-                .then((data: {
-                    lessons: ILessonProgress[]
-                }) => {
-                     console.log(data  );
-                    const completedLessonIds = data?.lessons.reduce(
-                        (record, lesson) => {
-                            record[lesson.lessonId] = "completado";
-                            return record;
-                        },
-                        {} as Record<number, string>,
-                    );
-                    completedLessonsStore.set(completedLessonIds);
-                    // $lessonsatom.set(data.lessons);
-                    return data.lessons;
-                });
-        },
-    })
-
-
-    // Renderiza los componentes hijos y pasa los datos como props
+    const user = clerk?.user;
     return (
 
         <ul className="flex flex-col gap-3">
 
             {
-                lessonsquery.isLoading ? <Loader2 className={`animate-spin `} /> :
+                 lesonarrays?.map((lesson, index) => (
+                    <li className="relative z-10" key={lesson.id}>
+                        {index !== lesonarrays.length - 1 && (
+                            <div className="absolute -z-10 w-full h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3"></div>
+                        )}
+                        <LessonsItem lesson={lesson}
+                            slug={slug} />
+                    </li>
+                ))
 
-                    lesonarrays?.map((lesson, index) => (
-                        <li className="relative z-10" key={lesson.id}>
-                            {index !== lesonarrays.length - 1 && (
-                                <div className="absolute -z-10 w-full h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3"></div>
-                            )}
-                            <LessonsItem lesson={lesson}
-                                slug={slug} />
-                        </li>
-                    ))
             }
         </ul>
     );

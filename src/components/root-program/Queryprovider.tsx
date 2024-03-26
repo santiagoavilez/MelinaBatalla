@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import LessonsItem from './LessonsItem';
-import { $courseSlug, $lesonSlug, $lessons, $lessonsatom, $lessonsmap, completedLessonsStore } from '@lib/bonusStore';
+import { $courseSlug, $lesonSlug, $lessonsatom,  completedLessonsStore } from '@lib/bonusStore';
 import type { ILesson, ILessonProgress } from 'db/types';
 import type { JsxChild } from 'typescript';
 import {
@@ -21,7 +21,6 @@ interface Props {
 const queryClient = new QueryClient()
 
 export default function ListItemsProvider({ slug }: Props) {
-
 
     return (
         <QueryClientProvider client={queryClient}>

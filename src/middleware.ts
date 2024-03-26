@@ -7,6 +7,7 @@ const protectedPageUrls = ['/cursos/']
 
 const privatePagesUrls = ['/', 'transforma-tu-realidad', '/links', '/cursos/descubri-tu-esencia']
 
+const staticPagesUrls = [ '/cursos/root-program']
 
 import { defineMiddleware } from "astro:middleware";
 
@@ -16,14 +17,17 @@ const clerk = createClerkClient({ publishableKey: publishableKey,secretKey: secr
 export const onRequest = defineMiddleware(async ({redirect, request, locals}, next) => {
 
     const url = new URL(request.url)
-
+    if (staticPagesUrls.some(path => url.pathname.startsWith(path))) {
+        return next()
+    }
     const requestState = await clerk.authenticateRequest({ request, publishableKey, secretKey })
     const auth = requestState.toAuth()
     if (auth?.userId) {
         locals.userId = auth?.userId
         const email = auth?.sessionClaims.userEmail as string
-        const {bonus} = auth?.sessionClaims.public_metadata as { bonus: string }
+        const { bonus, userName } = auth?.sessionClaims.public_metadata as { bonus: string, userName: string}
         locals.bonus = bonus
+        locals.userName = userName
         locals.userEmail = email
     }
     if (privatePagesUrls.some(path => url.pathname === (path))) {
