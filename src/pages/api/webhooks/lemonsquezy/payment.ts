@@ -52,7 +52,6 @@ export const POST: APIRoute = async ({ request }) => {
 
             if (isSuccessful) {
                 const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })
-                clerk.signInTokens.createSignInToken
                 // Create user in Clerk
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
