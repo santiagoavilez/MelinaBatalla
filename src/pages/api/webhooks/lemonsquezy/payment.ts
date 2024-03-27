@@ -4,6 +4,7 @@ import crypto from "crypto";
 const secret = import.meta.env.LEMON_SQUEEZY_WEBHOOK_SIGNATURE;
 const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
 const secretKey = import.meta.env.CLERK_SECRET_KEY
+const vercelurl = import.meta.env.PUBLIC_VERCEL_URL
 
 export const POST: APIRoute = async ({ request }) => {
 
@@ -12,7 +13,6 @@ export const POST: APIRoute = async ({ request }) => {
         const clonedReq =  request.clone();
         const eventType = request.headers.get("X-Event-Name");
         const body = await request.json();
-        console.log(secret);
         // Check signature
         const requestBody = await clonedReq.text();
 
@@ -21,10 +21,7 @@ export const POST: APIRoute = async ({ request }) => {
             hmac.update(requestBody).digest("hex"),
             "utf8"
         );
-        console.log(hmac);
         const signature = Buffer.from(request.headers.get("X-Signature") || "", "utf8");
-        console.log(digest);
-        console.log(signature);
 
         if (digest.length !== signature.length) {
             throw new Error("Invalid signature length.");
@@ -33,8 +30,6 @@ export const POST: APIRoute = async ({ request }) => {
         if (!crypto.timingSafeEqual(digest, signature)) {
             throw new Error("Invalid signature.");
         }
-
-        console.log(body);
 
         // Logic according to event
         if (eventType === "order_created") {
@@ -49,18 +44,15 @@ export const POST: APIRoute = async ({ request }) => {
                 // Create user in Clerk
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
-                    redirectUrl: 'https://2a60-181-230-166-180.ngrok-free.app/cursos/root-program',
+                    redirectUrl: vercelurl,
                     publicMetadata: {
                         "bonus": bonus,
                         "userName": userName,
                     },
                     ignoreExisting: true,
                 });
-
-
-
                 console.log(invitation);
-
+                return Response.json({ invitation: invitation });
             }
         }
 
