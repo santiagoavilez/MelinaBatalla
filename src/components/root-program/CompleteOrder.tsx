@@ -4,7 +4,6 @@ import { useStore } from '@nanostores/react'
 import { useEffect } from 'react'
 
 
-const secret = import.meta.env.PUBLIC_LEMON_API_KEY
 
 interface Props {
     variant?: 'default' | 'secondary'
@@ -80,7 +79,7 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
 
 
     return (
-        <Button id='complete-order' variant={variant} onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
+        <Button  variant={variant} onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
             {children}
         </Button>
     )

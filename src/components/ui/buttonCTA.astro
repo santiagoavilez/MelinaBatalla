@@ -9,12 +9,14 @@ const { className } = Astro.props as {
 <Button data-cta-hero className={className}><slot /> </Button>
 
 <script>
-    window.addEventListener("load", (event) => {
-
+    window.addEventListener("load", () => {
+        console.log("DOM fully loaded and parsed");
         const cartContainer = document.getElementById("complete-order")!;
+        console.log("scroll to the cart", cartContainer);
         const ctaHero = document.querySelectorAll("[data-cta-hero]");
         if (cartContainer && ctaHero) {
             //scroll to the cart
+            console.log("scroll to the cart", ctaHero);
             ctaHero.forEach((cta) => {
                 cta.addEventListener("click", () => {
                     cartContainer.scrollIntoView({

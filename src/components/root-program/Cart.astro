@@ -15,8 +15,9 @@ import { CompleteOrder } from "./CompleteOrder";
         Resumen de Compra
     </h3>
     <CartItems client:idle />
-
-    <CompleteOrder client:only > Completar mi compra </CompleteOrder>
+    <div id="complete-order" class="w-full flex justify-center" >
+        <CompleteOrder client:load> Completar mi compra </CompleteOrder>
+    </div>
 </section>
 
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
