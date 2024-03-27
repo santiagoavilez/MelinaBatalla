@@ -10,12 +10,7 @@ import SignInButton from "@components/auth/SignInButton.astro";
 import { getLessons } from "src/pages/api/lessons/lessonscompleted";
 import LessonsItem from "./LessonsItem";
 
-interface Props {
-    slug?: string;
-    lessons: Pick<ILesson, "id" | "name" | "slug">[];
-}
-
-const { slug, lessons } = Astro.props;
+const { slug } = Astro.params;
 
 // const completed = persistentCompletedLessons.get();
 // console.log(completed);
@@ -38,8 +33,8 @@ const { slug, lessons } = Astro.props;
 
 <section class="pl-6 pr-6">
     <h4 class="font-semibold text-xl pb-2">Contenido del curso</h4>
-    <SignedIn>
-        <ul class="flex flex-col gap-3">
+
+    <!-- <ul class="flex flex-col gap-3">
             {
                 lessons?.map((lesson, index) => (
                     <li class="relative z-10">
@@ -54,10 +49,7 @@ const { slug, lessons } = Astro.props;
                     </li>
                 ))
             }
-        </ul>
-    </SignedIn>
-    <SignedOut
-        ><SignInButton />
-        <!-- {(<ListItemsProvider transition:persist-props client:only />)} -->
-    </SignedOut>
+        </ul> -->
+
+    <ListItems client:load slug={slug as string}><SignInButton /> </ListItems>
 </section>

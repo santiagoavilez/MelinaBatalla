@@ -3,7 +3,24 @@
 
 import LessonsList from "@components/root-program/LessonsList.astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
-const { userName } = Astro.locals;
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@components/ui/card";
+import bonus from "@assets/root-program/potenciador-blur.png";
+import { Image } from "astro:assets";
+import DisplayUserName from "@components/auth/DisplayUserName";
+import SignedIn from "@components/auth/SignedIn.astro";
+import { Lock, LockKeyhole, LockKeyholeIcon } from "lucide-react";
+import { CompleteOrder } from "@components/root-program/CompleteOrder";
+import SignedOut from "@components/auth/SignedOut.astro";
+import App from "@components/layouts/Iniciar-sesion";
+import SignInCard from "@components/auth/SignInCard.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
+
 export const prerender = true;
 ---
 
@@ -11,23 +28,92 @@ export const prerender = true;
     description={"sitio de melina batalla, comunicadora visual"}
     title={"Melina Batalla"}
 >
-    <div class="h-full min-h-svh flex justify-center items-center">
-        <div class="flex justify-between px-6">
+    <SignedIn>
+        <div
+            class="h-full min-h-svh flex justify-start p-6 bg-blanco w-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
             <div
-                class="xxl:my-8 flex flex-col gap-10 mx-auto px-0 text-left max-w-screen-lg"
+                class="xxl:my-8 flex flex-col gap-10 px-0 text-left max-w-screen-lg"
             >
-                <h1
-                    class="text-4xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
+                <Card className="bg-marmol  rounded-3xl ">
+                    <CardHeader className="">
+                        <h1
+                            class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                        >
+                            Bienvenida a Root program <DisplayUserName
+                                client:load
+                            />
+                        </h1>
+                        <CardContent>
+                            <span>
+                                "Si no puedes volar, corre; si no puedes correr,
+                                camina; si no puedes caminar, gatea, pero sigue
+                                avanzando hacia tu meta". Martin Luther King.
+                            </span>
+                        </CardContent>
+                    </CardHeader>
+                </Card>
+                <div class="">
+                    <LessonsList slug="atrae-clientes-comprometidos" />
+                </div>
+
+                <div
+                    class="bg-yema flex flex-col md:flex-row gap-4 rounded-3xl p-4"
                 >
-                    Bienvenida a Root program {userName}
-                </h1>
-                <div>
-                    "Si no puedes volar, corre; si no puedes correr, camina; si
-                    no puedes caminar, gatea, pero sigue avanzando hacia tu
-                    meta". Martin Luther King.
+                    <div class="flex gap-4 flex-col justify-between w-full">
+                        <div class="relative">
+                            <Image
+                                alt={"potnciador de resultados blur."}
+                                src={bonus}
+                                widths={[450, 960, 1440, bonus.width]}
+                                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonus.width}px`}
+                                format="webp"
+                                class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg md:hidden"}
+                            />
+                            <CardTitle
+                                className="text-2xl pb-2 text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                            >
+                                Potenciador de resultados
+                            </CardTitle>
+                            <span>
+                                En este entrenamiento privado, te compartiré
+                                como multiplicar tus ganancias de tus servicios
+                                x2, x3 (Que no te va a llevar más de 30 minutos
+                                aplicar).
+                            </span>
+                        </div>
+
+                        <div class="">
+                            <CompleteOrder variant="secondary" client:only
+                                >Obtener Ahora</CompleteOrder
+                            >
+                        </div>
+                    </div>
+                    <div class="grow-0">
+                        <div class="relative">
+                            <Image
+                                alt={"potnciador de resultados blur."}
+                                src={bonus}
+                                widths={[450, 960, 1440, bonus.width]}
+                                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonus.width}px`}
+                                format="webp"
+                                class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg hidden md:block"}
+                            />
+                        </div>
+                    </div>
                 </div>
                 <!-- <LessonsList transition:persist/> -->
             </div>
         </div>
-    </div>
+    </SignedIn>
+    <SignedOut>
+        <div
+            class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco  rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+           <SignInCard />
+           <SignInButton />
+        </div>
+    </SignedOut>
 </CoursesLayout>
+
+<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>

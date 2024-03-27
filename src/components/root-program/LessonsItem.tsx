@@ -72,11 +72,7 @@ function LessonsItem({ lesson, slug }: Props) {
                 className={`font-medium text-lg flex items-center  justify-between gap-2 `}
 
             >
-                {/* {slug === lesson.slug ? <Play className=" fill-negro w-[14px]" /> : !isAvailable ? (
-                    <LockKeyholeIcon className=" w-8" />
-                ) : (
-                    <CheckCircle2 className=" w-8 stroke-yema " />
-                )} */}
+
                 {
                     (!completedLessonIds?.[lesson.id]) ? (
                         canbeViewed ? <Play className=" w-4 fill-negro"  /> : <LockKeyholeIcon className=" w-4" />

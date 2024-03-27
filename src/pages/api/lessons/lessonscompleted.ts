@@ -15,7 +15,11 @@ export const POST: APIRoute = async ({ request}) => {
         const { userId } = body as { userId: string };
         console.log("userId", userId);
         const lessonscompleted = await db
-            .select()
+            .select({
+                id: LessonProgress.lessonId,
+                slug: LessonProgress.lessonSlug,
+                status: LessonProgress.status
+            })
             .from(LessonProgress)
             .where(eq(LessonProgress.userId, userId as string));
 
@@ -29,7 +33,7 @@ export const POST: APIRoute = async ({ request}) => {
         // from(Lesson).
         // leftJoin(LessonProgress, and(eq(LessonProgress.userId,userId as string),eq(LessonProgress.lessonId,Lesson.id)))
 
-        // console.log("lessonswithCompleted", lessonswithCompleted);
+         console.log("lessonscompleted", lessonscompleted);
         return new Response(JSON.stringify({
             lessons: lessonscompleted,
         })

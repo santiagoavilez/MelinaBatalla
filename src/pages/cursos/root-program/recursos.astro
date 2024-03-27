@@ -1,27 +1,92 @@
 ---
 import LessonsList from "@components/root-program/LessonsList.astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
-
-
+import { Card, CardHeader } from "@components/ui/card";
+import { Image } from "astro:assets";
+import templateBlur from "@assets/root-program/plantillas-blur.png";
+import SignedOut from "@components/auth/SignedOut.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
+import SignInCard from "@components/auth/SignInCard.astro";
+import SignedIn from "@components/auth/SignedIn.astro";
 ---
 
 <CoursesLayout
     description={"sitio de melina batalla, comunicadora visual"}
     title={"Melina Batalla"}
 >
-    <div class="h-full min-h-svh flex justify-center items-center">
-        <div class="flex justify-between px-6">
-            <div
-                class="xxl:my-8 flex flex-col gap-10 mx-auto px-0 text-left max-w-screen-lg"
-            >
+    <SignedIn>
+        <div
+            class="h-full min-h-svh p-6 bg-blanco w-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+            <section class="md:p-10 px-6 pb-6">
                 <h1
-                    class="text-6xl text-left md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
+                    class="text-4xl md:text-left md:text-4xl leading-7 tracking text-negro font-bold"
                 >
-                    Root program
+                    Recursos
                 </h1>
-                <span>este es un curso.</span>
-                <LessonsList />
+            </section>
+            <div
+                class="flex h-full flex-wrap justify-center md:justify-start md:items-stretch gap-6"
+            >
+                <Card className="bg-marmol max-w-md rounded-3xl ">
+                    <CardHeader className="p-5">
+                        <Image
+                            alt={"potnciador de resultados blur."}
+                            src={templateBlur}
+                            widths={[450, 960, 1440, templateBlur.width]}
+                            sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${templateBlur.width}px`}
+                            format="webp"
+                            class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg "}
+                        />
+                        <h1
+                            class="text-lg text-left md:text-2xl leading-5 tracking-tighter text-negro font-semibold"
+                        >
+                            Plantillas para creación de Carruseles:
+                        </h1>
+
+                        <span>
+                            Estas plantillas no se centran únicamente en la
+                            estética visual del contenido. Se centran
+                            principalmente en compartirte una estructura
+                            funcional que te permita vender. Por favor, lee
+                            detenidamente y aplica cada paso.
+                        </span>
+                    </CardHeader>
+                </Card>
+                <Card className="bg-marmol max-w-md   rounded-3xl ">
+                    <CardHeader className="p-5">
+                        <Image
+                            alt={"potnciador de resultados blur."}
+                            src={templateBlur}
+                            widths={[450, 960, 1440, templateBlur.width]}
+                            sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${templateBlur.width}px`}
+                            format="webp"
+                            class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg "}
+                        />
+                        <h1
+                            class="text-lg text-left md:text-2xl leading-5 tracking-tighter text-negro font-semibold"
+                        >
+                            Plantillas para creación de Carruseles:
+                        </h1>
+
+                        <span>
+                            Si aplicas correctamente cada paso, no necesitarás
+                            crear cantidades excesivas de contenido. Ya solo
+                            deberás enfocarte en la atracción de nuevos
+                            prospectos. Probablemente no te saldrá perfecto a la
+                            primera, todo es práctica.
+                        </span>
+                    </CardHeader>
+                </Card>
             </div>
         </div>
-    </div>
+    </SignedIn>
+    <SignedOut>
+        <div
+            class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+            <SignInCard />
+            <SignInButton />
+        </div>
+    </SignedOut>
 </CoursesLayout>

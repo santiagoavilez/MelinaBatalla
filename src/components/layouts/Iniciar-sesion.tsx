@@ -22,13 +22,15 @@ function App({ children, invitationkey }: Props) {
             localization={esES}
             publishableKey={clerkPubKey}
         >
+
             <SignedOut>
                 {invitationkey ? <SignUp afterSignUpUrl={"/cursos/root-program"}
                     afterSignInUrl={"/cursos/root-program"}
                     redirectUrl={"/cursos/root-program"}
-                appearance={appearance}
+                    appearance={appearance}
                 ></SignUp> :
                     <SignIn
+
                         redirectUrl={"/cursos/root-program"}
                         key={"sign-in-key-e"}
                         afterSignUpUrl={"/cursos/root-program"}
@@ -40,6 +42,7 @@ function App({ children, invitationkey }: Props) {
             </SignedOut>
 
             {children}
+
         </ClerkProvider>
     );
 }

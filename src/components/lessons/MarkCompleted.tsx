@@ -1,3 +1,5 @@
+import useFetchCompletedLessons from "@components/root-program/fetchCompletedLessons"
+import { auth } from "@lib/authStore"
 import { $lessonsatom, addLessonCompleted, addLessonCompletedTomap, completedLessonsStore, persistentCompletedLessons } from "@lib/bonusStore"
 import { useStore } from "@nanostores/react"
 import { navigate } from "astro:transitions/client"
@@ -6,18 +8,19 @@ import { Suspense } from "react"
 
 export interface MarkCompletedProps {
     lessonSlug: string
-    userId: string
     lessonId: number
-    nextLessonSlug?: string | null
-    previusLessonSlug?: string | null
 }
 
 
 
 
 
-export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkCompletedProps) {
+export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedProps) {
+    useFetchCompletedLessons()
     const persistCompleted = useStore(persistentCompletedLessons)
+    const clerk = useStore(auth);
+
+    const user = clerk?.user;
     console.log('persistCompleted', persistCompleted);
     const isinStore = persistCompleted && persistCompleted[lessonId] ? true : false;
     const isfirtsOrbonus = lessonId === 0 || lessonId === 5;
@@ -35,13 +38,13 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkComp
         addLessonCompletedTomap({ id: lessonId });
 
         try {
-
+            if(!user?.id) return;
             const res = await fetch('/api/lessons/mark-completed', {
                 method: 'POST',
                 body: JSON.stringify({
                     lessonId: lessonId,
                     lessonSlug: lessonSlug,
-                    userId: userId
+                    userId: user?.id
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,6 +77,7 @@ export default function MarkCompleted({ lessonSlug, userId, lessonId }: MarkComp
             return
         }
         const sortedLessons = [...persistCompleted!]?.sort((a, b) => a.id - b.id);
+        console.log('sortedLessons', sortedLessons);
         const nextLesson = sortedLessons.find(lesson => !lesson.isCompleted);
 
 

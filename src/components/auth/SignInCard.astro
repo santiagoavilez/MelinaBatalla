@@ -1,0 +1,32 @@
+---
+import { Button } from "@components/ui/button";
+---
+
+<div id="auth-sign-in-card" class="w-full  auth-sign-in-card"></div>
+
+<script>
+    import { auth } from "../../lib/authStore";
+    document.addEventListener(
+        "astro:page-load",
+        () => {
+            // This only runs once.
+            auth.subscribe((clerk) => {
+                if (clerk?.loaded && !clerk.user) {
+                    const signInCard = document.getElementById(
+                        "auth-sign-in-card",
+                    ) as HTMLDivElement;
+
+                    if (signInCard) {
+                        clerk.openSignIn({
+                            path: "/cursos/root-program",
+                            afterSignInUrl: "/cursos/root-program",
+                            afterSignUpUrl: "/cursos/root-program",
+                            routing: "path",
+                        });
+                    }
+                }
+            });
+        },
+        { once: true },
+    );
+</script>

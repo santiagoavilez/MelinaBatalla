@@ -9,6 +9,7 @@ import Cart from "@components/root-program/Cart.astro";
 import { db, Course, Lesson, eq } from "astro:db";
 
 const lessons = await db.select().from(Lesson).where(eq(Lesson.courseId, 1));
+export const prerender = true;
 ---
 
 <MainLayout

@@ -2,15 +2,18 @@
 import NavButton from "./NavButton";
 
 import nazaPortrait from "@assets/root-program/naza-root-program.png";
+import SignedOut from "@components/auth/SignedOut.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
 import { Image } from "astro:assets";
+import type React from "react";
 const { slug } = Astro.params;
 
 //console.log("locals", Astro.locals);
 ---
 
-<nav  class="md:hidden bg-marmol px-1 py-1">
-    <NavButton client:visible slug={slug as string}>
-        <a href="/cursos/root-program" class="w-full">
+<nav class="md:hidden bg-marmol px-1 py-1">
+    <NavButton client:visible slug={slug as string} >
+
             <Image
                 alt={"Nazarena Batalla en un retrato de estudio."}
                 src={nazaPortrait}
@@ -18,6 +21,7 @@ const { slug } = Astro.params;
                 format="webp"
                 class={"rounded-full cursor-pointer w-20 h-20 shadow-lg"}
             />
-        </a>
+
+
     </NavButton>
 </nav>

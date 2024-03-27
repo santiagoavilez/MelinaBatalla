@@ -10,8 +10,10 @@ import { eq, desc, and } from "astro:db";
 import { Lesson, db } from "astro:db";
 import Classvideo from "@components/root-program/Classvideo";
 import SignedIn from "@components/auth/SignedIn.astro";
+import SignedOut from "@components/auth/SignedOut.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
 
-const { userId, bonus } = Astro.locals;
+const { bonus } = Astro.locals;
 
 export const getStaticPaths = async () => {
     const lessons = await db
@@ -41,7 +43,9 @@ export const prerender = true;
 ---
 
 <CoursesLayout slug={slug}>
-    <div class="h-full w-full">
+    <div
+        class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+    >
         {
             slug === "potenciador" ? (
                 bonus === "true" ? (
@@ -60,36 +64,32 @@ export const prerender = true;
             ) : (
                 <section class="h-full p-6   md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
-                        <SignedIn>
-                            <iframe
-                                id={`panda-${lesson?.video_id}`}
-                                title="clase de video"
-                                src={`https://player-vz-c8120ef3-31f.tv.pandavideo.com/embed/?v=${lesson?.video_id}`}
-                                class="w-full aspect-video rounded-lg"
-                                allowfullscreen
-                            />
-                        </SignedIn>
+                        <Classvideo
+                            client:only
+                            videoId={lesson?.video_id as string}
+                            lessonId={lesson.id}
+                        />
                     </div>
                 </section>
             )
         }
-    </div>
 
-    <MarkCompleted
-        client:only
-        lessonId={lesson.id}
-        userId={userId as string}
-        lessonSlug={slug as string}
-    />
-
-    <div class="text-left flex flex-col items-start w-full md:px-10 p-6">
-        <h1
-            class="inline-flex items-center text-2xl xl:text-3xl font-semibold pb-4 gap-3"
+        <MarkCompleted
+            client:only
+            lessonId={lesson.id}
+            lessonSlug={slug as string}
+        />
+        <div
+            class="text-left flex flex-col items-start w-full md:px-10 p-6 max-w-screen-xl"
         >
-            <Play className="fill-negro hidden md:block " />Modulo {
-                lesson.id + 1
-            }: {lesson.name}
-        </h1>
-        <p class="text-left pb-4">{lesson.description}</p>
+            <h1
+                class="inline-flex items-center text-2xl xl:text-3xl font-semibold pb-4 gap-3"
+            >
+                <Play className="fill-negro hidden md:block " />Modulo {
+                    lesson.id + 1
+                }: {lesson.name}
+            </h1>
+            <p class="text-left pb-4">{lesson.description}</p>
+        </div>
     </div>
 </CoursesLayout>
