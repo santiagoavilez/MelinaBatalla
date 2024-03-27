@@ -17,41 +17,35 @@ export const POST: APIRoute = async ({ request }) => {
         const requestBody = await clonedReq.text();
 
         const hmac = crypto.createHmac("sha256", secret);
-        let digest = Buffer.from(
-            hmac.update(requestBody).digest("hex"), 'utf8'
+        const digest = Buffer.from(
+            hmac.update(requestBody).digest("hex"),
+            "utf8"
         );
+        console.log(hmac);
+        const signature = Buffer.from(request.headers.get("X-Signature") || "", "utf8");
+        console.log(digest);
+        console.log(signature);
 
-        const signatureHeader = request.headers.get("X-Signature");
-        if (!signatureHeader) {
-            throw new Error("No X-Signature header provided.");
-        }
-        const hmac2 = crypto.createHmac("sha256", signatureHeader);
-        const signature = Buffer.from(
-            hmac2.update(requestBody).digest("hex"), 'utf8'
-        );
         if (digest.length !== signature.length) {
-            console.log(digest.length);
-            console.log(signature.length);
             throw new Error("Invalid signature length.");
         }
 
         if (!crypto.timingSafeEqual(digest, signature)) {
-            console.log(digest);
-            console.log( signature);
             throw new Error("Invalid signature.");
         }
 
         console.log(body);
-        console.log(eventType);
+
         // Logic according to event
         if (eventType === "order_created") {
-            const bonus = body.meta.custom_data?.bonus as string;
+            const bonus = body.meta.custom_data.bonus;
             const emailAddress = body.data.attributes.user_email;
             const userName = body.data.attributes.user_name;
             const isSuccessful = body.data.attributes.status === "paid";
 
             if (isSuccessful) {
                 const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })
+                clerk.signInTokens.createSignInToken
                 // Create user in Clerk
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
@@ -66,10 +60,13 @@ export const POST: APIRoute = async ({ request }) => {
 
 
                 console.log(invitation);
-                return Response.json({ invitation: invitation });
 
             }
         }
+
+
+
+
         return Response.json({ message: "Webhook received" });
     } catch (err) {
         console.error(err);

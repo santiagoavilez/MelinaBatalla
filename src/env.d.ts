@@ -10,6 +10,8 @@ interface ImportMetaEnv {
     readonly ASTRO_STUDIO_APP_TOKEN : string;
     readonly VITE_ASTRO_STUDIO_REMOTE_DB_URL : string;
     readonly VITE_ASTRO_STUDIO_APP_TOKEN : string;
+    readonly LEMON_API_KEY : string
+    readonly LEMON_SQUEEZY_DISCOUNT_CODE : string
 }
 interface ImportMeta {
     readonly env: ImportMetaEnv

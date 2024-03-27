@@ -20,9 +20,6 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
         }
     }, [])
     const $bonus = useStore(bonus)
-    const customprice = variant !== 'default' ? 4400 : ($bonus ? 33200 : 30500)
-    const discount_code = variant !== 'default' ? undefined : 'E1NZEXMW'
-
 
     const handleCompleteOrder = () => {
 
@@ -30,35 +27,8 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
             method: 'POST',
             body: JSON.stringify({
                 data: {
-                    "type": "checkouts",
-                    "attributes": {
-                        'custom_price': customprice,
-                        "checkout_options": {
-                            embed: true,
-                            "button_color": "#2DD272"
-                        },
-                        "checkout_data": {
-                            discount_code,
-                            "custom": {
-                                "user_id": '123',
-                                "bonus": $bonus ? 'true' : 'false',
-                            },
-                        },
-                    },
-                    "relationships": {
-                        "store": {
-                            "data": {
-                                "type": "stores",
-                                "id": "77898"
-                            }
-                        },
-                        "variant": {
-                            "data": {
-                                "type": "variants",
-                                "id": "307266"
-                            },
-                        }
-                    }
+                    bonus: $bonus,
+                    variant: variant,
                 }
             }),
             headers: {
