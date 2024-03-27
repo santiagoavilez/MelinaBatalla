@@ -9,19 +9,39 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
         // Catch the event type
-        const clonedReq = request.clone();
+        const clonedReq =  request.clone();
         const eventType = request.headers.get("X-Event-Name");
         const body = await request.json();
-
+        console.log(secret);
         // Check signature
+        const requestBody = await clonedReq.text();
+
         const hmac = crypto.createHmac("sha256", secret);
-        const digest = Buffer.from(
-            hmac.update(await clonedReq.text()).digest("hex"),
-            "utf8"
+        let digest = Buffer.from(
+            hmac.update(requestBody).digest("hex"), 'utf8'
         );
-        const signature = Buffer.from(request.headers.get("X-Signature") || "", "utf8");
+
+        const signatureHeader = request.headers.get("X-Signature");
+        if (!signatureHeader) {
+            throw new Error("No X-Signature header provided.");
+        }
+        const signature = Buffer.from(signatureHeader, 'hex');
+
+        if (digest.length !== signature.length) {
+            console.log(digest.length);
+            console.log(signature.length);
+            throw new Error("Invalid signature length.");
+        }
 
         if (!crypto.timingSafeEqual(digest, signature)) {
+            console.log(digest);
+            console.log(signature);
+            throw new Error("Invalid signature.");
+        }
+
+        if (!crypto.timingSafeEqual(digest, signature)) {
+            console.log(digest);
+            console.log( signature);
             throw new Error("Invalid signature.");
         }
 
