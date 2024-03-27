@@ -49,7 +49,7 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
                         "store": {
                             "data": {
                                 "type": "stores",
-                                "id": "76058"
+                                "id": "77898"
                             }
                         },
                         "variant": {
