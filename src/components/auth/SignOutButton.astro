@@ -14,7 +14,6 @@ const { className } = Astro.props;
             if (clerk?.loaded) {
                 const signOutButton =
                     document.getElementById("sign-out-button");
-                console.log("signOutButton", signOutButton);
                 signOutButton?.addEventListener("click", () => {
                     console.log("click signOutButton");
 

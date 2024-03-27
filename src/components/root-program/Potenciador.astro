@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+import bonusImage from "@assets/root-program/potenciador-blur.png";
+import { CardTitle } from "@components/ui/card";
+import { CompleteOrder } from "./CompleteOrder";
+import BonusSpotify from "@components/lessons/BonusSpotify.astro";
+---
+
+<section class="">
+    <div
+        id="bonus-container"
+        class="bg-yema hidden flex-col md:flex-row gap-4 rounded-xl p-4"
+    >
+        <div class="flex gap-4 flex-col justify-between w-full">
+            <div class="relative">
+                <Image
+                    alt={"potnciador de resultados blur."}
+                    src={bonusImage}
+                    widths={[450, 960, 1440, bonusImage.width]}
+                    sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonusImage.width}px`}
+                    format="webp"
+                    class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg md:hidden"}
+                />
+                <CardTitle
+                    className="text-2xl pb-2 text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                >
+                    Potenciador de resultados
+                </CardTitle>
+                <span>
+                    En este entrenamiento privado, te compartiré como
+                    multiplicar tus ganancias de tus servicios x2, x3 (Que no te
+                    va a llevar más de 30 minutos aplicar).
+                </span>
+            </div>
+
+            <div class="">
+                <CompleteOrder variant="secondary" client:only
+                    >Obtener Ahora</CompleteOrder
+                >
+            </div>
+        </div>
+        <div class="grow-0">
+            <div class="relative">
+                <Image
+                    alt={"potnciador de resultados blur."}
+                    src={bonusImage}
+                    widths={[450, 960, 1440, bonusImage.width]}
+                    sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonusImage.width}px`}
+                    format="webp"
+                    class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg hidden md:block"}
+                />
+            </div>
+        </div>
+    </div>
+
+    <BonusSpotify />
+</section>
+
+<script>
+    import { auth } from "@lib/authStore";
+
+    document.addEventListener("astro:page-load", (ev) => {
+        auth.subscribe((clerk) => {
+            if (!!clerk && clerk?.loaded) {
+                const user = clerk.user;
+                const bonus = clerk.user?.publicMetadata?.bonus;
+                if (bonus !== "true") {
+                    document
+                        .getElementById("bonus-container")!
+                        .classList.add("flex");
+                    document
+                        .getElementById("bonus-container")!
+                        .classList.remove("hidden");
+                } else {
+                    document
+                        .getElementById("bonus-container")!
+                        .classList.add("hidden");
+                    document
+                        .getElementById("bonus-container")!
+                        .classList.remove("flex");
+                }
+            }
+        });
+        /* eslint-disable no-alert, no-console */
+    });
+</script>

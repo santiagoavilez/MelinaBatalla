@@ -1,28 +1,38 @@
 ---
+
 ---
 
-<section
-
-    class="w-full p-6 md:p-10 flex flex-col justify-start gap-10"
->
+<section class="w-full flex flex-col justify-start gap-10">
     <div class="w-full flex flex-col items-center gap-4">
-        {" "}
-        potenciador
-        <div  id="embed-iframe"></div>
+        <div id="embed-iframe"></div>
     </div>
-    <script is:inline>
+    <script>
+        import { auth } from "@lib/authStore";
+
         document.addEventListener("astro:page-load", (ev) => {
-            // Pasa el documento entrante para establecer el tema en él
-            window.onSpotifyIframeApiReady = (IFrameAPI) => {
-                const element = document.getElementById("embed-iframe");
-                const options = {
-                    uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
-                };
-                const callback = (EmbedController) => {};
-                IFrameAPI.createController(element, options, callback);
-            };
+            auth.subscribe((clerk) => {
+                if (!!clerk && clerk?.loaded) {
+                    const user = clerk.user;
+                    const bonus = clerk.user?.publicMetadata?.bonus;
+                    if (bonus === "true") {
+                        window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
+                            const element =
+                                document.getElementById("embed-iframe");
+                            const options = {
+                                uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
+                            };
+                            const callback = (EmbedController: any) => {};
+                            IFrameAPI.createController(
+                                element,
+                                options,
+                                callback,
+                            );
+                        };
+                    }
+                }
+            });
+            /* eslint-disable no-alert, no-console */
         });
     </script>
-     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
-
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </section>

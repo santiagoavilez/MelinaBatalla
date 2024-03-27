@@ -20,7 +20,6 @@ export default function Classvideo({ videoId, lessonId }: {
     const clerk = useStore(auth);
     const user = clerk?.user;
     if (!clerk || !clerk?.loaded ) {
-        console.log('loading', clerk);
         return (
             <Skeleton className="aspect-video w-full flex items-center justify-center" />
         )

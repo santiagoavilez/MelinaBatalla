@@ -7,13 +7,10 @@ export default function BookLoader({ children }: { children?: React.ReactNode })
 
     const clerk = useStore(auth);
     if (!clerk || !clerk?.loaded) {
-        console.log('loading', clerk);
         return (
             <Skeleton className="aspect-square w-52 h-14 rounded-lg flex items-center justify-center" />
         )
     }
-
-    console.log('clerk', clerk)
     return (
         children
     )

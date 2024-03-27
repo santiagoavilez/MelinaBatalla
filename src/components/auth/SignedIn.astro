@@ -10,11 +10,9 @@ const { classes } = Astro.props;
     import { auth } from "../../lib/authStore";
     document.addEventListener("astro:page-load", () => {
         // This only runs once.
-        console.log("Auth", auth.get());
         auth.subscribe((clerk) => {
             if (!!clerk && clerk?.loaded) {
                 const signedIn = document.querySelectorAll(".auth-signed-in")!;
-                console.log("User is signed in", clerk, signedIn);
                 if (!!clerk.user) {
                     signedIn.forEach((el) => {
                         el.classList.remove("hidden");

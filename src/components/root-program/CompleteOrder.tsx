@@ -20,12 +20,10 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
             window.createLemonSqueezy()
         }
     }, [])
-    console.log('variant:', variant)
     const $bonus = useStore(bonus)
     const customprice = variant !== 'default' ? 4400 : ($bonus ? 33200 : 30500)
     const discount_code = variant !== 'default' ? undefined : 'E1NZEXMW'
-    console.log('discount_code:', discount_code)
-    console.log('customprice:', customprice)
+
 
     const handleCompleteOrder = () => {
 

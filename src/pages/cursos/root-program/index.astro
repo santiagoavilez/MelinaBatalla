@@ -10,7 +10,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@components/ui/card";
-import bonus from "@assets/root-program/potenciador-blur.png";
 import { Image } from "astro:assets";
 import DisplayUserName from "@components/auth/DisplayUserName";
 import SignedIn from "@components/auth/SignedIn.astro";
@@ -20,6 +19,7 @@ import SignedOut from "@components/auth/SignedOut.astro";
 import App from "@components/layouts/Iniciar-sesion";
 import SignInCard from "@components/auth/SignInCard.astro";
 import SignInButton from "@components/auth/SignInButton.astro";
+import Potenciador from "@components/root-program/Potenciador.astro";
 
 export const prerender = true;
 ---
@@ -30,7 +30,7 @@ export const prerender = true;
 >
     <SignedIn>
         <div
-            class="h-full min-h-svh flex justify-start p-6 bg-blanco w-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+            class="h-full min-h-svh flex justify-start p-6 md:p-10 bg-blanco w-full rounded-t-xl md:rounded-tr-none md:rounded-l-[3rem]"
         >
             <div
                 class="xxl:my-8 flex flex-col gap-10 px-0 text-left max-w-screen-lg"
@@ -57,51 +57,7 @@ export const prerender = true;
                     <LessonsList slug="atrae-clientes-comprometidos" />
                 </div>
 
-                <div
-                    class="bg-yema flex flex-col md:flex-row gap-4 rounded-3xl p-4"
-                >
-                    <div class="flex gap-4 flex-col justify-between w-full">
-                        <div class="relative">
-                            <Image
-                                alt={"potnciador de resultados blur."}
-                                src={bonus}
-                                widths={[450, 960, 1440, bonus.width]}
-                                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonus.width}px`}
-                                format="webp"
-                                class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg md:hidden"}
-                            />
-                            <CardTitle
-                                className="text-2xl pb-2 text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
-                            >
-                                Potenciador de resultados
-                            </CardTitle>
-                            <span>
-                                En este entrenamiento privado, te compartiré
-                                como multiplicar tus ganancias de tus servicios
-                                x2, x3 (Que no te va a llevar más de 30 minutos
-                                aplicar).
-                            </span>
-                        </div>
-
-                        <div class="">
-                            <CompleteOrder variant="secondary" client:only
-                                >Obtener Ahora</CompleteOrder
-                            >
-                        </div>
-                    </div>
-                    <div class="grow-0">
-                        <div class="relative">
-                            <Image
-                                alt={"potnciador de resultados blur."}
-                                src={bonus}
-                                widths={[450, 960, 1440, bonus.width]}
-                                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonus.width}px`}
-                                format="webp"
-                                class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg hidden md:block"}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <Potenciador />
                 <!-- <LessonsList transition:persist/> -->
             </div>
         </div>

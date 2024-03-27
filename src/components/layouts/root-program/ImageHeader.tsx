@@ -7,13 +7,11 @@ export default function ImageHeader({ children }: { children?: React.ReactNode }
 
     const clerk = useStore(auth);
     if (!clerk || !clerk?.loaded) {
-        console.log('loading', clerk);
         return (
             <Skeleton className="aspect-square w-20 rounded-full flex items-center justify-center" />
         )
     }
 
-    console.log('clerk', clerk)
     return (
         children
     )

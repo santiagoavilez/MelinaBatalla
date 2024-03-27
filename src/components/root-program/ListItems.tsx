@@ -22,7 +22,6 @@ export default function ListItems({ slug }: Props) {
     const clerk = useStore(auth);
     const user = clerk?.user;
 
-    console.log("user", user?.id, clerk?.loaded);
     let skeletons = []
     for (let i = 0; i < 6; i++) {
         skeletons.push(i)

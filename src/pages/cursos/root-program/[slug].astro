@@ -12,6 +12,7 @@ import Classvideo from "@components/root-program/Classvideo";
 import SignedIn from "@components/auth/SignedIn.astro";
 import SignedOut from "@components/auth/SignedOut.astro";
 import SignInButton from "@components/auth/SignInButton.astro";
+import Potenciador from "@components/root-program/Potenciador.astro";
 
 const { bonus } = Astro.locals;
 
@@ -46,23 +47,13 @@ export const prerender = true;
     <div
         class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
     >
-        {
-            slug === "potenciador" ? (
-                bonus === "true" ? (
-                    <BonusSpotify />
+        <section
+            class="h-full p-6 md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl"
+        >
+            {
+                slug === "potenciador" ? (
+                    <Potenciador />
                 ) : (
-                    <section
-                        transition:persist
-                        class="w-full p-6 md:p-10 flex flex-col justify-start gap-10 "
-                    >
-                        <div class="w-full flex flex-col items-center gap-4">
-                            {" "}
-                            Compra el potenciador mamu
-                        </div>
-                    </section>
-                )
-            ) : (
-                <section class="h-full p-6   md:p-10 flex flex-col justify-start gap-10 max-w-screen-xl">
                     <div class="w-full flex items-center gap-4">
                         <Classvideo
                             client:only
@@ -70,9 +61,9 @@ export const prerender = true;
                             lessonId={lesson.id}
                         />
                     </div>
-                </section>
-            )
-        }
+                )
+            }
+        </section>
 
         <MarkCompleted
             client:only
