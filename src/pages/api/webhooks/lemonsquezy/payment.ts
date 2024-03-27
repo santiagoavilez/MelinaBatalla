@@ -42,10 +42,10 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         console.log(body);
-
+        console.log(eventType);
         // Logic according to event
         if (eventType === "order_created") {
-            const bonus = body.meta.custom_data.bonus;
+            const bonus = body.meta.custom_data?.bonus as string;
             const emailAddress = body.data.attributes.user_email;
             const userName = body.data.attributes.user_name;
             const isSuccessful = body.data.attributes.status === "paid";
@@ -66,13 +66,10 @@ export const POST: APIRoute = async ({ request }) => {
 
 
                 console.log(invitation);
+                return Response.json({ invitation: invitation });
 
             }
         }
-
-
-
-
         return Response.json({ message: "Webhook received" });
     } catch (err) {
         console.error(err);
