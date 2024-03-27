@@ -25,18 +25,14 @@ export const POST: APIRoute = async ({ request }) => {
         if (!signatureHeader) {
             throw new Error("No X-Signature header provided.");
         }
-        const signature = Buffer.from(signatureHeader, 'hex');
-
+        const hmac2 = crypto.createHmac("sha256", signatureHeader);
+        const signature = Buffer.from(
+            hmac2.update(requestBody).digest("hex"), 'utf8'
+        );
         if (digest.length !== signature.length) {
             console.log(digest.length);
             console.log(signature.length);
             throw new Error("Invalid signature length.");
-        }
-
-        if (!crypto.timingSafeEqual(digest, signature)) {
-            console.log(digest);
-            console.log(signature);
-            throw new Error("Invalid signature.");
         }
 
         if (!crypto.timingSafeEqual(digest, signature)) {
