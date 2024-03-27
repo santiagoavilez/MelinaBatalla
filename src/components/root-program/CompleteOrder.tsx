@@ -55,7 +55,7 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
                         "variant": {
                             "data": {
                                 "type": "variants",
-                                "id": "307170"
+                                "id": "307266"
                             },
                         }
                     }
