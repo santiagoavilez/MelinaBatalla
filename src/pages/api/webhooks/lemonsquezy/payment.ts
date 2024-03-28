@@ -4,7 +4,7 @@ import crypto from "crypto";
 const secret = import.meta.env.LEMON_SQUEEZY_WEBHOOK_SIGNATURE;
 const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
 const secretKey = import.meta.env.CLERK_SECRET_KEY
-const vercel_branch_url = import.meta.env.VERCEL_BRANCH_URL
+const vercel_branch_url = import.meta.env.PUBLIC_VERCEL_BRANCH_URL
 
 export const POST: APIRoute = async ({ request }) => {
 

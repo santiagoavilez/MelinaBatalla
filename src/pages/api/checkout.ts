@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
                                  variant_id,
 
                              ],
-                             redirect_url: `${import.meta.env.VERCEL_BRANCH_URL}/cursos/root-program`,
+                             redirect_url: `${import.meta.env.PUBLIC_VERCEL_BRANCH_URL}/cursos/root-program`,
                          },
                         "checkout_options": {
                             embed: true,
@@ -48,7 +48,7 @@ export const POST: APIRoute = async ({ request }) => {
                         "checkout_data": {
                             discount_code,
                             "custom": {
-                                "userId": userId,
+                                "userId": userId ?? '',
                                 "bonus": $bonus ? 'true' : 'false',
                                 "variant": variant === 'default' ? 'default' : "potenciador",
 
