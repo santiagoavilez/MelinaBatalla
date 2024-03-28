@@ -14,6 +14,8 @@ export const POST: APIRoute = async ({ request }) => {
         const eventType = request.headers.get("X-Event-Name");
         const body = await request.json();
         // Check signature
+        console.log(vercel_branch_url)
+
         const requestBody = await clonedReq.text();
 
         const hmac = crypto.createHmac("sha256", secret);

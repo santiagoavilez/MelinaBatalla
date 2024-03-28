@@ -4,6 +4,7 @@ const secret = import.meta.env.LEMON_API_KEY;
 const code = import.meta.env.LEMON_SQUEEZY_DISCOUNT_CODE;
 const potenciador = import.meta.env.LEMON_POTENCIADOR_VARIANT_ID;
 const root = import.meta.env.LEMON_ROOT_VARIANT_ID;
+const vercel_branch_url = import.meta.env.PUBLIC_VERCEL_BRANCH_URL;
 
 export const POST: APIRoute = async ({ request }) => {
 
@@ -18,7 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         console.log(variant, $bonus, userId, customprice, discount_code, variant_id)
         console.log(body);
-
+        console.log(vercel_branch_url)
         const req = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
             method: 'POST',
             headers: {
@@ -35,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
                                  variant_id,
 
                              ],
-                             redirect_url: `${import.meta.env.PUBLIC_VERCEL_BRANCH_URL}/cursos/root-program`,
+                             redirect_url: `${vercel_branch_url}/cursos/root-program`,
                          },
                         "checkout_options": {
                             embed: true,
@@ -48,7 +49,7 @@ export const POST: APIRoute = async ({ request }) => {
                         "checkout_data": {
                             discount_code,
                             "custom": {
-                                "userId": userId ?? '',
+                                "userId": userId ?? '123',
                                 "bonus": $bonus ? 'true' : 'false',
                                 "variant": variant === 'default' ? 'default' : "potenciador",
 
