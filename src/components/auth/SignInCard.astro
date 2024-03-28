@@ -17,7 +17,7 @@
 
             auth.subscribe(async (clerk) => {
                 if (clerk?.loaded && !clerk.user) {
-                    const param = "__clerk_invitation_token";
+                    const param = "__clerk_ticket";
                     const ticket = new URL(
                         window.location.href,
                     ).searchParams.get(param);
