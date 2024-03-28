@@ -17,6 +17,11 @@
 
             auth.subscribe(async (clerk) => {
                 if (clerk?.loaded && !clerk.user) {
+                    const status = "__clerk_status";
+                    const statusParam = new URL(
+                        window.location.href,
+                    ).searchParams.get(status);
+
                     const param = "__clerk_ticket";
                     const ticket = new URL(
                         window.location.href,
@@ -27,7 +32,7 @@
                         "auth-sign-in-card",
                     ) as HTMLDivElement;
 
-                    if (ticket) {
+                    if (ticket || statusParam === "sign_up") {
                         console.log(ticket);
 
                         clerk.mountSignUp(signInCard, {
