@@ -1,0 +1,57 @@
+---
+
+---
+
+<div
+    id="auth-sign-in-card"
+    class="w-full self-center justify-self-center auth-sign-in-card"
+>
+</div>
+
+<script>
+    import { auth } from "@lib/authStore";
+    document.addEventListener(
+        "astro:page-load",
+        () => {
+            // This only runs once.
+
+            auth.subscribe(async (clerk) => {
+                if (clerk?.loaded && !clerk.user) {
+                    const status = "__clerk_status";
+                    const statusParam = new URL(
+                        window.location.href,
+                    ).searchParams.get(status);
+
+                    const param = "__clerk_ticket";
+                    const ticket = new URL(
+                        window.location.href,
+                    ).searchParams.get(param);
+                    console.log(ticket);
+
+                    const signInCard = document.getElementById(
+                        "auth-sign-in-card",
+                    ) as HTMLDivElement;
+
+                    if (ticket || statusParam === "sign_up") {
+                        console.log(ticket);
+
+                        clerk.mountSignUp(signInCard, {
+                            path: "/cursos/root-program",
+                            redirectUrl: "/cursos/root-program",
+                            routing: "virtual",
+                        });
+                    } else {
+                        if (signInCard && !ticket) {
+                            clerk.mountSignIn(signInCard, {
+                                path: "/cursos/root-program",
+                                redirectUrl: "/cursos/root-program",
+                                routing: "virtual",
+                            });
+                        }
+                    }
+                }
+            });
+        },
+        { once: true },
+    );
+</script>

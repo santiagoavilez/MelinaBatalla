@@ -1,26 +1,27 @@
 import Clerk from '@clerk/clerk-js'
 
 import { auth } from './authStore'
+import { esES } from './es-ES'
 
 
 const clerkPublishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
 let clerk: Clerk
 
+const appearance = {
+    elements: {
+        footer: { 'display': 'none' },
+        logoBox: { 'justify-content': 'center' }
+    }
+}
 export const initializeClerk = () => {
     const authNano = auth.get()
-    console.log('authNano', authNano)
     if (authNano) return
-    console.log('authNano', authNano)
 
     clerk = new Clerk(clerkPublishableKey)
     clerk
-        .load()
+        .load({localization: esES, appearance })
         .then(() => {
-            console.log('authNano', clerk)
             auth.set(clerk)
-            document.cookie = `userId=${clerk?.user?.id}; path=/`;
-
-
         })
         .catch(error => console.error(error))
 }

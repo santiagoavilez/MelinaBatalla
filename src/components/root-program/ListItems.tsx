@@ -1,67 +1,79 @@
-import { useEffect } from 'react';
 import LessonsItem from './LessonsItem';
-import { completedLessonsStore } from '@lib/bonusStore';
-import type { ILesson, ILessonProgress } from 'db/types';
-import type { JsxChild } from 'typescript';
+import { $lessonsatom } from '@lib/bonusStore';
+
+import { useStore } from '@nanostores/react';
+import { auth } from '@lib/authStore';
+import React, { useEffect } from 'react';
+import { Button } from '@components/ui/button';
+import { Skeleton } from '@components/ui/skeleton';
+import { Loader2 } from 'lucide-react';
 
 
 interface Props {
-    lessons: ILesson[];
     slug: string;
-    CourseSlug: string;
-    userId: string;
-    children?: JsxChild;
+    children?: React.ReactNode
 
 }
 
-export default function ListItems({ lessons, userId, slug, CourseSlug, children }:Props) {
-    useEffect(() => {
-        // Realiza una solicitud al servidor para obtener los datos cuando el componente se monta
-        fetch('/api/lessons/lessonscompleted').then(response => {
+export default function ListItems({ slug }: Props) {
 
-                // console.log(response);
-                return response.json();
 
-                })
-            .then((data: { lessonscompleted: ILessonProgress[] }) => {
-                // console.log(data  );
-                if (!data?.lessonscompleted) return;
-                const completedLessonIds = data?.lessonscompleted.reduce(
-                    (record, lesson) => {
-                        record[lesson.lessonId] = "completado"; // or any other string property of the lesson
-                        return record;
-                    },
-                    {} as Record<number, string>,
-                );
-                // console.log(completedLessonIds);
-                completedLessonsStore.set(completedLessonIds);
-                completedLessonsStore.get();
+    const lesonarrays = useStore($lessonsatom);
+    const clerk = useStore(auth);
+    const user = clerk?.user;
 
-            });
-    }, []);
-
-    // Renderiza los componentes hijos y pasa los datos como props
+    let skeletons = []
+    for (let i = 0; i < 6; i++) {
+        skeletons.push(i)
+    }
     return (
-        // <ul className="flex flex-col gap-8 divide-x divide-gray-900">
-        //     {lessons.map(lesson => (
-        //         <li className='' key={lesson.id}>
-        //         <LessonsItem lesson={lesson}
-        //             CourseSlug={CourseSlug}
-        //             slug={slug} />
-        //         </li>
-        //     ))}
-        // </ul>
+
         <ul className="flex flex-col gap-3">
-            {lessons.map((lesson, index) => (
-                <li className="relative z-10" key={lesson.id}>
-                    {index !== lessons.length - 1 && (
-                        <div className="absolute -z-10 w-full h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3"></div>
-                    )}
-                    <LessonsItem lesson={lesson}
-                        CourseSlug={CourseSlug}
-                        slug={slug} />
-                </li>
-            ))}
+            {
+                clerk?.loaded && user ? lesonarrays?.map((lesson, index) => (
+                    <li className="relative z-10 max-w-52" key={lesson.id}>
+                        {index !== lesonarrays.length - 1 && (
+                            <div className="absolute -z-10 w-full  h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3"></div>
+                        )}
+                        <LessonsItem lesson={lesson}
+                            slug={slug} />
+                    </li>
+                ))
+                    : clerk && clerk.loaded ? <Button id='sign-in' onClick={() => clerk?.openSignIn({
+                        afterSignInUrl: "/cursos/root-program",
+                        afterSignUpUrl: "/cursos/root-program",
+                    })}>
+                        Iniciar sesión
+                    </Button> : skeletons.map((_, i) => (
+                        <li className="relative z-10 max-w-52" key={i}>
+                            {i !== skeletons.length - 1 && (
+                                <div className="absolute -z-10 w-full h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3"></div>
+                            )}
+                            <div className=" animate-pulse rounded-md  bg-marmol md:bg-blanco/70 w-full pl-2 my-2   pr-6 flex items-center justify-between gap-2" >
+                                <div
+                                    className={`font-medium text-lg flex items-center  justify-between gap-2 `}
+
+                                >
+                                    <Loader2 className='animate-spin w-4' />{i < 4 ?`Módulo ${i+1}` :
+                                        i === 4 && 'Salvavidas' || i === 5 && 'Potenciador'
+                                        }
+
+                                </div>
+                            </div>
+                        </li>
+                    ))
+            }
         </ul>
     );
 }
+
+// const queryClient = new QueryClient()
+
+// export default function ListItemsProvider() {
+//     return (
+//         // Provide the client to your App
+//         <QueryClientProvider client={queryClient}>
+//             <ListItems />
+//         </QueryClientProvider>
+//     )
+// }

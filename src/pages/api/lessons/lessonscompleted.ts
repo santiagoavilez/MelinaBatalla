@@ -1,22 +1,46 @@
+import { auth } from "@lib/authStore";
 import type { APIRoute } from "astro";
-import { db, eq, LessonProgress } from "astro:db";
+import { and, db, eq, Lesson, LessonProgress } from "astro:db";
 
-
-export const GET: APIRoute = async ({  locals}) => {
+export const getLessons = async () => {
+    const lessons = await db
+        .select({ id: Lesson.id, name: Lesson.name, slug: Lesson.slug })
+        .from(Lesson);
+    return lessons;
+};
+export const POST: APIRoute = async ({ request}) => {
     try {
-        const { userId } = locals
+        const body = await request.json();
+        console.log("body", body);
+        const { userId } = body as { userId: string };
+        console.log("userId", userId);
         const lessonscompleted = await db
-            .select()
+            .select({
+                id: LessonProgress.lessonId,
+                slug: LessonProgress.lessonSlug,
+                status: LessonProgress.status
+            })
             .from(LessonProgress)
             .where(eq(LessonProgress.userId, userId as string));
-        //  console.log("lessonscompleted", lessonscompleted);
+
+        // const lessonswithCompleted = await db.
+        // select({
+        //     id: Lesson.id,
+        //     name: Lesson.name,
+        //     slug: Lesson.slug,
+        //     isCompleted: eq(LessonProgress.status, 'completado')
+        // }).
+        // from(Lesson).
+        // leftJoin(LessonProgress, and(eq(LessonProgress.userId,userId as string),eq(LessonProgress.lessonId,Lesson.id)))
+
+         console.log("lessonscompleted", lessonscompleted);
         return new Response(JSON.stringify({
-            lessonscompleted: lessonscompleted
+            lessons: lessonscompleted,
         })
         )
     }
     catch (error) {
-        // console.error('Error:', error);
+         console.log('Error:', error);
         return new Response(JSON.stringify({
             error: error
         }), {

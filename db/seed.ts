@@ -14,7 +14,7 @@ export default async function seed() {
 
 	await db.insert(Lesson).values([
 		{
-			id: 1,
+			id: 0,
 			courseId: 1,
 			name: 'Atrae clientes comprometidos con su proceso',
 			slug: 'atrae-clientes-comprometidos',
@@ -23,7 +23,7 @@ export default async function seed() {
 			description: 'Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados.'
 		},
 		{
-			id: 2,
+			id: 1,
 			courseId: 1,
 			name: 'Aprende a crear contenido funcional sin sacrificar tu paz',
 			slug: 'crea-contenido-funcional',
@@ -32,7 +32,7 @@ export default async function seed() {
 			description: 'Nunca más publicar cantidades excesivas de contenido sin obtener resultados y sacrificando tu tiempo. Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente.'
 		},
 		{
-			id: 3,
+			id: 2,
 			courseId: 1,
 			name: 'Obtén seguridad con una estrategia clara',
 			slug: 'obten-seguridad',
@@ -41,7 +41,7 @@ export default async function seed() {
 			description: 'Deja de depender de recomendados o la suerte. Te comparto la estrategia para atraer clientes interesados en invertir en ti.'
 		},
 		{
-			id: 4,
+			id: 3,
 			courseId: 1,
 			name: 'Aprende a enfocar tu energía',
 			slug: 'enfoca-tu-energia',
@@ -50,31 +50,24 @@ export default async function seed() {
 			description: 'Que tu energía deje de drenarse en tareas que no están alineadas a tus objetivos. Te comparto en que debes enfocar toda tu energía para obtener resultados.'
 		},
 		{
-			id: 5,
+			id: 4,
 			courseId: 1,
 			name: 'Salvavidas',
 			slug: 'salvavidas',
 			video_id: 'e215758c-39a4-4aa3-9a4e-0a15aa46ab19',
 			courseSlug: 'root-program',
-			description: 'Salvavidas en caso de emergencia.'
+			description: 'En este módulo "Salvavidas" hacemos un repaso de toda la estrategia completa desde contruir tu oferta, atraer clientes comprometidos, crear contenido funcional, obtener seguridad con una estrategia clara y enfocar tu energía.'
 		},
 		{
-
-			id: 6,
+			id: 5,
 			courseId: 1,
 			name: 'Potenciador',
 			slug: 'potenciador',
 			courseSlug: 'root-program',
-			description: 'Salvavidas en caso de emergencia.'
+			video_id: 'a',
+			description: 'Al adquirir el "Potenciador de Resultados", tras completar todos los módulos, obtendrás una reunión exclusiva 1:1, de 15 minutos, con Nazarena Batalla. En esta sesión, recibirás feedback personalizado para aclarar dudas y mejorar tus resultados.'
 		},
 
-		// {
-		// 	id: 5,
-		// 	courseId: 1,
-		// 	name: 'Atrae clientes comprometidos con su proceso',
-		// 	slug: 'atrae-clientes-comprometidos',
-		// 	description: 'Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados.'
-		// }
 	])
 
 }

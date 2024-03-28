@@ -1,30 +1,37 @@
 ---
-const {className} = Astro.props
+const { className } = Astro.props;
 ---
 
-<div id="sing-out-button" class:list={["cursor-pointer",className ]}><slot /></div>
+<div id="sign-out-button" class:list={["cursor-pointer", className]}>
+    <slot />
+</div>
 
 <script>
     import { auth } from "@lib/authStore";
-    import { navigate } from "astro:transitions/client";
+    import { initializeClerk } from "@lib/clerk";
+    document.addEventListener("astro:page-load", () => {
+        auth.subscribe((clerk) => {
+            if (clerk?.loaded) {
+                const signOutButton =
+                    document.getElementById("sign-out-button");
+                signOutButton?.addEventListener("click", () => {
+                    console.log("click signOutButton");
 
-    const signOutButton = document.getElementById("sing-out-button");
+                    clerk
+                        ?.signOut()
+                        .then(() => {
+                            console.log("signOut");
+                            auth.set(null);
+                            initializeClerk();
 
-    auth.listen((clerk) => {
-        if (!clerk) return;
-        signOutButton?.addEventListener("click", () => {
-            clerk
-                ?.signOut()
-                .then(() => {
-                    console.log("signOut");
-
-                    window.location.reload();
-                    navigate("/iniciar-sesion");
-                })
-                .catch((error) => {
-                    console.log("error", error);
+                            // window.location.reload();
+                            // navigate("/iniciar-sesion");
+                        })
+                        .catch((error) => {
+                            console.log("error", error);
+                        });
                 });
-            auth.set(null);
+            }
         });
     });
 </script>

@@ -1,17 +1,18 @@
 ---
 import { Separator } from "@components/ui/separator";
 import { InstagramIcon } from "lucide-react";
-import ProfileDropdown from "@components/auth/ProfileDropdown";
 import SignOutButton from "@components/auth/SignOutButton.astro";
-import { navigate } from "astro:transitions/client";
+import SignedIn from "@components/auth/SignedIn.astro";
 ---
 
-<footer class="flex flex-col p-6">
+<footer class="flex flex-col justify-self-end p-6" >
     <div class="inline-flex gap-2 my-2 underline">
         <a href="https://www.instagram.com/nazarena.batalla/">
             <InstagramIcon className="cursor-pointer" />
         </a>
-        <SignOutButton className=""> Cerrar Sesión </SignOutButton>
+        <SignedIn>
+            <SignOutButton className=""> Cerrar Sesión </SignOutButton>
+        </SignedIn>
     </div>
 
     <Separator className="bg-negro/20 my-2" />

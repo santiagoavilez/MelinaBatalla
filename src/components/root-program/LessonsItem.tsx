@@ -1,25 +1,26 @@
 import type { ILesson } from 'db/types';
-import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted } from '@lib/bonusStore';
+import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted, persistentCompletedLessons } from '@lib/bonusStore';
 import { useStore } from '@nanostores/react';
-import { Check, CheckCircle2, Circle, LockKeyholeIcon, Play } from 'lucide-react';
-import CircleCompletedLesson from './CircleCompletedLesson';
+import { Check, Circle, LockKeyholeIcon, Play } from 'lucide-react';
 import { cn } from '@lib/utils';
 import { cva } from 'class-variance-authority';
 import { navigate } from 'astro:transitions/client';
-import { useEffect } from 'react';
 
 interface Props {
-    lesson: ILesson;
+    lesson: Pick<ILesson, 'id' | 'name' | 'slug'>;
     slug: string;
-    CourseSlug: string;
 }
 
-function LessonsItem({ lesson, slug, CourseSlug }: Props) {
-    const completedLessonIds = useStore(completedLessonsStore);
+
+
+function LessonsItem({ lesson, slug }: Props) {
+    const completedLessonIds = useStore(persistentCompletedLessons);
+    if(slug=== lesson.slug) console.log("slug", slug, lesson.slug, lesson.id, )
+
 
     // console.log(completedLessonIds); // Verifica que el store se inicialice correctamente
-    const isAvailable = lesson.id === 1 || !!completedLessonIds[lesson.id - 1];
-    const isFirts = lesson.id === 1 || lesson.id === 6;
+    const isAvailable = lesson.id === 0 ||  !!completedLessonIds?.[lesson.id - 1];
+    const isFirts = lesson.id === 0 || lesson.id === 5;
     const canbeViewed = isAvailable || isFirts;
 
     const isDisabled = !isAvailable;
@@ -38,9 +39,10 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
     });
     let statusVariant : "blanco" | "gris" | "marron" |"yema"= "gris";
     if (slug === lesson.slug) {
+        console.log("actual", slug, lesson.slug, lesson.id,)
         statusVariant = "blanco";
     }
-    else if (completedLessonIds[lesson.id] === 'completado') {
+    else if (completedLessonIds?.[lesson.id]?.isCompleted === 'completado') {
         statusVariant = "yema";
     }
     else if (canbeViewed) {
@@ -54,14 +56,14 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
         <div
             className={cn(variant({ status: statusVariant }))}
             onClick={(e) => {
-                console.log("status", lesson.id, isDisabled);
+                console.log("status", lesson.id, isDisabled, slug);
                 if (!canbeViewed || slug === lesson.slug) {
                     console.log("No puedes navegar a esta lección ", lesson.id, canbeViewed);
                     e.preventDefault();
                 }
                 else {
-                    console.log("Navegando a la lección ", lesson.id);
-                    navigate(`/cursos/${CourseSlug}/${lesson.slug}`)
+                    console.log("Navegando a la lección ", lesson.slug);
+                    navigate(`/cursos/root-program/${lesson.slug}`)
 
                 }
             }}
@@ -70,19 +72,15 @@ function LessonsItem({ lesson, slug, CourseSlug }: Props) {
                 className={`font-medium text-lg flex items-center  justify-between gap-2 `}
 
             >
-                {/* {slug === lesson.slug ? <Play className=" fill-negro w-[14px]" /> : !isAvailable ? (
-                    <LockKeyholeIcon className=" w-8" />
-                ) : (
-                    <CheckCircle2 className=" w-8 stroke-yema " />
-                )} */}
+
                 {
-                    !completedLessonIds[lesson.id] ? (
+                    (!completedLessonIds?.[lesson.id]) ? (
                         canbeViewed ? <Play className=" w-4 fill-negro"  /> : <LockKeyholeIcon className=" w-4" />
                     ) :  (
                         <Check className=" w-4 stroke-yema " />
                     )
                 }
-                {lesson.id < 5 ? ("Módulo " +lesson.id): lesson.name}
+                {lesson.id < 4 ? ("Módulo " +(lesson.id+ 1)): lesson.name}
 
 
             </div>

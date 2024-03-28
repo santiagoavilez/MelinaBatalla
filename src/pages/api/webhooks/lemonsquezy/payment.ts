@@ -4,6 +4,7 @@ import crypto from "crypto";
 const secret = import.meta.env.LEMON_SQUEEZY_WEBHOOK_SIGNATURE;
 const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
 const secretKey = import.meta.env.CLERK_SECRET_KEY
+const vercel_branch_url = import.meta.env.PUBLIC_VERCEL_BRANCH_URL
 
 export const POST: APIRoute = async ({ request }) => {
 
@@ -12,60 +13,60 @@ export const POST: APIRoute = async ({ request }) => {
         const clonedReq = request.clone();
         const eventType = request.headers.get("X-Event-Name");
         const body = await request.json();
-
         // Check signature
+        console.log(vercel_branch_url)
+
+        const requestBody = await clonedReq.text();
+
         const hmac = crypto.createHmac("sha256", secret);
         const digest = Buffer.from(
-            hmac.update(await clonedReq.text()).digest("hex"),
+            hmac.update(requestBody).digest("hex"),
             "utf8"
         );
         const signature = Buffer.from(request.headers.get("X-Signature") || "", "utf8");
 
+        if (digest.length !== signature.length) {
+            throw new Error("Invalid signature length.");
+        }
+
         if (!crypto.timingSafeEqual(digest, signature)) {
             throw new Error("Invalid signature.");
         }
-
-        console.log(body);
 
         // Logic according to event
         if (eventType === "order_created") {
             const bonus = body.meta.custom_data.bonus;
             const emailAddress = body.data.attributes.user_email;
             const userName = body.data.attributes.user_name;
-            const firstName = userName.split(" ")[0];
-            const lastName = userName.split(" ")[1];
+            const userId = body.meta.custom_data.userId as string;
             const isSuccessful = body.data.attributes.status === "paid";
-
+            const isPotenciador = body.meta.custom_data.variant === "potenciador";
             if (isSuccessful) {
                 const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })
-                clerk.signInTokens.createSignInToken
                 // Create user in Clerk
+                console.log('Creating user in Clerk')
+                console.log(userId)
+                console.log(body.meta.custom_data.variant)
+                if (isPotenciador) {
+
+                    const user = await clerk.users.updateUserMetadata(userId, {
+                        publicMetadata: {
+                            bonus: 'true',
+                        }
+                    })
+                    return Response.json({ userPublicMetadata: user.publicMetadata });
+                }
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
-                    redirectUrl: 'https://2a60-181-230-166-180.ngrok-free.app/cursos/root-program',
+                    redirectUrl: `https://${vercel_branch_url}/cursos/root-program`,
                     publicMetadata: {
                         "bonus": bonus,
-
+                        "userName": userName,
                     },
                     ignoreExisting: true,
                 });
-
-
-
                 console.log(invitation);
-                // const newUser = await clerkClient.users.createUser({
-                //     firstName: firstName,
-                //     lastName: lastName,
-                //     publicMetadata:{
-                //         bonus: bonus,
-                //         isSuccessful: isSuccessful,
-                //     },
-                //     emailAddress: [emailAddress],
-                // });
-                // clerkClient.signInTokens.createSignInToken({
-                //     userId: newUser.id,
-                //     expiresInSeconds: 1000 * 60 * 60 * 24 * 7 * 4 * 3, // 3 months
-                // });
+                return Response.json({ invitation: invitation });
             }
         }
 
@@ -75,14 +76,7 @@ export const POST: APIRoute = async ({ request }) => {
         return Response.json({ message: "Webhook received" });
     } catch (err) {
         console.error(err);
-        return Response.json({ message: "Server error" }, { status: 500 });
+        return Response.json({ message: "Server error", error: err }, { status: 500 });
     }
 
-}
-
-export const GET: APIRoute = ({ params, request }) => {
-    return new Response(JSON.stringify({
-        message: "This was a GET!"
-    })
-    )
 }

@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import bonusImage from "@assets/root-program/potenciador-blur.png";
+import { CardTitle } from "@components/ui/card";
+import { CompleteOrder } from "./CompleteOrder";
+import  CompleteOrderAstro  from "./CompleteOrder.astro";
+import BonusSpotify from "@components/lessons/BonusSpotify.astro";
+---
+
+<section class="">
+    <div
+        id="skeleton"
+        class="w-full h-full max-h-[430px] md:h-96 animate-pulse bg-marmol p-4 rounded-xl aspect-[272/442] md:aspect-[989/343]"
+    >
+    </div>
+    <div
+        id="bonus-container"
+        class="bg-yema hidden h-full max-h-[600px] md:h-96 flex-col md:flex-row gap-4 rounded-xl p-4"
+    >
+        <div class="flex gap-4 flex-col justify-between w-full">
+            <div class="">
+                <div class="">
+                    <Image
+                        alt={"potnciador de resultados blur."}
+                        src={bonusImage}
+                        widths={[450, 960, 1440, bonusImage.width]}
+                        sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonusImage.width}px`}
+                        format="webp"
+                        loading="eager"
+                        class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg md:hidden"}
+                    />
+                </div>
+                <CardTitle
+                    className="text-2xl pb-2 text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                >
+                    Potenciador de resultados
+                </CardTitle>
+                <span>
+                    En este entrenamiento, te compartiré como multiplicar tus
+                    ganancias de tus servicios x2, x3 (Que no te va a llevar más
+                    de 30 minutos aplicar).
+                </span>
+            </div>
+
+            <div class="">
+                <!-- <CompleteOrder variant="secondary" client:only
+                    >Obtener Ahora</CompleteOrder
+                > -->
+                <CompleteOrderAstro variant="secondary">
+                    Completar mi compra
+                </CompleteOrderAstro>
+            </div>
+        </div>
+        <div class="w-full h-full">
+            <Image
+                alt={"potnciador de resultados blur."}
+                src={bonusImage}
+                widths={[450, 960, 1440, bonusImage.width]}
+                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonusImage.width}px`}
+                format="webp"
+                loading="eager"
+                class={"rounded-lg w-full cursor-pointer    shadow-lg hidden md:block"}
+            />
+        </div>
+    </div>
+
+    <BonusSpotify />
+</section>
+<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
+
+<script>
+    import { auth } from "@lib/authStore";
+
+    document.addEventListener("astro:page-load", (ev) => {
+        const bonusContainer = document.getElementById("bonus-container")!;
+        const skeleton = document.getElementById("skeleton")!;
+        auth.subscribe((clerk) => {
+            if (!!clerk && clerk?.loaded) {
+                const user = clerk.user;
+                const bonus = clerk.user?.publicMetadata?.bonus;
+                if (bonus !== "true") {
+                    skeleton.classList.add("hidden");
+                    bonusContainer.classList.add("flex");
+                    bonusContainer.classList.remove("hidden");
+                } else {
+                    skeleton.classList.add("hidden");
+                    bonusContainer.classList.add("hidden");
+                    bonusContainer.classList.remove("flex");
+                }
+            }
+        });
+        /* eslint-disable no-alert, no-console */
+    });
+</script>

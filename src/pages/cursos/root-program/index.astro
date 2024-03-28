@@ -1,0 +1,71 @@
+---
+// import { SignIn, SignedIn } from "@clerk/clerk-react";
+
+import LessonsList from "@components/root-program/LessonsList.astro";
+import CoursesLayout from "@components/layouts/CoursesLayout.astro";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@components/ui/card";
+import { Image } from "astro:assets";
+import DisplayUserName from "@components/auth/DisplayUserName";
+import SignedIn from "@components/auth/SignedIn.astro";
+import { Lock, LockKeyhole, LockKeyholeIcon } from "lucide-react";
+import { CompleteOrder } from "@components/root-program/CompleteOrder";
+import SignedOut from "@components/auth/SignedOut.astro";
+import App from "@components/layouts/Iniciar-sesion";
+import SignInCard from "@components/auth/SignInCard.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
+import Potenciador from "@components/root-program/Potenciador.astro";
+
+export const prerender = true;
+---
+
+<CoursesLayout
+    description={"sitio de melina batalla, comunicadora visual"}
+    title={"Melina Batalla"}
+>
+    <SignedIn>
+        <div
+            class="h-full min-h-svh flex justify-start p-6 md:p-10 bg-blanco w-full rounded-t-xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+            <div
+                class="xxl:my-8 flex flex-col gap-10 px-0 text-left max-w-screen-lg"
+            >
+                <Card className="bg-marmol  rounded-3xl ">
+                    <CardHeader className="">
+                        <h1
+                            class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                        >
+                            Bienvenida a Root program <DisplayUserName
+                                client:only
+                            />
+                        </h1>
+                        <span>
+                            "Si no puedes volar, corre; si no puedes correr,
+                            camina; si no puedes caminar, gatea, pero sigue
+                            avanzando hacia tu meta". Martin Luther King.
+                        </span>
+
+                    </CardHeader>
+                </Card>
+                <div class="">
+                    <LessonsList slug="atrae-clientes-comprometidos" />
+                </div>
+
+                <Potenciador />
+                <!-- <LessonsList transition:persist/> -->
+            </div>
+        </div>
+    </SignedIn>
+    <SignedOut>
+        <div
+            class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+            <SignInCard />
+        </div>
+    </SignedOut>
+</CoursesLayout>

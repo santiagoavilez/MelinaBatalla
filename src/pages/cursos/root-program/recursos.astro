@@ -1,0 +1,127 @@
+---
+import LessonsList from "@components/root-program/LessonsList.astro";
+import CoursesLayout from "@components/layouts/CoursesLayout.astro";
+import { Card, CardContent, CardHeader } from "@components/ui/card";
+import { Image } from "astro:assets";
+import templateBlur from "@assets/root-program/plantillas-blur.png";
+import SignedOut from "@components/auth/SignedOut.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
+import SignInCard from "@components/auth/SignInCard.astro";
+import SignedIn from "@components/auth/SignedIn.astro";
+import { Button } from "@components/ui/button";
+---
+
+<CoursesLayout
+    description={"sitio de melina batalla, comunicadora visual"}
+    title={"Melina Batalla"}
+>
+    <SignedIn>
+        <div
+            class="h-full min-h-svh p-6 md:p-10 flex flex-col gap-6 bg-blanco w-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+            <div class="max-w-screen-lg flex flex-col gap-6 md:gap-10">
+                <Card className="bg-marmol  rounded-3xl m ">
+                    <CardHeader className="">
+                        <h1
+                            class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                        >
+                            Recursos
+                        </h1>
+                        <span>
+                            "No podemos estar en modo de supervivencia. Tenemos
+                            que estar en modo de crecimiento". Jeff Bezos.
+                        </span>
+                    </CardHeader>
+                </Card>
+                <div
+                    class="flex h-full flex-wrap justify-center lg:grid lg:grid-cols-2 lg:items-stretch gap-6"
+                >
+                    <Card className="bg-marmol w-full  rounded-xl ">
+                        <CardHeader className="p-5">
+                            <div class="relative">
+                                <Image
+                                    alt={"potnciador de resultados blur."}
+                                    src={templateBlur}
+                                    widths={[
+                                        450,
+                                        960,
+                                        1440,
+                                        templateBlur.width,
+                                    ]}
+                                    sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${templateBlur.width}px`}
+                                    format="webp"
+                                    class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg "}
+                                />
+                                <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                    <a
+                                        href="/"
+                                    >
+                                        <Button> </Button>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <h1
+                                class="text-lg text-left md:text-2xl leading-5 tracking-tighter text-negro font-semibold"
+                            >
+                                Plantillas para creación de Carruseles:
+                            </h1>
+
+                            <span>
+                                Estas plantillas no se centran únicamente en la
+                                estética visual del contenido. Se centran
+                                principalmente en compartirte una estructura
+                                funcional que te permita vender. Por favor, lee
+                                detenidamente y aplica cada paso.
+                            </span>
+                        </CardHeader>
+                    </Card>
+                    <Card className="bg-marmol w-full    rounded-xl ">
+                        <CardHeader className="p-5">
+                            <Image
+                                alt={"potnciador de resultados blur."}
+                                src={templateBlur}
+                                widths={[450, 960, 1440, templateBlur.width]}
+                                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${templateBlur.width}px`}
+                                format="webp"
+                                class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg "}
+                            />
+                            <h1
+                                class="text-lg text-left md:text-2xl leading-5 tracking-tighter text-negro font-semibold"
+                            >
+                                Plantillas para creación de Carruseles:
+                            </h1>
+
+                            <span>
+                                Si aplicas correctamente cada paso, no
+                                necesitarás crear cantidades excesivas de
+                                contenido. Ya solo deberás enfocarte en la
+                                atracción de nuevos prospectos. Probablemente no
+                                te saldrá perfecto a la primera, todo es
+                                práctica.
+                            </span>
+                        </CardHeader>
+                    </Card>
+                </div>
+                <Card className="bg-marmol  rounded-3xl m ">
+                    <CardHeader className="">
+                        <span>
+                            "El que pasa el tiempo arrepintiéndose del pasado,
+                            pierde el presente y arriesga el futuro". Francisco
+                            de Quevedo.
+                        </span>
+                    </CardHeader>
+                </Card>
+            </div>
+        </div>
+    </SignedIn>
+    <SignedOut>
+        <div
+            class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+        >
+            <SignInCard />
+            <SignInButton />
+        </div>
+    </SignedOut>
+</CoursesLayout>

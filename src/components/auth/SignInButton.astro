@@ -2,21 +2,25 @@
 import { Button } from "@components/ui/button";
 ---
 
+
 <Button id="auth-sign-in-button" className="auth-sign-in-button">
     Iniciar sesión
 </Button>
 
 <script>
-    import { auth } from "../../lib/authStore";
-
+    import { auth } from "@lib/authStore";
     auth.subscribe((clerk) => {
-        if (clerk !== null && clerk.isReady()) {
-            const signInButton = document.getElementById("auth-sign-in-button");
+        if (clerk?.loaded) {
+            const signInButton = document.getElementById(
+                "auth-sign-in-button",
+            )!;
+
             const signInButtons = document.querySelectorAll(
                 ".auth-sign-in-button",
             )!;
             signInButtons.forEach((el) => {
                 el.addEventListener("click", () => {
+                    console.log("click");
                     clerk.openSignIn({
                         afterSignInUrl: "/cursos/root-program",
                         afterSignUpUrl: "/cursos/root-program",
@@ -25,6 +29,7 @@ import { Button } from "@components/ui/button";
             });
             if (signInButton) {
                 signInButton.addEventListener("click", () => {
+                    console.log("click");
                     clerk.openSignIn({
                         afterSignInUrl: "/cursos/root-program",
                         afterSignUpUrl: "/cursos/root-program",

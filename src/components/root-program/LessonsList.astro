@@ -1,53 +1,55 @@
 ---
 import { LessonProgress } from "astro:db";
-import { eq } from "astro:db";
-import { db } from "astro:db";
-import type { ILesson } from "db/types";
-import { completedLessonsStore } from "@lib/bonusStore";
-import LessonsItem from "./LessonsItem";
+import { persistentCompletedLessons } from "@lib/bonusStore";
 import ListItems from "./ListItems";
+import type { ILesson } from "db/types";
 
-interface Props {
-    lessons?: ILesson[];
-}
+import SignedIn from "@components/auth/SignedIn.astro";
+import SignedOut from "@components/auth/SignedOut.astro";
+import SignInButton from "@components/auth/SignInButton.astro";
+import { getLessons } from "src/pages/api/lessons/lessonscompleted";
+import LessonsItem from "./LessonsItem";
 
-const { CourseSlug, slug } = Astro.params as {
-    CourseSlug: string;
-    slug: string;
-};
-const { lessons } = Astro.props as Props;
+const { slug } = Astro.params;
 
-//console.log("locals", Astro.locals);
+// const completed = persistentCompletedLessons.get();
+// console.log(completed);
 
-const { userId } = Astro.locals;
-
-// const lessonscompleted = await db
-//     .select()
-//     .from(LessonProgress)
-//     .where(eq(LessonProgress.userId, userId as string));
-
-//  console.log("lessonscompleted", lessonscompleted);
-
-// console.log("cokkies", Astro.cookies.get("__session"));
-
-// const sessionid = Astro.cookies.get("__session");
-
-// const session = await clerk.sessions.getSession(sessionid?.value as string);
-// console.log("session", session);
-// Query the lessonscompleted table to find orders completed by a user
+// if (completed && !completed.length) {
+//     const { userId } = Astro.locals;
+//     const lessonscompleted = await db
+//         .select({
+//             id: LessonProgress.lessonId,
+//             slug: LessonProgress.lessonSlug,
+//             isCompleted: LessonProgress.status,
+//         })
+//         .from(LessonProgress)
+//         .where(eq(LessonProgress.userId, userId as string));
+//     if (lessonscompleted.length < 0) persistentCompletedLessons.set(null);
+//     persistentCompletedLessons.set(lessonscompleted);
+//     console.log(persistentCompletedLessons.get());
+// }
 ---
 
 <section class="pl-6 pr-6">
     <h4 class="font-semibold text-xl pb-2">Contenido del curso</h4>
-    {
-        !!lessons && (
-            <ListItems
-                client:only
-                userId={userId as string}
-                lessons={lessons}
-                CourseSlug={CourseSlug}
-                slug={slug}
-            />
-        )
-    }
+
+    <!-- <ul class="flex flex-col gap-3">
+            {
+                lessons?.map((lesson, index) => (
+                    <li class="relative z-10">
+                        {index !== lessons.length - 1 && (
+                            <div class="absolute -z-10 w-full h-3/6 border-l border-negro/20  right-full left-4 -bottom-1/3" />
+                        )}
+                        <LessonsItem
+                            client:only
+                            lesson={lesson}
+                            slug={slug as string}
+                        />
+                    </li>
+                ))
+            }
+        </ul> -->
+
+    <ListItems client:load slug={slug as string}><SignInButton /> </ListItems>
 </section>

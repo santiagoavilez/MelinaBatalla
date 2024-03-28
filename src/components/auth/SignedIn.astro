@@ -2,18 +2,16 @@
 const { classes } = Astro.props;
 ---
 
-<div class=`auth-signed-in hidden ${classes ?? ''}`>
+<div class=`auth-signed-in hidden w-full ${classes ?? ''}`>
     <slot />
 </div>
 
 <script>
     import { auth } from "../../lib/authStore";
-    console.log("Auth", auth.get());
     auth.subscribe((clerk) => {
-        if (clerk !== null && clerk.isReady()) {
+        if (!!clerk && clerk?.loaded) {
             const signedIn = document.querySelectorAll(".auth-signed-in")!;
             if (!!clerk.user) {
-                console.log("User is signed in", clerk);
                 signedIn.forEach((el) => {
                     el.classList.remove("hidden");
                 });
@@ -24,4 +22,21 @@ const { classes } = Astro.props;
             }
         }
     });
+    // document.addEventListener("astro:page-load", () => {
+    //     // This only runs once.
+    //     auth.subscribe((clerk) => {
+    //         if (!!clerk && clerk?.loaded) {
+    //             const signedIn = document.querySelectorAll(".auth-signed-in")!;
+    //             if (!!clerk.user) {
+    //                 signedIn.forEach((el) => {
+    //                     el.classList.remove("hidden");
+    //                 });
+    //             } else {
+    //                 signedIn.forEach((el) => {
+    //                     el.classList.add("hidden");
+    //                 });
+    //             }
+    //         }
+    //     });
+    // });
 </script>

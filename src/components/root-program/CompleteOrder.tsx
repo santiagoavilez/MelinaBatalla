@@ -1,84 +1,72 @@
 import { Button } from '@components/ui/button'
+import { auth } from '@lib/authStore'
 import { bonus } from '@lib/bonusStore'
 import { useStore } from '@nanostores/react'
+import { Loader2 } from 'lucide-react'
 import { useEffect } from 'react'
 
 
-const secret = import.meta.env.PUBLIC_LEMON_API_KEY
 
-export  function CompleteOrder() {
+interface Props {
+    variant?: 'default' | 'secondary'
+    children?: React.ReactNode
+}
+
+export function CompleteOrder({ variant = 'default', children }: Props) {
 
 
     useEffect(() => {
-        if(window) {
+        if (window) {
 
-        window.createLemonSqueezy()
+            window.createLemonSqueezy()
         }
-    }, [])
+    }, [window])
 
-    const $bonus = useStore(bonus)
-
-    const handleCompleteOrder = () => {
-
-        fetch('https://api.lemonsqueezy.com/v1/checkouts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${secret}`
-            },
-            body: JSON.stringify({
-                data: {
-                    "type": "checkouts",
-                    "attributes": {
-                        'custom_price': $bonus ? 33200: 28800,
-                        "checkout_options": {
-                            embed: true,
-                            "button_color": "#2DD272"
-                        },
-                        "checkout_data": {
-                            'discount_code': $bonus ? 'E1NZEXMW' :'EWOTQZMW',
-                            "custom": {
-                                "user_id": '123',
-                                "bonus": $bonus ? 'true' : 'false',
-                            },
-                        },
-                    },
-                    "relationships": {
-                        "store": {
-                            "data": {
-                                "type": "stores",
-                                "id": "76058"
-                            }
-                        },
-                        "variant": {
-                            "data": {
-                                "type": "variants",
-                                "id": "307170"
-                            },
-                        }
-                    }
-                }
-            })
-        })
-            .then(response => response.json())
-            .then(( response ) => {
-                console.log('data:', response);
-                const url = response?.data?.attributes.url;
-                if (url) {
-                    window.LemonSqueezy.Url.Open(url);
-                }
-
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    if(!window){
 
     }
 
+    if(!window ){
+        return (
+            <Button variant={variant} className="w-full md:w-fit animate-pulse  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
+               <Loader2 className='animate-spin' ></Loader2> ...Cargando
+            </Button>
+        )
+    }
+
+    const $bonus = useStore(bonus)
+    const clerk = useStore(auth)
+    const user =  clerk?.user
+    const handleCompleteOrder = () => {
+
+        fetch('/api/checkout', {
+            method: 'POST',
+            body: JSON.stringify({
+                data: {
+                    bonus: $bonus,
+                    variant: variant,
+                    userId : user?.id
+                }
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(response => response.json()).then((response) => {
+            console.log('data:', response);
+
+            const url = response?.url;
+            if (url) {
+                window.LemonSqueezy.Url.Open(url);
+            }
+
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
 
     return (
-        <Button id='complete-order' onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
-            Completar mi compra
+        <Button  variant={variant} onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
+            {children}
         </Button>
     )
 }

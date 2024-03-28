@@ -7,35 +7,17 @@ interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	image?: string | undefined;
-	lessons?: ILesson[];
+	slug?: string;
 }
-const { title, description, image } = Astro.props;
+const { title, description, slug } = Astro.props;
 import melinaPortrait from "@assets/Melina-batalla.png";
-import nazaPortrait from "@assets/root-program/naza-root-program.png";
 
-import CoursesNav from "@components/nav/CoursesNav.astro";
 import { slide, ViewTransitions } from "astro:transitions";
 import LessonsList from "@components/root-program/LessonsList.astro";
-import type { ILesson } from "db/types";
-import { Lesson } from "astro:db";
-import { db } from "astro:db";
-import { eq } from "astro:db";
-import { Image } from "astro:assets";
-import { CardTitle } from "@components/ui/card";
-import { Button } from "@components/ui/button";
-import { InstagramIcon, PlusIcon } from "lucide-react";
-import { Separator } from "@components/ui/separator";
-import ProfileDropdown from "@components/auth/ProfileDropdown";
+
 import SideBarHeader from "./root-program/SideBarHeader.astro";
 import SideBarFooter from "./root-program/SideBarFooter.astro";
 import NavBar from "./root-program/NavBar.astro";
-
-const { CourseSlug } = Astro.params;
-
-const lessons = await db
-	.select()
-	.from(Lesson)
-	.where(eq(Lesson.courseSlug, CourseSlug as string));
 ---
 
 <html lang="en">
@@ -90,37 +72,57 @@ const lessons = await db
 		<ViewTransitions />
 	</head>
 
-	<body class="bg-marmol w-full">
+	<body id="parent" class="bg-marmol w-full">
 		<div class="w-full h-full min-h-screen">
 			<div class="flex w-full">
 				<div
-					class="w-full max-w-64 hidden md:flex flex-col items-start justify-between gap-12"
+					class="w-full h-screen max-w-64 hidden md:flex flex-col items-start justify-between "
 					id="sideBar"
 				>
 					<div class="flex flex-col gap-4">
 						<SideBarHeader />
 
-						<LessonsList lessons={lessons} />
+						<LessonsList />
 					</div>
 
 					<SideBarFooter />
 				</div>
 				<div
-					transition:animate={slide({ duration: "0.7s" })}
+					transition:animate="slide"
 					class="bg-marmol w-full min-h-screen h-full md:rounded-l-[3rem]"
 				>
-					<NavBar transition:persist lessons={lessons} />
-					<div
-						class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
-					>
-						<slot />
-					</div>
+					<nav class="md:hidden bg-marmol px-1 py-1">
+						<NavBar />
+					</nav>
+
+					<slot />
 				</div>
 			</div>
 		</div>
 		<script>
 			import { initializeClerk } from "../../lib/clerk";
 			initializeClerk();
+		</script>
+		<script>
+			import { $lessonsatom } from "@lib/bonusStore";
+
+			document.addEventListener("astro:before-preparation", (ev) => {
+
+				const lessons = $lessonsatom.get();
+				const fromLessonSlug = ev.from.pathname.split("/").pop();
+				const toLessonSlug = ev.to.pathname.split("/").pop();
+
+				const fromLesson = lessons.find(
+					(lesson) => lesson.slug === fromLessonSlug,
+				);
+				const toLesson = lessons.find(
+					(lesson) => lesson.slug === toLessonSlug,
+				);
+				if (!!fromLesson && !!toLesson && fromLesson.id > toLesson.id) {
+					ev.direction = "back";
+				}
+				ev.loader();
+			});
 		</script>
 	</body>
 </html>
