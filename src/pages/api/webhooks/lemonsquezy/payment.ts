@@ -58,7 +58,7 @@ export const POST: APIRoute = async ({ request }) => {
                 }
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
-                    redirectUrl: `${vercel_branch_url}/cursos/root-program`,
+                    redirectUrl: `https://${vercel_branch_url}/cursos/root-program`,
                     publicMetadata: {
                         "bonus": bonus,
                         "userName": userName,

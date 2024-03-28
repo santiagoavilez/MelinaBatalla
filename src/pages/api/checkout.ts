@@ -19,7 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         console.log(variant, $bonus, userId, customprice, discount_code, variant_id)
         console.log(body);
-        console.log(vercel_branch_url)
+        console.log('import.meta.env:', vercel_branch_url)
         const req = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
             method: 'POST',
             headers: {
@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
                                  variant_id,
 
                              ],
-                             redirect_url: `${vercel_branch_url}/cursos/root-program`,
+                             redirect_url: `https://${vercel_branch_url}/cursos/root-program`,
                          },
                         "checkout_options": {
                             embed: true,
