@@ -41,16 +41,15 @@ export const prerender = true;
                             class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
                         >
                             Bienvenida a Root program <DisplayUserName
-                                client:load
+                                client:only
                             />
                         </h1>
-                        <CardContent>
-                            <span>
-                                "Si no puedes volar, corre; si no puedes correr,
-                                camina; si no puedes caminar, gatea, pero sigue
-                                avanzando hacia tu meta". Martin Luther King.
-                            </span>
-                        </CardContent>
+                        <span>
+                            "Si no puedes volar, corre; si no puedes correr,
+                            camina; si no puedes caminar, gatea, pero sigue
+                            avanzando hacia tu meta". Martin Luther King.
+                        </span>
+
                     </CardHeader>
                 </Card>
                 <div class="">
@@ -64,11 +63,9 @@ export const prerender = true;
     </SignedIn>
     <SignedOut>
         <div
-            class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco  rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
+            class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
         >
-           <SignInButton />
+            <SignInCard />
         </div>
     </SignedOut>
 </CoursesLayout>
-
-<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>

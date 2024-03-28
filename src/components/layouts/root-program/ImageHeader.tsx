@@ -12,8 +12,16 @@ export default function ImageHeader({ children }: { children?: React.ReactNode }
         )
     }
 
+    if(!clerk.user) {
+        return (
+            children
+        )
+    }
+
     return (
-        children
+        <a href="/cursos/root-program" className="w-full">
+        {children}
+        </a>
     )
 
 

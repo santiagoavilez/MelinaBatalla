@@ -1,11 +1,15 @@
 ---
-import { Button } from "@components/ui/button";
+
 ---
 
-<div id="auth-sign-in-card" class="w-full auth-sign-in-card"></div>
+<div
+    id="auth-sign-in-card"
+    class="w-full self-center justify-self-center auth-sign-in-card"
+>
+</div>
 
 <script>
-    import { auth } from "../../lib/authStore";
+    import { auth } from "@lib/authStore";
     document.addEventListener(
         "astro:page-load",
         () => {
@@ -17,31 +21,26 @@ import { Button } from "@components/ui/button";
                     const ticket = new URL(
                         window.location.href,
                     ).searchParams.get(param);
+                    console.log(ticket);
+
                     const signInCard = document.getElementById(
                         "auth-sign-in-card",
                     ) as HTMLDivElement;
+
                     if (ticket) {
                         console.log(ticket);
-                        const signUp = await clerk.client?.signUp.create({
+
+                        clerk.mountSignUp(signInCard, {
+                            path: "/cursos/root-program",
                             redirectUrl: "/cursos/root-program",
-                            strategy: "ticket",
-                            ticket,
+                            routing: "virtual",
                         });
-                        if (signUp) {
-                            clerk.mountSignUp(signInCard, {
-                                path: "/cursos/root-program",
-                                afterSignInUrl: "/cursos/root-program",
-                                afterSignUpUrl: "/cursos/root-program",
-                                routing: "path",
-                            });
-                        }
                     } else {
                         if (signInCard && !ticket) {
-                            clerk.openSignIn({
+                            clerk.mountSignIn(signInCard, {
                                 path: "/cursos/root-program",
-                                afterSignInUrl: "/cursos/root-program",
-                                afterSignUpUrl: "/cursos/root-program",
-                                routing: "path",
+                                redirectUrl: "/cursos/root-program",
+                                routing: "virtual",
                             });
                         }
                     }

@@ -1,5 +1,4 @@
 import React from "react";
-import { dark } from '@clerk/themes';
 import { ClerkProvider, SignIn, SignInButton, SignUp, SignedOut } from "@clerk/clerk-react";
 import { esES } from "@lib/es-ES";
 

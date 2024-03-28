@@ -1,6 +1,8 @@
 import { Button } from '@components/ui/button'
+import { auth } from '@lib/authStore'
 import { bonus } from '@lib/bonusStore'
 import { useStore } from '@nanostores/react'
+import { Loader2 } from 'lucide-react'
 import { useEffect } from 'react'
 
 
@@ -18,9 +20,23 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
 
             window.createLemonSqueezy()
         }
-    }, [])
-    const $bonus = useStore(bonus)
+    }, [window])
 
+    if(!window){
+
+    }
+
+    if(!window ){
+        return (
+            <Button variant={variant} className="w-full md:w-fit animate-pulse  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >
+               <Loader2 className='animate-spin' ></Loader2> ...Cargando
+            </Button>
+        )
+    }
+
+    const $bonus = useStore(bonus)
+    const clerk = useStore(auth)
+    const user =  clerk?.user
     const handleCompleteOrder = () => {
 
         fetch('/api/checkout', {
@@ -29,6 +45,7 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
                 data: {
                     bonus: $bonus,
                     variant: variant,
+                    userId : user?.id
                 }
             }),
             headers: {
@@ -46,7 +63,6 @@ export function CompleteOrder({ variant = 'default', children }: Props) {
             console.error('Error:', error);
         });
     }
-
 
     return (
         <Button  variant={variant} onClick={handleCompleteOrder} className="w-full md:w-fit  md:px-10 md:py-6 text-xl rounded-full self-center text-left " >

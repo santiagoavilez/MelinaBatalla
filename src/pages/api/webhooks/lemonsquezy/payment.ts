@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
         // Catch the event type
-        const clonedReq =  request.clone();
+        const clonedReq = request.clone();
         const eventType = request.headers.get("X-Event-Name");
         const body = await request.json();
         // Check signature
@@ -36,12 +36,24 @@ export const POST: APIRoute = async ({ request }) => {
             const bonus = body.meta.custom_data.bonus;
             const emailAddress = body.data.attributes.user_email;
             const userName = body.data.attributes.user_name;
+            const userId = body.meta.custom_data.userId as string;
             const isSuccessful = body.data.attributes.status === "paid";
-
+            const isPotenciador = body.meta.custom_data.variant === "potenciador";
             if (isSuccessful) {
                 const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })
-                clerk.signInTokens.createSignInToken
                 // Create user in Clerk
+                console.log('Creating user in Clerk')
+                console.log(userId)
+                console.log(body.meta.custom_data.variant)
+                if (isPotenciador) {
+
+                    const user = await clerk.users.updateUserMetadata(userId, {
+                        publicMetadata: {
+                            bonus: 'true',
+                        }
+                    })
+                    return Response.json({ userPublicMetadata: user.publicMetadata });
+                }
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
                     redirectUrl: `${vercel_branch_url}/cursos/root-program`,

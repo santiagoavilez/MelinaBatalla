@@ -13,6 +13,8 @@ interface ImportMetaEnv {
     readonly LEMON_API_KEY : string
     readonly LEMON_SQUEEZY_DISCOUNT_CODE : string
     readonly VERCEL_BRANCH_URL : string
+    readonly LEMON_ROOT_VARIANT_ID: string
+    readonly LEMON_POTENCIADOR_VARIANT_ID: string
 }
 interface ImportMeta {
     readonly env: ImportMetaEnv

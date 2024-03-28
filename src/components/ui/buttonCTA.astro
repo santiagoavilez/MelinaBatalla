@@ -11,7 +11,7 @@ const { className } = Astro.props as {
 <script>
     window.addEventListener("load", () => {
         console.log("DOM fully loaded and parsed");
-        const cartContainer = document.getElementById("complete-order")!;
+        const cartContainer = document.getElementById("complete-order-container")!;
         console.log("scroll to the cart", cartContainer);
         const ctaHero = document.querySelectorAll("[data-cta-hero]");
         if (cartContainer && ctaHero) {

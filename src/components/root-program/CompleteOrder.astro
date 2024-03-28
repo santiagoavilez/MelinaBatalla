@@ -1,0 +1,112 @@
+---
+import { Button, type ButtonVariants } from "@components/ui/button";
+import { Loader2 } from "lucide-react";
+
+interface Props {
+    variant: ButtonVariants["variant"];
+}
+const { variant } = Astro.props;
+---
+
+<div>
+    <Button
+        id="complete-order"
+        variant={variant}
+        data-message={variant}
+        className="w-full md:w-fit animate-pulse flex gap-2 cursor-not-allowed items-center  md:px-10 md:py-6 text-xl rounded-full self-center text-left "
+    >
+        <Loader2 id="skeleton-complete-order" className="animate-spin" />
+        <slot />
+    </Button>
+</div>
+
+<script>
+    import type { ButtonVariants } from "@components/ui/button";
+    import { auth } from "@lib/authStore";
+    import { bonus } from "@lib/bonusStore";
+
+    window.addEventListener(
+        "load",
+        () => {
+            // This only runs once.
+            const skeleton = document.getElementById(
+                "skeleton-complete-order",
+            )!;
+            const button = document.getElementById("complete-order")!;
+            const variant = button.dataset.message;
+            console.log("variant:", variant);
+
+            skeleton.classList.add("hidden");
+            button.classList.remove("animate-pulse");
+            button.classList.remove("cursor-not-allowed");
+            bonus.subscribe(($bonus) => {
+                console.log("bonus:", $bonus);
+                auth.subscribe((clerk) => {
+                    if (variant === "secondary") {
+                        if (clerk !== null && clerk?.user) {
+                            const user = clerk.user;
+                            console.log("clerk en potenciador:", clerk);
+                            console.log("user en potenciador:", user.id);
+
+                            button.addEventListener("click", () => {
+                                handleCompleteOrder({
+                                    bonus: $bonus,
+                                    variant:
+                                        variant as ButtonVariants["variant"],
+                                    userId: user.id,
+                                });
+                            });
+                        }
+                    } else {
+                        button.addEventListener("click", () => {
+                            console.log("click");
+                            handleCompleteOrder({
+                                bonus: $bonus,
+                                variant: variant as ButtonVariants["variant"],
+                                userId: null,
+                            });
+                        });
+                    }
+                });
+            });
+        },
+        { once: true },
+    );
+
+    const handleCompleteOrder = ({
+        bonus,
+        variant,
+        userId,
+    }: {
+        bonus: boolean | "indeterminate";
+        variant: ButtonVariants["variant"];
+        userId: string | undefined | null;
+    }) => {
+        fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify({
+                data: {
+                    bonus: bonus,
+                    variant: variant,
+                    userId: userId,
+                },
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log("data:", response);
+
+                const url = response?.url;
+                if (url) {
+                    window.LemonSqueezy.Url.Open(url);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+</script>
+<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>

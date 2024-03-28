@@ -2,6 +2,7 @@
 import { BonusCard } from "./BonusCard";
 import { CartItems } from "./CartItems";
 import { CompleteOrder } from "./CompleteOrder";
+import  CompleteOrderAstro  from "./CompleteOrder.astro";
 ---
 
 <section class="h-full p-6 xs:p-10 flex flex-col overflow-hidden gap-8 w-full">
@@ -15,9 +16,15 @@ import { CompleteOrder } from "./CompleteOrder";
         Resumen de Compra
     </h3>
     <CartItems client:idle />
-    <div id="complete-order" class="w-full flex justify-center" >
-        <CompleteOrder client:only> Completar mi compra </CompleteOrder>
+    <div id="complete-order-container" class="w-full flex justify-center">
+        <!-- <CompleteOrder client:only> Completar mi compra </CompleteOrder> -->
+        <CompleteOrderAstro variant="default">Completar mi compra</CompleteOrderAstro>
     </div>
+    <span class="text-xs text-gray-600 text-center"
+        >Destinaremos el 10% de las ganancias de este programa a <strong
+            >Greenpeace</strong
+        ></span
+    >
 </section>
+<script src="https://unpkg.com/taos@1.0.5/dist/taos.js" defer></script>
 
-<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>

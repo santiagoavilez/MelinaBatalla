@@ -13,6 +13,7 @@ import SignedIn from "@components/auth/SignedIn.astro";
 import SignedOut from "@components/auth/SignedOut.astro";
 import SignInButton from "@components/auth/SignInButton.astro";
 import Potenciador from "@components/root-program/Potenciador.astro";
+import BonusDescription from "@components/root-program/BonusDescription";
 
 const { bonus } = Astro.locals;
 
@@ -66,7 +67,7 @@ export const prerender = true;
         </section>
 
         <MarkCompleted
-            client:only
+            client:load
             lessonId={lesson.id}
             lessonSlug={slug as string}
         />
@@ -80,7 +81,13 @@ export const prerender = true;
                     lesson.id + 1
                 }: {lesson.name}
             </h1>
-            <p class="text-left pb-4">{lesson.description}</p>
+            {
+                slug === "potenciador" ? (
+                    <BonusDescription client:load />
+                ) : (
+                    <p class="text-left pb-4">{lesson.description}</p>
+                )
+            }
         </div>
     </div>
 </CoursesLayout>

@@ -5,6 +5,7 @@ import { useStore } from "@nanostores/react"
 import { navigate } from "astro:transitions/client"
 import { Check, MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { Suspense } from "react"
+import { Skeleton } from "../ui/skeleton"
 
 export interface MarkCompletedProps {
     lessonSlug: string
@@ -19,8 +20,18 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
     useFetchCompletedLessons()
     const persistCompleted = useStore(persistentCompletedLessons)
     const clerk = useStore(auth);
-
+    const arraylessons = useStore($lessonsatom)
     const user = clerk?.user;
+    if (clerk === null) {
+        console.log('clerk', clerk)
+        return (
+            <div className="px-6 md:px-10 md:max-w-screen-xl">
+                <Skeleton className='bg-marmol w-full h-6  ' />
+            </div>
+
+        )
+    }
+
     console.log('persistCompleted', persistCompleted);
     const isinStore = persistCompleted && persistCompleted[lessonId] ? true : false;
     const isfirtsOrbonus = lessonId === 0 || lessonId === 5;
@@ -61,7 +72,6 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
         }
 
     }
-    const arraylessons = useStore($lessonsatom)
 
     // go to previus class using the history to go back sumulating the back button
     const handlePreviusClass = async () => {

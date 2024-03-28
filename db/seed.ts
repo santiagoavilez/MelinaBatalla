@@ -56,7 +56,7 @@ export default async function seed() {
 			slug: 'salvavidas',
 			video_id: 'e215758c-39a4-4aa3-9a4e-0a15aa46ab19',
 			courseSlug: 'root-program',
-			description: 'Salvavidas en caso de emergencia.'
+			description: 'En este módulo "Salvavidas" hacemos un repaso de toda la estrategia completa desde contruir tu oferta, atraer clientes comprometidos, crear contenido funcional, obtener seguridad con una estrategia clara y enfocar tu energía.'
 		},
 		{
 			id: 5,
@@ -65,16 +65,9 @@ export default async function seed() {
 			slug: 'potenciador',
 			courseSlug: 'root-program',
 			video_id: 'a',
-			description: 'Salvavidas en caso de emergencia.'
+			description: 'Al adquirir el "Potenciador de Resultados", tras completar todos los módulos, obtendrás una reunión exclusiva 1:1, de 15 minutos, con Nazarena Batalla. En esta sesión, recibirás feedback personalizado para aclarar dudas y mejorar tus resultados.'
 		},
 
-		// {
-		// 	id: 5,
-		// 	courseId: 1,
-		// 	name: 'Atrae clientes comprometidos con su proceso',
-		// 	slug: 'atrae-clientes-comprometidos',
-		// 	description: 'Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados.'
-		// }
 	])
 
 }
