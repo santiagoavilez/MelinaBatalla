@@ -2,7 +2,7 @@
 import { Button } from "@components/ui/button";
 ---
 
-<div id="auth-sign-in-card" class="w-full  auth-sign-in-card"></div>
+<div id="auth-sign-in-card" class="w-full auth-sign-in-card"></div>
 
 <script>
     import { auth } from "../../lib/authStore";
@@ -10,19 +10,40 @@ import { Button } from "@components/ui/button";
         "astro:page-load",
         () => {
             // This only runs once.
-            auth.subscribe((clerk) => {
+
+            auth.subscribe(async (clerk) => {
                 if (clerk?.loaded && !clerk.user) {
+                    const param = "__clerk_invitation_token";
+                    const ticket = new URL(
+                        window.location.href,
+                    ).searchParams.get(param);
                     const signInCard = document.getElementById(
                         "auth-sign-in-card",
                     ) as HTMLDivElement;
-
-                    if (signInCard) {
-                        clerk.openSignIn({
-                            path: "/cursos/root-program",
-                            afterSignInUrl: "/cursos/root-program",
-                            afterSignUpUrl: "/cursos/root-program",
-                            routing: "path",
+                    if (ticket) {
+                        console.log(ticket);
+                        const signUp = await clerk.client?.signUp.create({
+                            redirectUrl: "/cursos/root-program",
+                            strategy: "ticket",
+                            ticket,
                         });
+                        if (signUp) {
+                            clerk.mountSignUp(signInCard, {
+                                path: "/cursos/root-program",
+                                afterSignInUrl: "/cursos/root-program",
+                                afterSignUpUrl: "/cursos/root-program",
+                                routing: "path",
+                            });
+                        }
+                    } else {
+                        if (signInCard && !ticket) {
+                            clerk.openSignIn({
+                                path: "/cursos/root-program",
+                                afterSignInUrl: "/cursos/root-program",
+                                afterSignUpUrl: "/cursos/root-program",
+                                routing: "path",
+                            });
+                        }
                     }
                 }
             });

@@ -2,6 +2,82 @@
 import { Button } from "@components/ui/button";
 ---
 
+<div id="auth-sign-in-card" class="w-full auth-sign-in-card"></div>
+
+<script>
+    import { auth } from "../../lib/authStore";
+    document.addEventListener(
+        "astro:page-load",
+        () => {
+            // This only runs once.
+
+            auth.subscribe(async (clerk) => {
+                if (clerk?.loaded && !clerk.user) {
+                    const param = "__clerk_invitation_token";
+                    const ticket = new URL(
+                        window.location.href,
+                    ).searchParams.get(param);
+                    const signInCard = document.getElementById(
+                        "auth-sign-in-card",
+                    ) as HTMLDivElement;
+                    const signInButton = document.getElementById(
+                        "auth-sign-in-button",
+                    )!;
+
+                    const signInButtons = document.querySelectorAll(
+                        ".auth-sign-in-button",
+                    )!;
+                    if (ticket) {
+                        console.log(ticket);
+                        signInButton.classList.add("hidden");
+                        const signUp = await clerk.client?.signUp.create({
+                            redirectUrl: "/cursos/root-program",
+                            strategy: "ticket",
+                            ticket,
+                        });
+                        if (signUp) {
+                            clerk.mountSignUp(signInCard, {
+                                path: "/cursos/root-program",
+                                afterSignInUrl: "/cursos/root-program",
+                                afterSignUpUrl: "/cursos/root-program",
+                                routing: "path",
+                            });
+                        }
+                    } else {
+                        if (signInCard && !ticket) {
+                            clerk.openSignIn({
+                                path: "/cursos/root-program",
+                                afterSignInUrl: "/cursos/root-program",
+                                afterSignUpUrl: "/cursos/root-program",
+                                routing: "path",
+                            });
+
+                            signInButtons.forEach((el) => {
+                                el.addEventListener("click", () => {
+                                    console.log("click");
+                                    clerk.openSignIn({
+                                        afterSignInUrl: "/cursos/root-program",
+                                        afterSignUpUrl: "/cursos/root-program",
+                                    });
+                                });
+                            });
+                            if (signInButton) {
+                                signInButton.addEventListener("click", () => {
+                                    console.log("click");
+                                    clerk.openSignIn({
+                                        afterSignInUrl: "/cursos/root-program",
+                                        afterSignUpUrl: "/cursos/root-program",
+                                    });
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        { once: true },
+    );
+</script>
 <Button id="auth-sign-in-button" className="auth-sign-in-button">
     Iniciar sesión
 </Button>

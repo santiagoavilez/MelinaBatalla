@@ -21,6 +21,7 @@ function App({ children, invitationkey }: Props) {
         <ClerkProvider
             localization={esES}
             publishableKey={clerkPubKey}
+
         >
 
             <SignedOut>

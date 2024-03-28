@@ -11,6 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
         const { variant, bonus: $bonus } = body.data
         const customprice = variant !== 'default' ? 4400 : ($bonus ? 33200 : 30500)
         const discount_code = variant !== 'default' ? undefined : code
+        const variant_id = variant === 'default' ? '307266' : '307268'
         console.log(body);
 
         const req = await fetch('https://api.lemonsqueezy.com/v1/checkouts', {
@@ -46,7 +47,7 @@ export const POST: APIRoute = async ({ request }) => {
                         "variant": {
                             "data": {
                                 "type": "variants",
-                                "id": "307266"
+                                "id": variant_id
                             },
                         }
                     }

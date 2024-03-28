@@ -12,7 +12,7 @@ interface ImportMetaEnv {
     readonly VITE_ASTRO_STUDIO_APP_TOKEN : string;
     readonly LEMON_API_KEY : string
     readonly LEMON_SQUEEZY_DISCOUNT_CODE : string
-    readonly PUBLIC_VERCEL_URL : string
+    readonly VERCEL_BRANCH_URL : string
 }
 interface ImportMeta {
     readonly env: ImportMetaEnv

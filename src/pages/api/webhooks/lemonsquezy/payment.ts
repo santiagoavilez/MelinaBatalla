@@ -4,7 +4,7 @@ import crypto from "crypto";
 const secret = import.meta.env.LEMON_SQUEEZY_WEBHOOK_SIGNATURE;
 const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
 const secretKey = import.meta.env.CLERK_SECRET_KEY
-const vercelurl = import.meta.env.PUBLIC_VERCEL_URL
+const vercel_branch_url = import.meta.env.VERCEL_BRANCH_URL
 
 export const POST: APIRoute = async ({ request }) => {
 
@@ -44,7 +44,7 @@ export const POST: APIRoute = async ({ request }) => {
                 // Create user in Clerk
                 const invitation = await clerk.invitations.createInvitation({
                     emailAddress: emailAddress,
-                    redirectUrl: vercelurl,
+                    redirectUrl: `${vercel_branch_url}/cursos/root-program`,
                     publicMetadata: {
                         "bonus": bonus,
                         "userName": userName,
