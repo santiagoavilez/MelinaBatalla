@@ -75,10 +75,12 @@ export const POST: APIRoute = async ({ request }) => {
         })
         const res = await req.json()
         const {data} = res
-        console.log(res)
         if (!data) {
             return Response.json({ message: "Server error", eror: res }, { status: 500 });
         }
+        console.log(res.data.attributes)
+        console.log(res.data.attributes.product_options)
+
         const url = data?.attributes?.url
         return Response.json({ url: url });
 

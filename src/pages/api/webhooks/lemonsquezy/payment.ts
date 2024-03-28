@@ -76,7 +76,7 @@ export const POST: APIRoute = async ({ request }) => {
         return Response.json({ message: "Webhook received" });
     } catch (err) {
         console.error(err);
-        return Response.json({ message: "Server error" }, { status: 500 });
+        return Response.json({ message: "Server error", error: err }, { status: 500 });
     }
 
 }
