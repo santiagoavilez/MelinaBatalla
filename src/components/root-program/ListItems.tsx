@@ -5,7 +5,6 @@ import { useStore } from '@nanostores/react';
 import { auth } from '@lib/authStore';
 import React, { useEffect, useState } from 'react';
 import { Button } from '@components/ui/button';
-import { Skeleton } from '@components/ui/skeleton';
 import { Loader2 } from 'lucide-react';
 
 
