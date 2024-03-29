@@ -13,7 +13,7 @@
             auth.subscribe((clerk) => {
                 if (!!clerk && clerk?.loaded) {
                     const user = clerk.user;
-                    const bonus = clerk.user?.publicMetadata?.bonus;
+                    const bonus = user?.publicMetadata?.bonus;
                     if (bonus === "true") {
                         window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
                             const element =
@@ -31,8 +31,7 @@
                     }
                 }
             });
-            /* eslint-disable no-alert, no-console */
         });
     </script>
-    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </section>
+<script src="https://open.spotify.com/embed/iframe-api/v1" defer></script>

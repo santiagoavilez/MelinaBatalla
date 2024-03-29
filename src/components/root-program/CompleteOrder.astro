@@ -25,53 +25,61 @@ const { variant } = Astro.props;
     import { auth } from "@lib/authStore";
     import { bonus } from "@lib/bonusStore";
 
-    window.addEventListener(
-        "load",
-        () => {
-            // This only runs once.
-            const skeleton = document.getElementById(
-                "skeleton-complete-order",
-            )!;
-            const button = document.getElementById("complete-order")!;
-            const variant = button.dataset.message;
-            console.log("variant:", variant);
+    window.addEventListener("load", () => {
+        // This only runs once.
+        const skeleton = document.getElementById("skeleton-complete-order")!;
+        const button = document.getElementById("complete-order")!;
+        const variant = button?.dataset.message;
+        console.log("variant:", variant);
 
-            skeleton.classList.add("hidden");
-            button.classList.remove("animate-pulse");
-            button.classList.remove("cursor-not-allowed");
-            bonus.subscribe(($bonus) => {
-                console.log("bonus:", $bonus);
-                auth.subscribe((clerk) => {
-                    if (variant === "secondary") {
-                        if (clerk !== null && clerk?.user) {
-                            const user = clerk.user;
-                            console.log("clerk en potenciador:", clerk);
-                            console.log("user en potenciador:", user.id);
-
-                            button.addEventListener("click", () => {
-                                handleCompleteOrder({
-                                    bonus: $bonus,
-                                    variant:
-                                        variant as ButtonVariants["variant"],
-                                    userId: user.id,
-                                });
-                            });
-                        }
-                    } else {
-                        button.addEventListener("click", () => {
-                            console.log("click");
-                            handleCompleteOrder({
-                                bonus: $bonus,
-                                variant: variant as ButtonVariants["variant"],
-                                userId: null,
-                            });
-                        });
-                    }
+        skeleton?.classList.add("hidden");
+        button?.classList.remove("animate-pulse");
+        button?.classList.remove("cursor-not-allowed");
+        console.log("button:", button);
+        bonus.subscribe(($bonus) => {
+            console.log("bonus:", $bonus);
+            if (variant === "default") {
+                button?.addEventListener("click", () => {
+                    console.log("click");
+                    handleCompleteOrder({
+                        bonus: $bonus,
+                        variant: variant as ButtonVariants["variant"],
+                        userId: null,
+                    });
                 });
-            });
-        },
-        { once: true },
-    );
+            }
+        });
+    });
+    document.addEventListener("astro:after-swap", () => {
+        // This only runs once.
+        const skeleton = document.getElementById("skeleton-complete-order")!;
+        const button = document.getElementById("complete-order")!;
+        const variant = button?.dataset.message;
+        console.log("variant:", variant);
+
+        skeleton?.classList.add("hidden");
+        button?.classList.remove("animate-pulse");
+        button?.classList.remove("cursor-not-allowed");
+        console.log("button:", button);
+
+        auth.subscribe((clerk) => {
+            if (variant === "secondary") {
+                if (clerk !== null && clerk?.user) {
+                    const user = clerk.user;
+                    console.log("clerk en potenciador:", clerk);
+                    console.log("user en potenciador:", user.id);
+
+                    button?.addEventListener("click", () => {
+                        handleCompleteOrder({
+                            bonus: false,
+                            variant: variant as ButtonVariants["variant"],
+                            userId: user.id,
+                        });
+                    });
+                }
+            }
+        });
+    });
 
     const handleCompleteOrder = ({
         bonus,

@@ -2,7 +2,6 @@
 import { Button } from "@components/ui/button";
 ---
 
-
 <Button id="auth-sign-in-button" className="auth-sign-in-button">
     Iniciar sesión
 </Button>
@@ -18,23 +17,55 @@ import { Button } from "@components/ui/button";
             const signInButtons = document.querySelectorAll(
                 ".auth-sign-in-button",
             )!;
-            signInButtons.forEach((el) => {
-                el.addEventListener("click", () => {
-                    console.log("click");
-                    clerk.openSignIn({
-                        afterSignInUrl: "/cursos/root-program",
-                        afterSignUpUrl: "/cursos/root-program",
+            const status = "__clerk_status";
+            const statusParam = new URL(window.location.href).searchParams.get(
+                status,
+            );
+
+            const param = "__clerk_ticket";
+            const ticket = new URL(window.location.href).searchParams.get(
+                param,
+            );
+            if (ticket || statusParam === "sign_up") {
+                console.log("sign up");
+
+                signInButtons.forEach((el) => {
+                    console.log("el");
+                    el.addEventListener("click", () => {
+                        console.log("sign up click");
+                        clerk.openSignUp({
+                            afterSignInUrl: "/cursos/root-program",
+                            afterSignUpUrl: "/cursos/root-program",
+                            routing: "virtual",
+                        });
                     });
                 });
-            });
-            if (signInButton) {
-                signInButton.addEventListener("click", () => {
-                    console.log("click");
-                    clerk.openSignIn({
-                        afterSignInUrl: "/cursos/root-program",
-                        afterSignUpUrl: "/cursos/root-program",
+
+                clerk.openSignUp({
+                    path: "/cursos/root-program",
+                    redirectUrl: "/cursos/root-program",
+                    routing: "virtual",
+                });
+            } else {
+                console.log("sign in");
+                signInButtons.forEach((el) => {
+                    el.addEventListener("click", () => {
+                        console.log("click");
+                        clerk.openSignIn({
+                            afterSignInUrl: "/cursos/root-program",
+                            afterSignUpUrl: "/cursos/root-program",
+                        });
                     });
                 });
+                if (signInButton) {
+                    signInButton.addEventListener("click", () => {
+                        console.log("click");
+                        clerk.openSignIn({
+                            afterSignInUrl: "/cursos/root-program",
+                            afterSignUpUrl: "/cursos/root-program",
+                        });
+                    });
+                }
             }
         }
     });
