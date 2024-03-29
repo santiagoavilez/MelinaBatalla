@@ -66,8 +66,9 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
             />
         </div>
     </div>
-
-    <BonusSpotify />
+    <div id="bonus-spotify" class="w-full h-full">
+        <BonusSpotify />
+    </div>
 </section>
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
 
@@ -76,18 +77,28 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 
     document.addEventListener("astro:page-load", (ev) => {
         const bonusContainer = document.getElementById("bonus-container")!;
+        const bonusSpotify = document.getElementById("bonus-spotify")!;
+
         const skeleton = document.getElementById("skeleton")!;
         auth.subscribe((clerk) => {
             if (!!clerk && clerk?.loaded) {
-                const bonus = clerk.user?.publicMetadata?.bonus;
-                if (bonus !== "true") {
-                    skeleton.classList.add("hidden");
-                    bonusContainer.classList.add("flex");
-                    bonusContainer.classList.remove("hidden");
+                if (clerk.user) {
+                    const bonus = clerk.user?.publicMetadata?.bonus;
+                    if (bonus !== "true") {
+                        skeleton.classList.add("hidden");
+                        bonusContainer.classList.add("flex");
+                        bonusContainer.classList.remove("hidden");
+                    } else {
+                        skeleton.classList.add("hidden");
+                        bonusContainer.classList.add("hidden");
+                        bonusContainer.classList.remove("flex");
+                        bonusSpotify.classList.remove("hidden");
+                    }
                 } else {
                     skeleton.classList.add("hidden");
-                    bonusContainer.classList.add("hidden");
-                    bonusContainer.classList.remove("flex");
+                    bonusContainer.classList.remove("hidden");
+                    bonusContainer.classList.add("flex");
+                    bonusSpotify.classList.add("hidden");
                 }
             }
         });
