@@ -71,7 +71,7 @@ export default function ListItems({ slug }: Props) {
         const ticket = new URL(
             window.location.href,
         ).searchParams.get(param);
-        console.log(ticket);
+
 
         const signInCard = document.getElementById(
             "auth-sign-in-card",
@@ -86,13 +86,12 @@ export default function ListItems({ slug }: Props) {
                 routing: "virtual",
             });
         } else {
-            if (signInCard && !ticket) {
                 clerk?.openSignIn({
                     afterSignInUrl: "/cursos/root-program",
                     afterSignUpUrl: "/cursos/root-program",
                     routing: "virtual",
                 });
-            }
+
         }
 }
 

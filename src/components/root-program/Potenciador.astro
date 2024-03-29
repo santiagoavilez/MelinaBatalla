@@ -8,10 +8,14 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 ---
 
 <section class="">
-
+    <div
+        id="skeleton"
+        class="w-full h-full max-h-[430px] md:h-96 animate-pulse bg-marmol p-4 rounded-xl aspect-[272/442] md:aspect-[989/343]"
+    >
+    </div>
     <div
         id="bonus-container"
-        class="bg-yema flex h-full max-h-[600px] md:h-96 flex-col md:flex-row gap-4 rounded-xl p-4"
+        class="bg-yema hidden h-full max-h-[600px] md:h-96 flex-col md:flex-row gap-4 rounded-xl p-4"
     >
         <div class="flex gap-4 flex-col justify-between w-full">
             <div class="">
@@ -42,7 +46,10 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                 <!-- <CompleteOrder variant="secondary" client:only
                     >Obtener Ahora</CompleteOrder
                 > -->
-                <CompleteOrderAstro transition:persist="slide" variant="secondary">
+                <CompleteOrderAstro
+                    transition:persist="slide"
+                    variant="secondary"
+                >
                     Completar mi compra
                 </CompleteOrderAstro>
             </div>
@@ -59,8 +66,42 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
             />
         </div>
     </div>
-
-    <BonusSpotify />
+    <div id="bonus-spotify" class="w-full h-full">
+        <BonusSpotify />
+    </div>
 </section>
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
 
+<script>
+    import { auth } from "@lib/authStore";
+
+    document.addEventListener("astro:page-load", (ev) => {
+        const bonusContainer = document.getElementById("bonus-container")!;
+        const bonusSpotify = document.getElementById("bonus-spotify")!;
+
+        const skeleton = document.getElementById("skeleton")!;
+        auth.subscribe((clerk) => {
+            if (!!clerk && clerk?.loaded) {
+                if (clerk.user) {
+                    const bonus = clerk.user?.publicMetadata?.bonus;
+                    if (bonus !== "true") {
+                        skeleton.classList.add("hidden");
+                        bonusContainer.classList.add("flex");
+                        bonusContainer.classList.remove("hidden");
+                    } else {
+                        skeleton.classList.add("hidden");
+                        bonusContainer.classList.add("hidden");
+                        bonusContainer.classList.remove("flex");
+                        bonusSpotify.classList.remove("hidden");
+                    }
+                } else {
+                    skeleton.classList.add("hidden");
+                    bonusContainer.classList.remove("hidden");
+                    bonusContainer.classList.add("flex");
+                    bonusSpotify.classList.add("hidden");
+                }
+            }
+        });
+        /* eslint-disable no-alert, no-console */
+    });
+</script>
