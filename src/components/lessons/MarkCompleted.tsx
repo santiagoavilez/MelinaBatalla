@@ -4,7 +4,7 @@ import { $lessonsatom, addLessonCompleted, addLessonCompletedTomap, completedLes
 import { useStore } from "@nanostores/react"
 import { navigate } from "astro:transitions/client"
 import { Check, MoveLeftIcon, MoveRightIcon } from "lucide-react"
-import { Suspense } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { Skeleton } from "../ui/skeleton"
 
 export interface MarkCompletedProps {
@@ -18,15 +18,25 @@ export interface MarkCompletedProps {
 
 export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedProps) {
     useFetchCompletedLessons()
-    const persistCompleted = useStore(persistentCompletedLessons)
-    const clerk = useStore(auth);
     const arraylessons = useStore($lessonsatom)
+    const persistCompleted = useStore(persistentCompletedLessons)
+
+
+    const [loaded, setLoaded] = useState(false);
+    const clerk = useStore(auth);
+
     const user = clerk?.user;
-    if (clerk === null) {
-        console.log('clerk', clerk)
+
+    useEffect(() => {
+        if (clerk && clerk.loaded) {
+            setLoaded(true);
+        }
+    }, [clerk]);
+
+    if (!loaded) {
         return (
             <div className="px-6 md:px-10 md:max-w-screen-xl">
-                <Skeleton className='bg-marmol w-full h-6  ' />
+                <Skeleton className='bg-marmol w-full h-8  ' />
             </div>
 
         )

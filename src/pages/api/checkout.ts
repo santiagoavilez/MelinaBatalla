@@ -4,7 +4,7 @@ const secret = import.meta.env.LEMON_API_KEY;
 const code = import.meta.env.LEMON_SQUEEZY_DISCOUNT_CODE;
 const potenciador = import.meta.env.LEMON_POTENCIADOR_VARIANT_ID;
 const root = import.meta.env.LEMON_ROOT_VARIANT_ID;
-const vercel_branch_url = import.meta.env.PUBLIC_VERCEL_BRANCH_URL;
+const vercel_branch_url = import.meta.env.PUBLIC_VERCEL_URL;
 
 export const POST: APIRoute = async ({ request }) => {
 

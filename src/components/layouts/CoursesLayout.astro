@@ -82,13 +82,13 @@ import NavBar from "./root-program/NavBar.astro";
 					<div class="flex flex-col gap-4">
 						<SideBarHeader />
 
-						<LessonsList />
+						<LessonsList transition:persist />
 					</div>
 
-					<SideBarFooter />
+					<SideBarFooter transition:persist />
 				</div>
 				<div
-					transition:animate="slide"
+					transition:animate={slide({duration: '0.6s'})}
 					class="bg-marmol w-full min-h-screen h-full md:rounded-l-[3rem]"
 				>
 					<nav class="md:hidden bg-marmol px-1 py-1">

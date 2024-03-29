@@ -28,44 +28,43 @@ export const prerender = true;
     description={"sitio de melina batalla, comunicadora visual"}
     title={"Melina Batalla"}
 >
-    <SignedIn>
+    <div
+        class="h-full min-h-svh flex justify-start p-6 md:p-10 bg-blanco w-full rounded-t-xl md:rounded-tr-none md:rounded-l-[3rem]"
+    >
         <div
-            class="h-full min-h-svh flex justify-start p-6 md:p-10 bg-blanco w-full rounded-t-xl md:rounded-tr-none md:rounded-l-[3rem]"
+            class="xxl:my-8 flex flex-col gap-10 px-0 text-left max-w-screen-lg"
         >
-            <div
-                class="xxl:my-8 flex flex-col gap-10 px-0 text-left max-w-screen-lg"
-            >
-                <Card className="bg-marmol  rounded-3xl ">
-                    <CardHeader className="">
-                        <h1
-                            class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
-                        >
-                            Bienvenida a Root program <DisplayUserName
-                                client:only
-                            />
-                        </h1>
-                        <span>
-                            "Si no puedes volar, corre; si no puedes correr,
-                            camina; si no puedes caminar, gatea, pero sigue
-                            avanzando hacia tu meta". Martin Luther King.
-                        </span>
-
-                    </CardHeader>
-                </Card>
-                <div class="">
-                    <LessonsList slug="atrae-clientes-comprometidos" />
-                </div>
-
-                <Potenciador />
-                <!-- <LessonsList transition:persist/> -->
+            <Card className="bg-marmol  rounded-3xl">
+                <CardHeader className="">
+                    <h1
+                        class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+                    >
+                        Bienvenida a Root program <DisplayUserName
+                            client:load
+                        />
+                    </h1>
+                    <span>
+                        "Si no puedes volar, corre; si no puedes correr, camina;
+                        si no puedes caminar, gatea, pero sigue avanzando hacia
+                        tu meta". Martin Luther King.
+                    </span>
+                </CardHeader>
+            </Card>
+            <div class="">
+                <LessonsList slug="atrae-clientes-comprometidos" />
+                <!-- <SignInCard /> -->
             </div>
+
+            <Potenciador />
+            <!-- <LessonsList transition:persist/> -->
         </div>
-    </SignedIn>
-    <SignedOut>
+    </div>
+
+    <!-- <SignedOut>
         <div
             class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
         >
             <SignInCard />
         </div>
-    </SignedOut>
+    </SignedOut> -->
 </CoursesLayout>
