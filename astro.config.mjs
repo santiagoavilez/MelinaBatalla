@@ -14,6 +14,7 @@ export default defineConfig({
     applyBaseStyles: false
   }), react(), db(), sitemap()],
   adapter: vercel({
-    imageService: false
+    imageService: false,
+    webAnalytics: {enabled: true}
   })
 });

@@ -10,6 +10,8 @@ interface Props {
 	description?: string | undefined;
 	image?: string | undefined;
 }
+import SpeedInsights from "@vercel/speed-insights/astro";
+
 const { title, description, image } = Astro.props;
 import melinaPortrait from "@assets/Melina-batalla.png";
 ---
@@ -25,6 +27,7 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 			content={description}
 		/>
 		<meta property="og:locale" content="es_ES" />
+		<SpeedInsights />
 
 		<meta
 			property="og:image"
