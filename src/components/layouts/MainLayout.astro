@@ -61,6 +61,49 @@ import melinaPortrait from "@assets/Melina-batalla.png";
 		<meta name="generator" content={Astro.generator} />
 
 		<link rel="icon" type="image/svg+xml" href="/MBlogo.svg" />
+		<link
+			rel="preload"
+			href="https://player-vz-c8120ef3-31f.tv.pandavideo.com.br/embed/css/styles.css"
+			as="style"
+		/>
+		<link
+			rel="prerender"
+			href="https://player-vz-c8120ef3-31f.tv.pandavideo.com.br/embed/?v=05c02b32-7443-4047-8b82-a33bddfce763"
+		/>
+		<link
+			rel="preload"
+			href="https://player-vz-c8120ef3-31f.tv.pandavideo.com.br/embed/js/hls.js"
+			as="script"
+		/>
+		<link
+			rel="preload"
+			href="https://player-vz-c8120ef3-31f.tv.pandavideo.com.br/embed/js/plyr.polyfilled.min.js"
+			as="script"
+		/>
+		<link
+			rel="preload"
+			href="https://config.tv.pandavideo.com.br/vz-c8120ef3-31f/05c02b32-7443-4047-8b82-a33bddfce763.json"
+			as="fetch"
+		/>
+		<link
+			rel="preload"
+			href="https://config.tv.pandavideo.com.br/vz-c8120ef3-31f/config.json"
+			as="fetch"
+		/>
+		<link
+			rel="preload"
+			href="https://b-vz-c8120ef3-31f.tv.pandavideo.com.br/05c02b32-7443-4047-8b82-a33bddfce763/playlist.m3u8"
+			as="fetch"
+		/>
+		<link
+			rel="dns-prefetch"
+			href="https://b-vz-c8120ef3-31f.tv.pandavideo.com.br"
+		/>
+		<link
+			rel="dns-prefetch"
+			href="https://player-vz-c8120ef3-31f.tv.pandavideo.com.br"
+		/>
+		<link rel="dns-prefetch" href="https://vz-c8120ef3-31f.b-cdn.net" />
 		<meta name="title" property="og:title" content={title} />
 		<title>{title}</title>
 	</head>
