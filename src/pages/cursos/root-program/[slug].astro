@@ -1,21 +1,16 @@
 ---
-import type { GetStaticPaths } from "astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
-import BonusSpotify from "@components/lessons/BonusSpotify.astro";
 import MarkCompleted from "@components/lessons/MarkCompleted";
 
 import { Play } from "lucide-react";
 
-import { eq, desc, and } from "astro:db";
+import { eq } from "astro:db";
 import { Lesson, db } from "astro:db";
 import Classvideo from "@components/root-program/Classvideo";
-import SignedIn from "@components/auth/SignedIn.astro";
-import SignedOut from "@components/auth/SignedOut.astro";
-import SignInButton from "@components/auth/SignInButton.astro";
+
 import Potenciador from "@components/root-program/Potenciador.astro";
 import BonusDescription from "@components/root-program/BonusDescription";
 
-const { bonus } = Astro.locals;
 
 export const getStaticPaths = async () => {
     const lessons = await db
@@ -44,7 +39,7 @@ const [lesson] = await db
 export const prerender = true;
 ---
 
-<CoursesLayout slug={slug}>
+<CoursesLayout title={lesson.name}  description={lesson.description} slug={slug}>
     <div
         class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
     >

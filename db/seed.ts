@@ -20,7 +20,7 @@ export default async function seed() {
 			slug: 'atrae-clientes-comprometidos',
 			courseSlug: 'root-program',
 			video_id: '157078f4-55dd-48fd-8fee-02ce9d9efb2a',
-			description: 'Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados.'
+			description: 'Empezarás a definir y atraer  clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfócate en aquellos que sí quieren ser ayudados.'
 		},
 		{
 			id: 1,
