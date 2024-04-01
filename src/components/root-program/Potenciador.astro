@@ -85,20 +85,20 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                 if (clerk.user) {
                     const bonus = clerk.user?.publicMetadata?.bonus;
                     if (bonus !== "true") {
-                        skeleton.classList.add("hidden");
-                        bonusContainer.classList.add("flex");
-                        bonusContainer.classList.remove("hidden");
+                        skeleton?.classList.add("hidden");
+                        bonusContainer?.classList.add("flex");
+                        bonusContainer?.classList.remove("hidden");
                     } else {
-                        skeleton.classList.add("hidden");
-                        bonusContainer.classList.add("hidden");
-                        bonusContainer.classList.remove("flex");
-                        bonusSpotify.classList.remove("hidden");
+                        skeleton?.classList.add("hidden");
+                        bonusContainer?.classList.add("hidden");
+                        bonusContainer?.classList.remove("flex");
+                        bonusSpotify?.classList.remove("hidden");
                     }
                 } else {
-                    skeleton.classList.add("hidden");
-                    bonusContainer.classList.remove("hidden");
-                    bonusContainer.classList.add("flex");
-                    bonusSpotify.classList.add("hidden");
+                    skeleton?.classList.add("hidden");
+                    bonusContainer?.classList.remove("hidden");
+                    bonusContainer?.classList.add("flex");
+                    bonusSpotify?.classList.add("hidden");
                 }
             }
         });

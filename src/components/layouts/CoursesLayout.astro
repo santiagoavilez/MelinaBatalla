@@ -18,6 +18,7 @@ import LessonsList from "@components/root-program/LessonsList.astro";
 import SideBarHeader from "./root-program/SideBarHeader.astro";
 import SideBarFooter from "./root-program/SideBarFooter.astro";
 import NavBar from "./root-program/NavBar.astro";
+import { Toaster } from "sonner";
 ---
 
 <html lang="en">
@@ -76,7 +77,7 @@ import NavBar from "./root-program/NavBar.astro";
 		<div class="w-full h-full min-h-screen">
 			<div class="flex w-full">
 				<div
-					class="w-full h-screen max-w-64 hidden md:flex flex-col items-start justify-between "
+					class="w-full h-screen max-w-64 hidden md:flex flex-col items-start justify-between"
 					id="sideBar"
 				>
 					<div class="flex flex-col gap-4">
@@ -88,11 +89,12 @@ import NavBar from "./root-program/NavBar.astro";
 					<SideBarFooter transition:persist />
 				</div>
 				<div
-					transition:animate={slide({duration: '0.6s'})}
+					transition:animate={slide({ duration: "0.8s" })}
 					class="bg-marmol w-full min-h-screen h-full md:rounded-l-[3rem]"
 				>
 					<nav class="md:hidden bg-marmol px-1 py-1">
 						<NavBar />
+						<Toaster client:only />
 					</nav>
 
 					<slot />
@@ -107,7 +109,6 @@ import NavBar from "./root-program/NavBar.astro";
 			import { $lessonsatom } from "@lib/bonusStore";
 
 			document.addEventListener("astro:before-preparation", (ev) => {
-
 				const lessons = $lessonsatom.get();
 				const fromLessonSlug = ev.from.pathname.split("/").pop();
 				const toLessonSlug = ev.to.pathname.split("/").pop();

@@ -6,6 +6,10 @@ import { navigate } from "astro:transitions/client"
 import { Check, MoveLeftIcon, MoveRightIcon } from "lucide-react"
 import { Suspense, useEffect, useState } from "react"
 import { Skeleton } from "../ui/skeleton"
+import NextLessonButton from "./NextLessonButton"
+import PreviusLessonButon from "./PreviusLessonButon"
+import { confettiAni } from "@lib/utils/confetti"
+import { toast } from "sonner"
 
 export interface MarkCompletedProps {
     lessonSlug: string
@@ -50,6 +54,7 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
     const handleCompleted = async () => {
         const newCompleted = { id: lessonId, isCompleted: 'completado' , slug: lessonSlug}
         addLessonCompleted({ id: lessonId, status: 'completado' });
+        confettiAni()
         if(!persistCompleted || persistCompleted.length === 0){
             persistentCompletedLessons.set([newCompleted])
         }
@@ -74,7 +79,16 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
             const data = await res.json();
 
             console.log(data);
-
+            confettiAni()
+            confettiAni()
+            toast("Event has been created.")
+            // setTimeout(() => {
+            //     confettiAni().then(() => {
+            //         // Do something after the confetti animation
+            //     }).catch((err) => {
+            //         console.log(err);
+            //     });
+            // }, 200);
 
         }
         catch (error) {
@@ -83,40 +97,10 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
 
     }
 
-    // go to previus class using the history to go back sumulating the back button
-    const handlePreviusClass = async () => {
-        let lastAvailable = arraylessons[0]?.slug
-        if(lessonId === 1) {
-            navigate(`/cursos/root-program/${lastAvailable}`)
-            return
-        }
-        if ( persistCompleted && persistCompleted[lessonId - 2]) {
-            console.log('persistCompleted', persistCompleted[lessonId - 2]);
-            lastAvailable = arraylessons[lessonId - 1]?.slug
-            navigate(`/cursos/root-program/${lastAvailable}`)
-            return
-        }
-        const sortedLessons = [...persistCompleted!]?.sort((a, b) => a.id - b.id);
-        console.log('sortedLessons', sortedLessons);
-        const nextLesson = sortedLessons.find(lesson => !lesson.isCompleted);
-
-
-        // Encuentra la primera lección que no esté completada
-
-        if (nextLesson) {
-            lastAvailable = nextLesson.slug;
-        }
-        navigate(`/cursos/root-program/${lastAvailable}`)
-
-
-    }
-    const handleNextClass = () => {
-        navigate(`/cursos/root-program/${arraylessons[lessonId + 1].slug}`)
-    }
     return (
 
             <div className="flex justify-between w-full px-6 md:px-10 md:max-w-screen-xl" >
-                <div >{(lessonId !== 0 || (persistCompleted && persistCompleted[lessonId - 2])) && <div className="cursor-pointer hover:text-primary" onClick={handlePreviusClass}><MoveLeftIcon /></div>}</div>
+                <div >{(lessonId !== 0 || (persistCompleted && persistCompleted[lessonId - 2])) && <PreviusLessonButon lessonId={lessonId} />}</div>
                 <div >{
                     !isinStore ? (
                         (isfirtsOrbonus || ( persistCompleted && persistCompleted[lessonId - 1])) && <span
@@ -127,7 +111,7 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
                         <span className="inline-flex gap-2 text-primary">
                             <Check className="" /> Completado
                         </span>}</div>
-                <div > {lessonId !== 5 && (isinStore) && <div className="cursor-pointer hover:text-primary" onClick={handleNextClass}><MoveRightIcon /> </div>}</div>
+            <div > {lessonId !== 5 && (isinStore) && <NextLessonButton slug={arraylessons[lessonId + 1].slug} />}</div>
             </div>
 
     )

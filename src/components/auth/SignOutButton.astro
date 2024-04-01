@@ -23,9 +23,6 @@ const { className } = Astro.props;
                             console.log("signOut");
                             auth.set(null);
                             initializeClerk();
-
-                            // window.location.reload();
-                            // navigate("/iniciar-sesion");
                         })
                         .catch((error) => {
                             console.log("error", error);

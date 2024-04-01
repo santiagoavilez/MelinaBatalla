@@ -62,7 +62,7 @@ export const prerender = true;
         </section>
 
         <MarkCompleted
-            client:load
+            client:only
             lessonId={lesson.id}
             lessonSlug={slug as string}
         />
