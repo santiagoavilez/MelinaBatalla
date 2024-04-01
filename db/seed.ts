@@ -57,7 +57,6 @@ export default async function seed() {
 			video_id: 'e215758c-39a4-4aa3-9a4e-0a15aa46ab19',
 			courseSlug: 'root-program',
 			description: 'En este módulo "Salvavidas" hacemos un repaso de toda la estrategia completa desde contruir tu oferta, atraer clientes comprometidos, crear contenido funcional, obtener seguridad con una estrategia clara y enfocar tu energía.'
-
 		},
 		{
 			id: 5,

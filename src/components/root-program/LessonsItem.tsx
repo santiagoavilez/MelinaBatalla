@@ -1,5 +1,5 @@
 import type { ILesson } from 'db/types';
-import { completedLessonsStore, getLessonStatus, isPreviousLessonCompleted, persistentCompletedLessons } from '@lib/bonusStore';
+import {  persistentCompletedLessons } from '@lib/bonusStore';
 import { useStore } from '@nanostores/react';
 import { Check, Circle, LockKeyholeIcon, Play } from 'lucide-react';
 import { cn } from '@lib/utils';
@@ -35,7 +35,6 @@ function LessonsItem({ lesson, slug }: Props) {
     });
     let statusVariant : "blanco" | "gris" | "marron" |"yema"= "gris";
     if (slug === lesson.slug) {
-        console.log("actual", slug, lesson.slug, lesson.id,)
         statusVariant = "blanco";
     }
     else if (completedLessonIds?.[lesson.id]?.isCompleted === 'completado') {

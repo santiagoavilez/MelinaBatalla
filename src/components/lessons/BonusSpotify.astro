@@ -15,19 +15,25 @@
                     const user = clerk.user;
                     const bonus = user?.publicMetadata?.bonus;
                     if (bonus === "true") {
-                        window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-                            const element =
-                                document.getElementById("embed-iframe");
-                            const options = {
-                                uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
+
+                        if (window) {
+                            window.onSpotifyIframeApiReady = (
+                                IFrameAPI: any,
+                            ) => {
+                                const element =
+                                    document?.getElementById("embed-iframe");
+                                console.log(element);
+                                const options = {
+                                    uri: "spotify:episode:1mihbisvtfa1qYBp0rWJHt",
+                                };
+                                const callback = (EmbedController: any) => {};
+                                IFrameAPI.createController(
+                                    element,
+                                    options,
+                                    callback,
+                                );
                             };
-                            const callback = (EmbedController: any) => {};
-                            IFrameAPI.createController(
-                                element,
-                                options,
-                                callback,
-                            );
-                        };
+                        }
                     }
                 }
             });
