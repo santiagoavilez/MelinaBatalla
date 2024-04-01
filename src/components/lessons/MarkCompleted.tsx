@@ -1,15 +1,14 @@
 import useFetchCompletedLessons from "@components/root-program/fetchCompletedLessons"
 import { auth } from "@lib/authStore"
-import { $lessonsatom, addLessonCompleted, addLessonCompletedTomap, completedLessonsStore, persistentCompletedLessons } from "@lib/bonusStore"
+import { $lessonsatom,   persistentCompletedLessons } from "@lib/bonusStore"
 import { useStore } from "@nanostores/react"
-import { navigate } from "astro:transitions/client"
-import { Check, MoveLeftIcon, MoveRightIcon } from "lucide-react"
-import { Suspense, useEffect, useState } from "react"
+import { Check  } from "lucide-react"
+import {  useEffect, useState } from "react"
 import { Skeleton } from "../ui/skeleton"
 import NextLessonButton from "./NextLessonButton"
 import PreviusLessonButon from "./PreviusLessonButon"
-import { confettiAni } from "@lib/utils/confetti"
-import { toast } from "sonner"
+import { useToast } from "@components/ui/use-toast"
+import { getFraseAleatoria, getTituloAleatorio } from "@lib/utils/motivationToast"
 
 export interface MarkCompletedProps {
     lessonSlug: string
@@ -20,11 +19,15 @@ export interface MarkCompletedProps {
 
 
 
-export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedProps) {
+export default function MarkCompleted({ lessonSlug, lessonId }: MarkCompletedProps) {
     useFetchCompletedLessons()
-    const arraylessons = useStore($lessonsatom)
-    const persistCompleted = useStore(persistentCompletedLessons)
+    const { toast } = useToast()
 
+    const arraylessons = useStore($lessonsatom)
+
+    const persistCompleted = useStore(persistentCompletedLessons)
+    const isinStore = persistCompleted && persistCompleted[lessonId] ? true : false;
+    const isfirtsOrbonus = lessonId === 0 || lessonId === 5;
 
     const [loaded, setLoaded] = useState(false);
     const clerk = useStore(auth);
@@ -46,25 +49,23 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
         )
     }
 
-    console.log('persistCompleted', persistCompleted);
-    const isinStore = persistCompleted && persistCompleted[lessonId] ? true : false;
-    const isfirtsOrbonus = lessonId === 0 || lessonId === 5;
-    console.log('isinStore', isinStore, isfirtsOrbonus, lessonId === 0 || lessonId === 5 );
+
 
     const handleCompleted = async () => {
-        const newCompleted = { id: lessonId, isCompleted: 'completado' , slug: lessonSlug}
-        addLessonCompleted({ id: lessonId, status: 'completado' });
-        confettiAni()
-        if(!persistCompleted || persistCompleted.length === 0){
-            persistentCompletedLessons.set([newCompleted])
-        }
-        else{
-            persistentCompletedLessons.set([...persistCompleted, newCompleted])
-        }
-        addLessonCompletedTomap({ id: lessonId });
-
         try {
-            if(!user?.id) return;
+            toast({
+                title: getTituloAleatorio(),
+                description: getFraseAleatoria(),
+            })
+            const newCompleted = { id: lessonId, isCompleted: 'completado', slug: lessonSlug }
+
+            if (!persistCompleted || persistCompleted.length === 0) {
+                persistentCompletedLessons.set([newCompleted])
+            }
+            else {
+                persistentCompletedLessons.set([...persistCompleted, newCompleted])
+            }
+            if (!user?.id) return;
             const res = await fetch('/api/lessons/mark-completed', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -79,16 +80,7 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
             const data = await res.json();
 
             console.log(data);
-            confettiAni()
-            confettiAni()
-            toast("Event has been created.")
-            // setTimeout(() => {
-            //     confettiAni().then(() => {
-            //         // Do something after the confetti animation
-            //     }).catch((err) => {
-            //         console.log(err);
-            //     });
-            // }, 200);
+
 
         }
         catch (error) {
@@ -98,21 +90,24 @@ export default function MarkCompleted({ lessonSlug,  lessonId }: MarkCompletedPr
     }
 
     return (
-
-            <div className="flex justify-between w-full px-6 md:px-10 md:max-w-screen-xl" >
-                <div >{(lessonId !== 0 || (persistCompleted && persistCompleted[lessonId - 2])) && <PreviusLessonButon lessonId={lessonId} />}</div>
-                <div >{
-                    !isinStore ? (
-                        (isfirtsOrbonus || ( persistCompleted && persistCompleted[lessonId - 1])) && <span
+        <>
+        <div className="flex justify-between w-full px-6 md:px-10 md:max-w-screen-xl" >
+            <div >{(lessonId !== 0 || (persistCompleted && persistCompleted[lessonId - 2])) && <PreviusLessonButon lessonId={lessonId} />}</div>
+            <div >{
+                !isinStore ? (
+                    (isfirtsOrbonus || (persistCompleted && persistCompleted[lessonId - 1])) && <span
                             className="text-sm font-normal inline-flex gap-2 cursor-pointer hover:text-primary" onClick={handleCompleted}>
-                            <Check />Marcar como completado
-                        </span>
-                    ) :
-                        <span className="inline-flex gap-2 text-primary">
-                            <Check className="" /> Completado
-                        </span>}</div>
+                        <Check />Marcar como completado
+                    </span>
+                ) :
+                    <span className="inline-flex gap-2 text-primary">
+                        <Check className="" /> Completado
+                    </span>}</div>
             <div > {lessonId !== 5 && (isinStore) && <NextLessonButton slug={arraylessons[lessonId + 1].slug} />}</div>
-            </div>
+
+        </div>
+
+        </>
 
     )
 }

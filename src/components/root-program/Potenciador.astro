@@ -80,6 +80,9 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
         const bonusSpotify = document.getElementById("bonus-spotify")!;
 
         const skeleton = document.getElementById("skeleton")!;
+        console.log("skeleton", skeleton.id);
+        console.log("bonusSpotify", bonusSpotify.id);
+        console.log("bonusContainer", bonusContainer.id);
         auth.subscribe((clerk) => {
             if (!!clerk && clerk?.loaded) {
                 if (clerk.user) {
@@ -89,6 +92,40 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                         bonusContainer?.classList.add("flex");
                         bonusContainer?.classList.remove("hidden");
                     } else {
+                        console.log("tiene bonus", bonus);
+                        skeleton?.classList.add("hidden");
+                        bonusContainer?.classList.add("hidden");
+                        bonusContainer?.classList.remove("flex");
+                        bonusSpotify?.classList.remove("hidden");
+                    }
+                } else {
+                    skeleton?.classList.add("hidden");
+                    bonusContainer?.classList.remove("hidden");
+                    bonusContainer?.classList.add("flex");
+                    bonusSpotify?.classList.add("hidden");
+                }
+            }
+        });
+        /* eslint-disable no-alert, no-console */
+    });
+    document.addEventListener("astro:after-swap", (ev) => {
+        const bonusContainer = document.getElementById("bonus-container")!;
+        const bonusSpotify = document.getElementById("bonus-spotify")!;
+
+        const skeleton = document.getElementById("skeleton")!;
+        console.log("skeleton", skeleton.id);
+        console.log("bonusSpotify", bonusSpotify.id);
+        console.log("bonusContainer", bonusContainer.id);
+        auth.subscribe((clerk) => {
+            if (!!clerk && clerk?.loaded) {
+                if (clerk.user) {
+                    const bonus = clerk.user?.publicMetadata?.bonus;
+                    if (bonus !== "true") {
+                        skeleton?.classList.add("hidden");
+                        bonusContainer?.classList.add("flex");
+                        bonusContainer?.classList.remove("hidden");
+                    } else {
+                        console.log("tiene bonus", bonus);
                         skeleton?.classList.add("hidden");
                         bonusContainer?.classList.add("hidden");
                         bonusContainer?.classList.remove("flex");

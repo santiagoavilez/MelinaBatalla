@@ -11,7 +11,6 @@ import Classvideo from "@components/root-program/Classvideo";
 import Potenciador from "@components/root-program/Potenciador.astro";
 import BonusDescription from "@components/root-program/BonusDescription";
 
-
 export const getStaticPaths = async () => {
     const lessons = await db
         .select({
@@ -39,7 +38,7 @@ const [lesson] = await db
 export const prerender = true;
 ---
 
-<CoursesLayout title={lesson.name}  description={lesson.description} slug={slug}>
+<CoursesLayout title={lesson.name} description={lesson.description} slug={slug}>
     <div
         class="bg-blanco w-full min-h-screen h-full rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
     >
@@ -62,10 +61,12 @@ export const prerender = true;
         </section>
 
         <MarkCompleted
+            data-astro-rerun
             client:only
             lessonId={lesson.id}
             lessonSlug={slug as string}
         />
+
         <div
             class="text-left flex flex-col items-start w-full md:px-10 p-6 max-w-screen-xl"
         >

@@ -15,7 +15,6 @@ export default function Classvideo({ videoId, lessonId }: {
 }) {
 
     const lessonsArray = useStore(persistentCompletedLessons);
-    console.log('lessonsArray', lessonsArray);
     const isAvailable = lessonsArray?.[lessonId - 1] || lessonId === 0;
     const clerk = useStore(auth);
     const user = clerk?.user;
@@ -24,7 +23,6 @@ export default function Classvideo({ videoId, lessonId }: {
             <Skeleton className="aspect-video w-full flex items-center justify-center" />
         )
     }
-
 
     if(clerk?.loaded && !user) {
 
