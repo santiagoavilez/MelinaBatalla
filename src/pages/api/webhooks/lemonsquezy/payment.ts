@@ -37,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
         if (eventType === "order_created") {
             const bonus = body.meta.custom_data.bonus;
             const emailAddress = body.data.attributes.user_email;
-            const userName = body.data.attributes.user_name;
+            const userName = body.data.attributes.user_name as string;
             const userId = body.meta.custom_data.userId as string;
             const isSuccessful = body.data.attributes.status === "paid";
             const isPotenciador = body.meta.custom_data.variant === "potenciador";
@@ -66,6 +66,24 @@ export const POST: APIRoute = async ({ request }) => {
                     ignoreExisting: true,
                 });
                 console.log(invitation);
+                const ip = request.headers.get("forwarded");
+                const first_name = userName.split(' ')[0];
+                const last_name = userName.split(' ')[0];
+                fetch('https://app.provely.io/api/webhooks/26222b1e-e9e8-451f-b906-9616d7f6bc57/custom',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+
+                        "data": {
+                            "email": emailAddress,
+                            "first_name": first_name,
+                            "last_name": last_name,
+                            "ip": ip,
+                        }
+                    }),
+                })
                 return Response.json({ invitation: invitation });
             }
         }
