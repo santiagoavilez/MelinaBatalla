@@ -30,12 +30,9 @@ const { variant } = Astro.props;
         const skeleton = document.getElementById("skeleton-complete-order")!;
         const button = document.getElementById("complete-order")!;
         const variant = button?.dataset.message;
-        console.log("variant:", variant);
-
         skeleton?.classList.add("hidden");
         button?.classList.remove("animate-pulse");
         button?.classList.remove("cursor-not-allowed");
-        console.log("button:", button);
         bonus.subscribe(($bonus) => {
             console.log("bonus:", $bonus);
             if (variant === "default") {
@@ -66,8 +63,6 @@ const { variant } = Astro.props;
             if (variant === "secondary") {
                 if (clerk !== null && clerk?.user) {
                     const user = clerk.user;
-                    console.log("clerk en potenciador:", clerk);
-                    console.log("user en potenciador:", user.id);
 
                     button?.addEventListener("click", () => {
                         handleCompleteOrder({

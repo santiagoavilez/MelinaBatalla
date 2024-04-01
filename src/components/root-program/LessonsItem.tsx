@@ -15,15 +15,11 @@ interface Props {
 
 function LessonsItem({ lesson, slug }: Props) {
     const completedLessonIds = useStore(persistentCompletedLessons);
-    if(slug=== lesson.slug) console.log("slug", slug, lesson.slug, lesson.id, )
-
-
     // console.log(completedLessonIds); // Verifica que el store se inicialice correctamente
     const isAvailable = lesson.id === 0 ||  !!completedLessonIds?.[lesson.id - 1];
     const isFirts = lesson.id === 0 || lesson.id === 5;
     const canbeViewed = isAvailable || isFirts;
 
-    const isDisabled = !isAvailable;
     const variant = cva(" w-full pl-2 py-2   pr-6 flex items-center justify-between gap-2",{
         variants: {
             status: {
@@ -56,13 +52,10 @@ function LessonsItem({ lesson, slug }: Props) {
         <div
             className={cn(variant({ status: statusVariant }))}
             onClick={(e) => {
-                console.log("status", lesson.id, isDisabled, slug);
                 if (!canbeViewed || slug === lesson.slug) {
-                    console.log("No puedes navegar a esta lección ", lesson.id, canbeViewed);
                     e.preventDefault();
                 }
                 else {
-                    console.log("Navegando a la lección ", lesson.slug);
                     navigate(`/cursos/root-program/${lesson.slug}`)
 
                 }
