@@ -4,7 +4,7 @@ import crypto from "crypto";
 const secret = import.meta.env.MP_SECRET_KEY;
 const publishableKey = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY
 const secretKey = import.meta.env.CLERK_SECRET_KEY
-const vercel_branch_url = import.meta.env.PUBLIC_VERCEL_URL
+const vercel_url = import.meta.env.PUBLIC_VERCEL_URL
 
 interface PaymentData {
     status: string;
@@ -36,9 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
         // Check signature
         const signature = request.headers.get('x-signature')!;
         const requestId = request.headers.get('x-request-id')!;
-
-       console.log("signature", signature);
-        console.log("request", requestId);
+        console.log("vercel_url", vercel_url);
         // Split the signature into an array of key-value pairs
         const pairs = signature.split(',');
 
@@ -92,13 +90,21 @@ export const POST: APIRoute = async ({ request }) => {
                 if (status === 'approved' && status_detail === 'accredited' && paymentData.captured) {
                     const { bonus, userId, variant } = paymentData.metadata;
                     const email = paymentData.payer.email;
-                    let userName = 'Hermana';
-                    userName = paymentData?.payer?.first_name ?? '' + ' ' + paymentData?.payer?.last_name ?? '';
-                    if ( paymentData.payment_type_id === 'credit_card' || paymentData.payment_type_id === 'debit_card') {
-                        if (!!paymentData.card && !!paymentData.card.cardholder && !!paymentData.card.cardholder.name) {
-                        userName = paymentData.card.cardholder.name;
+                    let userName = 'Hermana'; // Default value
+
+                    // Check if the payment was made with a card
+                    if (paymentData.payment_type_id === 'credit_card' || paymentData.payment_type_id === 'debit_card') {
+                        // Check if the cardholder's name is available
+                        if (paymentData.card && paymentData.card.cardholder && paymentData.card.cardholder.name) {
+                            userName = paymentData.card.cardholder.name;
                         }
                     }
+
+                    // If the cardholder's name is not available, fall back to the payer's name
+                    if (userName === 'Hermana' && paymentData.payer) {
+                        userName = `${paymentData.payer.first_name ?? ''} ${paymentData.payer.last_name ?? ''}`.trim();
+                    }
+
                     console.log("email", email);
 
                     if ( variant === 'default') {
@@ -109,7 +115,7 @@ export const POST: APIRoute = async ({ request }) => {
                         try {
                             const invitation = await clerk.invitations.createInvitation({
                                 emailAddress: email,
-                                redirectUrl: `https://${vercel_branch_url}/cursos/root-program`,
+                                redirectUrl: `https://${vercel_url}/cursos/root-program`,
                                 publicMetadata: {
                                     "bonus": bonus,
                                     "userName": userName,
