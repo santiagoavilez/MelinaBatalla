@@ -192,6 +192,9 @@ export default function MercadoPagoButton() {
                                 customization={{
                                     visual: {
                                         hideFormTitle: true,
+                                        defaultPaymentOption: {
+                                            debitCardForm: true
+                                        },
                                     },
                                     paymentMethods: {
                                         debitCard: 'all',
