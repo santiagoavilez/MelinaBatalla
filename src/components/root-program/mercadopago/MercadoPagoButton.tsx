@@ -39,7 +39,7 @@ export default function MercadoPagoButton() {
                     picture_url: "https://melina-batalla.lemonsqueezy.com/_vercel/image?url=https:%2F%2Flemonsqueezy.imgix.net%2Fmedia%2F77898%2Fd1657848-7a5d-4dcd-b49c-35c0455b58fa.png?ixlib=php-3.3.1%26s=7cb2c62f0da994cc05868441ef51d702&w=1536&q=100",
                     quantity: 1,
                     currency_id: "ARS",
-                    unit_price: 170,
+                    unit_price: 18,
                 },
             ],
             metadata: {
@@ -95,7 +95,9 @@ export default function MercadoPagoButton() {
                 .then((data) => {
                     // recibir el resultado del pago
                     console.log(data);
-
+                    if (data.status === 'rejected' || data.status === 'cancelled') {
+                        throw new Error('Error al procesar el pago', { cause: data.status})
+                    }
                     setTimeout(() => {
                         setShowSuccessDialog(true)
                         confettiAni()
