@@ -39,7 +39,7 @@ export default function MercadoPagoButton() {
                     picture_url: "https://melina-batalla.lemonsqueezy.com/_vercel/image?url=https:%2F%2Flemonsqueezy.imgix.net%2Fmedia%2F77898%2Fd1657848-7a5d-4dcd-b49c-35c0455b58fa.png?ixlib=php-3.3.1%26s=7cb2c62f0da994cc05868441ef51d702&w=1536&q=100",
                     quantity: 1,
                     currency_id: "ARS",
-                    unit_price: 18,
+                    unit_price: 1,
                 },
             ],
             metadata: {
@@ -186,7 +186,7 @@ export default function MercadoPagoButton() {
                             <div className={` ${!loading ? ' animate-in  fade-in-0 h-auto ' : 'animate-out fade-out-0 opacity-0 h-0'} `}>
                                 <Payment
                                 initialization={{
-                                    amount: 17000,
+                                    amount: 1,
                                     preferenceId: preferenceId,
                                 }}
                                 customization={{
