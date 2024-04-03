@@ -8,17 +8,15 @@ interface Props {
 const { variant } = Astro.props;
 ---
 
-<div>
-    <Button
-        id="complete-order"
-        variant={variant}
-        data-message={variant}
-        className="w-full md:w-fit animate-pulse flex gap-2 cursor-not-allowed items-center  md:px-10 md:py-6 text-xl rounded-full self-center text-left "
-    >
-        <Loader2 id="skeleton-complete-order" className="animate-spin" />
-        <slot />
-    </Button>
-</div>
+<Button
+    id="complete-order"
+    variant={variant}
+    data-message={variant}
+    className="w-full md:w-fit animate-pulse flex gap-2 cursor-not-allowed items-center  md:px-10 md:py-6 text-lg rounded-full self-center text-left "
+>
+    <Loader2 id="skeleton-complete-order" className="animate-spin" />
+    <slot />
+</Button>
 
 <script>
     import type { ButtonVariants } from "@components/ui/button";

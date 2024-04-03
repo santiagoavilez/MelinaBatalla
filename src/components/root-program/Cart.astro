@@ -2,13 +2,18 @@
 import { BonusCard } from "./BonusCard";
 import { CartItems } from "./CartItems";
 import { CompleteOrder } from "./CompleteOrder";
-import  CompleteOrderAstro  from "./CompleteOrder.astro";
+import CompleteOrderAstro from "./CompleteOrder.astro";
+import MercadoPagoCheckout from "./mercadopago/MercadoPagoCheckout.astro";
+import MercadoPagoButton from "./mercadopago/MercadoPagoButton";
+import { Separator } from "@components/ui/separator";
+import MercadoPagoLoader from "./mercadopago/MercadoPagoLoader";
+import { lazy } from "react";
 ---
 
 <section class="h-full p-6 xs:p-10 flex flex-col overflow-hidden gap-8 w-full">
     <div
-        class="duration-700 [animation-iteration-count:infinite] taos:[transform:translate3d(0,200px,0)_scale(0.6)] taos:opacity-0"
-        data-taos-offset="-100"
+        class="duration-700 taos:[animation-iteration-count:infinite] taos:[transform:translate3d(0,200px,0)_scale(0.6)] taos:opacity-0"
+        data-taos-offset="200"
     >
         <BonusCard client:load />
     </div>
@@ -16,15 +21,26 @@ import  CompleteOrderAstro  from "./CompleteOrder.astro";
         Resumen de Compra
     </h3>
     <CartItems client:idle />
-    <div id="complete-order-container" class="w-full flex justify-center">
-        <!-- <CompleteOrder client:only> Completar mi compra </CompleteOrder> -->
-        <CompleteOrderAstro variant="default">Completar mi compra</CompleteOrderAstro>
+    <!-- <MercadoPagoCheckout /> -->
+
+    <!-- <CompleteOrder client:only> Completar mi compra </CompleteOrder> -->
+    <div
+        id="complete-order-container"
+        class="flex h-full flex-col md:flex-row justify-center w-full items-center gap-4 text-sm"
+    >
+        <MercadoPagoButton client:load />
+        <Separator className="hidden md:block md:h-5" orientation="vertical" />
+        <Separator className="md:hidden w-4/5 bg-marmol/80" />
+
+        <CompleteOrderAstro variant="default"
+            >Comprar con USD</CompleteOrderAstro
+        >
     </div>
+
     <span class="text-xs text-gray-600 text-center"
         >Destinaremos el 10% de las ganancias de este programa a <strong
             >Greenpeace</strong
         ></span
     >
 </section>
-<script src="https://unpkg.com/taos@1.0.5/dist/taos.js" defer></script>
-
+<script src="https://unpkg.com/taos@1.0.5/dist/taos.js" async></script>

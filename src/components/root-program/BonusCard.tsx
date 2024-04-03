@@ -2,7 +2,10 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@component
 import { Checkbox } from "@components/ui/checkbox";
 import { bonus } from "@lib/bonusStore";
 import { useStore } from "@nanostores/react";
+import { Loader2 } from "lucide-react";
+import { lazy, Suspense } from "react";
 
+const Checkboxx = lazy(() => import('@components/ui/checkbox'))
 export function BonusCard() {
 
     const $bonus = useStore(bonus)
@@ -26,14 +29,19 @@ export function BonusCard() {
                     <span className="line-through"> $47.00</span>
                 </div>
                 <div className="items-top flex space-x-2  bg-blanco text-negro p-3  w-full">
-                    <Checkbox
-                        checked={$bonus}
-                        className="w-5 h-5 bg-primary"
-                        value={'check'}
-                        aria-label="Bonus"
+                    <Suspense fallback={
+                        <Loader2 className="animate-spin" ></Loader2>
+                    }>
+                        <Checkboxx
+                            checked={$bonus}
+                            className="w-5 h-5 "
+                            value={'check'}
+                            aria-label="Bonus"
 
-                        onCheckedChange={setBonus}
-                        id="check-bonus" ></Checkbox>
+                            onCheckedChange={setBonus}
+                            id="check-bonus" ></Checkboxx>
+                    </Suspense>
+
                     <div className="grid gap-1.5 leading-none">
                         <label
                             id=""

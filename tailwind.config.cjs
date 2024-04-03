@@ -93,8 +93,8 @@ module.exports = {
 
   },
   safelist: [
-    '!duration-[0ms]',
-    '!delay-0ms',
+    `!duration-&lsqb;0ms&rsqb;`,
+    `!delay-&lsqb;0ms&rsqb;`,
     'html.js :where([class*="taos:"]:not(.taos-init))'
   ],
   plugins: [

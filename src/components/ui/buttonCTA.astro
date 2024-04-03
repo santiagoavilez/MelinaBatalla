@@ -1,22 +1,35 @@
 ---
+import { Loader2 } from "lucide-react";
 import { Button } from "./button";
+import { cn } from "@lib/utils";
 
 const { className } = Astro.props as {
     className: string;
 };
 ---
 
-<Button data-cta-hero className={className}><slot /> </Button>
+<Button data-cta-hero className={cn(className, "animate-pulse flex gap-2")}>
+    <Loader2 data-loader-cta className="animate-spin w-6 h-6" />
+    <slot />
+</Button>
 
 <script>
     window.addEventListener("load", () => {
-        console.log("DOM fully loaded and parsed");
-        const cartContainer = document.getElementById("complete-order-container")!;
-        console.log("scroll to the cart", cartContainer);
+        const cartContainer = document.getElementById(
+            "complete-order-container",
+        )!;
         const ctaHero = document.querySelectorAll("[data-cta-hero]");
+        const loader = document.querySelectorAll("[data-loader-cta]");
+        if (loader) {
+            loader.forEach((load) => {
+                load.classList.add('hidden')
+            });
+            ctaHero.forEach((cta) => {
+                cta.classList.remove('animate-pulse')
+            });
+        }
         if (cartContainer && ctaHero) {
             //scroll to the cart
-            console.log("scroll to the cart", ctaHero);
             ctaHero.forEach((cta) => {
                 cta.addEventListener("click", () => {
                     cartContainer.scrollIntoView({
