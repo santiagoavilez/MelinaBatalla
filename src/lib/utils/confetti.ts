@@ -3,9 +3,10 @@ import { confetti } from '@tsparticles/confetti';
 export const confettiAni = () => {
 
 
-    const count = 250;
+    const count = 200;
     const defaults = {
-        origin: { y: 0.7 },
+        origin: { y: 0.5 },
+        zIndex: 999,
     };
 
     function fire(particleRatio: number, opts: unknown) {
@@ -20,6 +21,13 @@ export const confettiAni = () => {
         fire(0.25, {
             spread: 26,
             startVelocity: 55,
+        }),
+        fire(0.35, {
+            spread: 26,
+            startVelocity: 55,
+        }),
+        fire(0.35, {
+            spread: 60,
         }),
         fire(0.35, {
             spread: 100,

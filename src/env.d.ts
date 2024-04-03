@@ -15,6 +15,9 @@ interface ImportMetaEnv {
     readonly PUBLIC_VERCEL_URL : string
     readonly LEMON_ROOT_VARIANT_ID: string
     readonly LEMON_POTENCIADOR_VARIANT_ID: string
+    readonly MP_ACCESS_TOKEN: string
+    readonly PUBLIC_MP_PUBLIC_KEY: string
+    readonly MP_SECRET_KEY: string
 }
 interface ImportMeta {
     readonly env: ImportMetaEnv
