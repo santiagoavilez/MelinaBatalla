@@ -32,10 +32,8 @@ const { variant } = Astro.props;
         button?.classList.remove("animate-pulse");
         button?.classList.remove("cursor-not-allowed");
         bonus.subscribe(($bonus) => {
-            console.log("bonus:", $bonus);
             if (variant === "default") {
                 button?.addEventListener("click", () => {
-                    console.log("click");
                     handleCompleteOrder({
                         bonus: $bonus,
                         variant: variant as ButtonVariants["variant"],
@@ -55,13 +53,11 @@ const { variant } = Astro.props;
         skeleton?.classList.add("hidden");
         button?.classList.remove("animate-pulse");
         button?.classList.remove("cursor-not-allowed");
-        console.log("button:", button);
 
         auth.subscribe((clerk) => {
             if (variant === "secondary") {
                 if (clerk !== null && clerk?.user) {
                     const user = clerk.user;
-
                     button?.addEventListener("click", () => {
                         handleCompleteOrder({
                             bonus: false,

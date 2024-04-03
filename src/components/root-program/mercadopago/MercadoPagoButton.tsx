@@ -22,8 +22,7 @@ export default function MercadoPagoButton() {
     const [initialization, setInitialization] = useState<any>(false);
     useEffect(() => {
         import('@mercadopago/sdk-react/mercadoPago/initMercadoPago').then(({ default: initMercadoPago }) => {
-            console.log(import.meta.env.PUBLIC_MP_PUBLIC_KEY)
-            console.log('initMercadoPago')
+
             initMercadoPago(import.meta.env.PUBLIC_MP_PUBLIC_KEY as string, { locale: 'es-AR' });
             setInitialization(true)
         })
@@ -65,7 +64,6 @@ export default function MercadoPagoButton() {
             const data = await response.json();
             const { id } = data
             setPreferenceId(id);
-            console.log(data)
         }
         catch (error) {
             console.log(error)
@@ -74,11 +72,9 @@ export default function MercadoPagoButton() {
 
     const onSubmit = async ({ formData }: any) => {
         // callback llamado al hacer clic en el botón enviar datos
-        console.log(formData);
         formData.metadata = {
             bonus: $bonus ? 'true' : 'false',
         }
-        console.log(formData)
         return new Promise<void>((resolve, reject) => {
             fetch("/api/mercadopago/payment", {
                 method: "POST",
@@ -87,14 +83,12 @@ export default function MercadoPagoButton() {
                 },
                 body: JSON.stringify(formData),
             }).then((response) => {
-                console.log(response)
                 if (!response.ok) throw new Error(response.statusText, { cause: response });
 
                 return response.json()
             })
                 .then((data) => {
                     // recibir el resultado del pago
-                    console.log(data);
                     if (data.status === 'rejected' || data.status === 'cancelled') {
                         throw new Error('Error al procesar el pago', { cause: data.status})
                     }
