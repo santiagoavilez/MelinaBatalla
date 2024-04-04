@@ -14,7 +14,6 @@ export const POST: APIRoute = async ({ request }) => {
         const eventType = request.headers.get("X-Event-Name");
         const body = await request.json();
         // Check signature
-        console.log(vercel_branch_url)
 
         const requestBody = await clonedReq.text();
 
@@ -42,11 +41,8 @@ export const POST: APIRoute = async ({ request }) => {
             const isSuccessful = body.data.attributes.status === "paid";
             const isPotenciador = body.meta.custom_data.variant === "potenciador";
             if (isSuccessful) {
-                const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })
-                // Create user in Clerk
-                console.log('Creating user in Clerk')
-                console.log(userId)
-                console.log(body.meta.custom_data.variant)
+                const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })                // Create user in Clerk
+
                 if (isPotenciador) {
 
                     const user = await clerk.users.updateUserMetadata(userId, {
@@ -65,7 +61,7 @@ export const POST: APIRoute = async ({ request }) => {
                     },
                     ignoreExisting: true,
                 });
-                console.log(invitation);
+
                 const ip = request.headers.get("forwarded");
                 const first_name = userName.split(' ')[0];
                 const last_name = userName.split(' ')[0];

@@ -36,7 +36,6 @@ export const POST: APIRoute = async ({ request }) => {
         // Check signature
         const signature = request.headers.get('x-signature')!;
         const requestId = request.headers.get('x-request-id')!;
-        console.log("vercel_url", vercel_url);
         // Split the signature into an array of key-value pairs
         const pairs = signature.split(',');
 
@@ -65,10 +64,6 @@ export const POST: APIRoute = async ({ request }) => {
         if (!crypto.timingSafeEqual(hashsignature, digest)) {
             throw new Error("Invalid signature.");
         }
-        else{
-            console.log("signature is valid")
-        }
-
 
         if (type === 'payment' && !!id && action.startsWith('payment.')) {
             try {
@@ -83,10 +78,8 @@ export const POST: APIRoute = async ({ request }) => {
                 );
                 const paymentData = await responseCompra.json() as PaymentData
 
-                console.log("paymentData", paymentData);
                 const { status, status_detail } = paymentData;
 
-                console.log("metadata", paymentData.metadata);
                 if (status === 'approved' && status_detail === 'accredited' && paymentData.captured) {
                     const { bonus, userId, variant } = paymentData.metadata;
                     const email = paymentData.payer.email;
@@ -105,13 +98,10 @@ export const POST: APIRoute = async ({ request }) => {
                         userName = `${paymentData.payer.first_name ?? ''} ${paymentData.payer.last_name ?? ''}`.trim();
                     }
 
-                    console.log("email", email);
 
                     if ( variant === 'default') {
                         const clerk = createClerkClient({ apiKey: publishableKey, secretKey: secretKey })
                         // Create user in Clerk
-                        console.log('Inviting user in Clerk')
-                        console.log(bonus)
                         try {
                             const invitation = await clerk.invitations.createInvitation({
                                 emailAddress: email,

@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 export const POST: APIRoute = async ({ request }) => {
     try {
         const IdempotencyKey = uuidv4();
-        console.log('IdempotencyKey', IdempotencyKey);
         const body  = await request.json();
         const res = await fetch('https://api.mercadopago.com/v1/payments', {
             method: 'POST',
@@ -17,7 +16,6 @@ export const POST: APIRoute = async ({ request }) => {
             body: JSON.stringify(body),
         });
         const data = await res.json();
-        console.log('res',data);
         if (!res.ok) {
             console.log('res',data);
             return new Response(JSON.stringify({
