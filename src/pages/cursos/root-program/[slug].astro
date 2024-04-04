@@ -52,7 +52,7 @@ export const prerender = true;
                 ) : (
                     <div class="w-full flex items-center gap-4">
                         <Classvideo
-                            client:only
+                            client:load
                             videoId={lesson?.video_id as string}
                             lessonId={lesson.id}
                         />

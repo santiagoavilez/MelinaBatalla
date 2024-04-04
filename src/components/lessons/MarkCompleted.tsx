@@ -43,7 +43,7 @@ export default function MarkCompleted({ lessonSlug, lessonId }: MarkCompletedPro
     if (!loaded) {
         return (
             <div className="px-6 md:px-10 md:max-w-screen-xl">
-                <Skeleton className='bg-marmol w-full h-8 my-2  ' />
+                <Skeleton className='bg-marmol w-full h-4 my-2  ' />
             </div>
 
         )

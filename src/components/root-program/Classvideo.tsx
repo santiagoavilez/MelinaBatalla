@@ -20,7 +20,7 @@ export default function Classvideo({ videoId, lessonId }: {
     const user = clerk?.user;
     if (!clerk || !clerk?.loaded ) {
         return (
-            <Skeleton className="aspect-video w-full flex items-center justify-center" />
+            <Skeleton className="aspect-video bg-marmol w-full flex items-center justify-center" />
         )
     }
 
