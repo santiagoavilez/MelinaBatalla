@@ -120,24 +120,24 @@ body {
 
 		/* width */
 		::-webkit-scrollbar {
-			width: 10px;
+			width: 5px;
 		}
 
 		/* Track */
 		::-webkit-scrollbar-track {
-			background: #888;
+			background: #FAF7F7;
 			border-radius: 0px;
 		}
 
 		/* Handle */
 		::-webkit-scrollbar-thumb {
-			background: #141414;
-			border-radius: 0px;
+			background: #09090b30;
+			border-radius: 10px;
 		}
 
 		/* Handle on hover */
 		::-webkit-scrollbar-thumb:hover {
-			background: #555;
+			background: #E09E71;
 		}
 	}
 

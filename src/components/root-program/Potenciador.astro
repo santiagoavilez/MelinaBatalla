@@ -5,20 +5,21 @@ import { CardTitle } from "@components/ui/card";
 import { CompleteOrder } from "./CompleteOrder";
 import CompleteOrderAstro from "./CompleteOrder.astro";
 import BonusSpotify from "@components/lessons/BonusSpotify.astro";
+import MercadoPagoButton from "./mercadopago/MercadoPagoButton";
 ---
 
 <section class="">
     <div
         id="skeleton"
-        class="w-full h-full max-h-[430px] md:h-96 animate-pulse bg-marmol p-4 rounded-xl aspect-[272/442] md:aspect-[989/343]"
+        class="w-full h-full max-h-[520px] animate-pulse bg-marmol p-4 rounded-xl aspect-[272/442] md:aspect-[989/343]"
     >
     </div>
     <div
         id="bonus-container"
-        class="bg-yema hidden h-full max-h-[600px] md:h-96 flex-col md:flex-row gap-4 rounded-xl p-4"
+        class="bg-yema hidden h-auto flex-col  gap-4 rounded-xl p-4"
     >
-        <div class="flex gap-4 flex-col justify-between w-full">
-            <div class="">
+        <div class="flex gap-4 h-auto flex-col justify-between w-full">
+            <div class="flex flex-col gap-4">
                 <div class="">
                     <Image
                         alt={"potnciador de resultados blur."}
@@ -27,7 +28,7 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                         sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonusImage.width}px`}
                         format="webp"
                         loading="eager"
-                        class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg md:hidden"}
+                        class={"rounded-lg w-full cursor-pointer  aspect-auto shadow-lg "}
                     />
                 </div>
                 <CardTitle
@@ -42,7 +43,7 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                 </span>
             </div>
 
-            <div class="">
+
                 <!-- <CompleteOrder variant="secondary" client:only
                     >Obtener Ahora</CompleteOrder
                 > -->
@@ -50,20 +51,10 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                     transition:persist="slide"
                     variant="secondary"
                 >
-                    Completar mi compra
+                    Comprar con USD
                 </CompleteOrderAstro>
-            </div>
-        </div>
-        <div class="w-full h-full">
-            <Image
-                alt={"potnciador de resultados blur."}
-                src={bonusImage}
-                widths={[450, 960, 1440, bonusImage.width]}
-                sizes={`(max-width: 360px) 450px, (max-width: 720px) 960px, (max-width: 1600px) 1440px, ${bonusImage.width}px`}
-                format="webp"
-                loading="eager"
-                class={"rounded-lg w-full cursor-pointer    shadow-lg hidden md:block"}
-            />
+                <MercadoPagoButton client:load variant="secondary" > </MercadoPagoButton>
+
         </div>
     </div>
     <div id="bonus-spotify" class="w-full h-full">
@@ -80,42 +71,7 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
         const bonusSpotify = document.getElementById("bonus-spotify")!;
 
         const skeleton = document.getElementById("skeleton")!;
-        console.log("skeleton", skeleton.id);
-        console.log("bonusSpotify", bonusSpotify.id);
-        console.log("bonusContainer", bonusContainer.id);
-        auth.subscribe((clerk) => {
-            if (!!clerk && clerk?.loaded) {
-                if (clerk.user) {
-                    const bonus = clerk.user?.publicMetadata?.bonus;
-                    if (bonus !== "true") {
-                        skeleton?.classList.add("hidden");
-                        bonusContainer?.classList.add("flex");
-                        bonusContainer?.classList.remove("hidden");
-                    } else {
-                        console.log("tiene bonus", bonus);
-                        skeleton?.classList.add("hidden");
-                        bonusContainer?.classList.add("hidden");
-                        bonusContainer?.classList.remove("flex");
-                        bonusSpotify?.classList.remove("hidden");
-                    }
-                } else {
-                    skeleton?.classList.add("hidden");
-                    bonusContainer?.classList.remove("hidden");
-                    bonusContainer?.classList.add("flex");
-                    bonusSpotify?.classList.add("hidden");
-                }
-            }
-        });
-        /* eslint-disable no-alert, no-console */
-    });
-    document.addEventListener("astro:after-swap", (ev) => {
-        const bonusContainer = document.getElementById("bonus-container")!;
-        const bonusSpotify = document.getElementById("bonus-spotify")!;
 
-        const skeleton = document.getElementById("skeleton")!;
-        console.log("skeleton", skeleton.id);
-        console.log("bonusSpotify", bonusSpotify.id);
-        console.log("bonusContainer", bonusContainer.id);
         auth.subscribe((clerk) => {
             if (!!clerk && clerk?.loaded) {
                 if (clerk.user) {
@@ -133,12 +89,43 @@ import BonusSpotify from "@components/lessons/BonusSpotify.astro";
                     }
                 } else {
                     skeleton?.classList.add("hidden");
-                    bonusContainer?.classList.remove("hidden");
-                    bonusContainer?.classList.add("flex");
                     bonusSpotify?.classList.add("hidden");
                 }
             }
         });
         /* eslint-disable no-alert, no-console */
     });
+    // document.addEventListener("astro:after-swap", (ev) => {
+    //     const bonusContainer = document.getElementById("bonus-container")!;
+    //     const bonusSpotify = document.getElementById("bonus-spotify")!;
+
+    //     const skeleton = document.getElementById("skeleton")!;
+    //     console.log("skeleton", skeleton.id);
+    //     console.log("bonusSpotify", bonusSpotify.id);
+    //     console.log("bonusContainer", bonusContainer.id);
+    //     auth.subscribe((clerk) => {
+    //         if (!!clerk && clerk?.loaded) {
+    //             if (clerk.user) {
+    //                 const bonus = clerk.user?.publicMetadata?.bonus;
+    //                 if (bonus !== "true") {
+    //                     skeleton?.classList.add("hidden");
+    //                     bonusContainer?.classList.add("flex");
+    //                     bonusContainer?.classList.remove("hidden");
+    //                 } else {
+    //                     console.log("tiene bonus", bonus);
+    //                     skeleton?.classList.add("hidden");
+    //                     bonusContainer?.classList.add("hidden");
+    //                     bonusContainer?.classList.remove("flex");
+    //                     bonusSpotify?.classList.remove("hidden");
+    //                 }
+    //             } else {
+    //                 skeleton?.classList.add("hidden");
+    //                 bonusContainer?.classList.remove("hidden");
+    //                 bonusContainer?.classList.add("flex");
+    //                 bonusSpotify?.classList.add("hidden");
+    //             }
+    //         }
+    //     });
+    //     /* eslint-disable no-alert, no-console */
+    // });
 </script>

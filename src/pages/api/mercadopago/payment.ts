@@ -1,22 +1,25 @@
 import type { APIRoute } from "astro";
 const accestoken = import.meta.env.MP_ACCESS_TOKEN
+import { v4 as uuidv4 } from 'uuid';
 
 export const POST: APIRoute = async ({ request }) => {
     try {
-        console.log('accestoken', accestoken);
+        const IdempotencyKey = uuidv4();
+        console.log('IdempotencyKey', IdempotencyKey);
         const body  = await request.json();
         const res = await fetch('https://api.mercadopago.com/v1/payments', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Idempotency-Key': body.token,
+                'X-Idempotency-Key': IdempotencyKey,
                 Authorization: `Bearer ${accestoken}`,
             },
             body: JSON.stringify(body),
         });
         const data = await res.json();
-        console.log(data);
+        console.log('res',data);
         if (!res.ok) {
+            console.log('res',data);
             return new Response(JSON.stringify({
                 error: data
             }), {

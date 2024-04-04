@@ -3,10 +3,7 @@
 
 import LessonsList from "@components/root-program/LessonsList.astro";
 import CoursesLayout from "@components/layouts/CoursesLayout.astro";
-import {
-    Card,
-    CardHeader,
-} from "@components/ui/card";
+import { Card, CardHeader } from "@components/ui/card";
 import DisplayUserName from "@components/auth/DisplayUserName";
 
 import Potenciador from "@components/root-program/Potenciador.astro";
@@ -15,42 +12,40 @@ export const prerender = true;
 ---
 
 <CoursesLayout
-    description={"Programa integrado por 5 clases grabadas, plantillas para creación de contenido efectivo y acceso a la comunidad de acompañamiento privado."}
-    title={"Root program | Nazarena Batalla"}
+  description={"Programa integrado por 5 clases grabadas, plantillas para creación de contenido efectivo y acceso a la comunidad de acompañamiento privado."}
+  title={"Root program | Nazarena Batalla"}
 >
+  <div
+    class="h-full min-h-svh flex justify-start p-6 md:p-10 bg-blanco w-full rounded-t-xl md:rounded-tr-none md:rounded-l-[3rem]"
+  >
     <div
-        class="h-full min-h-svh flex justify-start p-6 md:p-10 bg-blanco w-full rounded-t-xl md:rounded-tr-none md:rounded-l-[3rem]"
+      class="xxl:my-8 grid lg:grid-cols-3 gap-4 px-0 text-left max-w-screen-lg"
     >
-        <div
-            class="xxl:my-8 flex flex-col gap-10 px-0 text-left max-w-screen-lg"
-        >
-            <Card className="bg-marmol  rounded-3xl">
-                <CardHeader className="">
-                    <h1
-                        class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
-                    >
-                        Bienvenida a Root program <DisplayUserName
-                            client:load
-                        />
-                    </h1>
-                    <span>
-                        "Si no puedes volar, corre; si no puedes correr, camina;
-                        si no puedes caminar, gatea, pero sigue avanzando hacia
-                        tu meta". Martin Luther King.
-                    </span>
-                </CardHeader>
-            </Card>
-            <div class="">
-                <LessonsList slug="atrae-clientes-comprometidos" />
-                <!-- <SignInCard /> -->
-            </div>
+      <Card className="bg-marmol h-fit rounded-3xl">
+        <CardHeader className="">
+          <h1
+            class="text-2xl text-left md:text-4xl leading-7 tracking-tight text-negro font-bold"
+          >
+            Bienvenida a Root program <DisplayUserName client:load />
+          </h1>
+          <span>
+            "Si no puedes volar, corre; si no puedes correr, camina; si no
+            puedes caminar, gatea, pero sigue avanzando hacia tu meta". Martin
+            Luther King.
+          </span>
+        </CardHeader>
+      </Card>
+      <div class="">
+        <LessonsList slug="atrae-clientes-comprometidos" />
+        <!-- <SignInCard /> -->
+      </div>
 
-            <Potenciador />
-            <!-- <LessonsList transition:persist/> -->
-        </div>
+      <Potenciador />
+      <!-- <LessonsList transition:persist/> -->
     </div>
+  </div>
 
-    <!-- <SignedOut>
+  <!-- <SignedOut>
         <div
             class="w-full h-screen flex flex-col items-center justify-center md:bg-blanco rounded-t-3xl md:rounded-tr-none md:rounded-l-[3rem]"
         >
