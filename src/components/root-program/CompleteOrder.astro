@@ -4,15 +4,16 @@ import { Loader2 } from "lucide-react";
 
 interface Props {
   variant: ButtonVariants["variant"];
+  full?: boolean;
 }
-const { variant } = Astro.props;
+const { variant, full } = Astro.props;
 ---
 
 <Button
   id="complete-order"
   variant={variant}
   data-message={variant}
-  className="w-full md:w-fit animate-pulse flex gap-2 cursor-not-allowed items-center   h-auto text-lg rounded-full self-center text-left "
+  className={`w-full ${full ? '' : 'md:w-fit'} animate-pulse flex gap-2 cursor-not-allowed items-center   h-auto text-lg rounded-full self-center text-left `}
 >
   <Loader2 id="skeleton-complete-order" className="animate-spin" />
   <slot />

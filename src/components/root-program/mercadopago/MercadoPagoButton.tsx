@@ -16,8 +16,9 @@ import { auth } from "@lib/authStore"
 const Payment = lazy(() => import('@mercadopago/sdk-react/bricks/payment'));
 interface Props {
     variant?: ButtonVariants["variant"];
+    full?: boolean;
 }
-export default function MercadoPagoButton({ variant = 'default' }: Props) {
+export default function MercadoPagoButton({ variant = 'default' , full}: Props) {
     const $bonus = useStore(bonus)
     const clerk = useStore(auth)
 
@@ -156,9 +157,9 @@ export default function MercadoPagoButton({ variant = 'default' }: Props) {
         <AlertDialog>
             <AlertDialogTrigger asChild >
                 {initialization ?
-                    <Button variant={variant} className="w-full md:w-fit flex gap-2  items-center   h-auto text-lg rounded-full self-center text-left "
+                    <Button variant={variant} className={`w-full ${full ? '' : 'md:w-fit'} flex gap-2  items-center   h-auto text-lg rounded-full self-center text-left `}
                         onClickCapture={createPreference}  > Comprar con ARS</Button> :
-                    <Button variant={variant} className="w-full md:w-fit animate-pulse flex gap-2 cursor-not-allowed items-center   h-auto text-lg rounded-full self-center text-left ">
+                    <Button variant={variant} className={`w-full ${full ? '' : 'md:w-fit'} animate-pulse flex gap-2 cursor-not-allowed items-center   h-auto text-lg rounded-full self-center text-left `}>
                         <Loader2 className="animate-spin" />Comprar con ARS
                     </Button>}
 

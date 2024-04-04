@@ -10,6 +10,7 @@ import Classvideo from "@components/root-program/Classvideo";
 
 import Potenciador from "@components/root-program/Potenciador.astro";
 import BonusDescription from "@components/root-program/BonusDescription";
+import PotenciadorVideo from "@components/root-program/Potenciador-video.astro";
 
 export const getStaticPaths = async () => {
     const lessons = await db
@@ -47,7 +48,7 @@ export const prerender = true;
         >
             {
                 slug === "potenciador" ? (
-                    <Potenciador />
+                    <PotenciadorVideo />
                 ) : (
                     <div class="w-full flex items-center gap-4">
                         <Classvideo
@@ -62,7 +63,7 @@ export const prerender = true;
 
         <MarkCompleted
             data-astro-rerun
-            client:only
+            client:load
             lessonId={lesson.id}
             lessonSlug={slug as string}
         />
