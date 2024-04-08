@@ -18,7 +18,7 @@ interface Props {
     variant?: ButtonVariants["variant"];
     full?: boolean;
 }
-export default function MercadoPagoButton({ variant = 'default' , full}: Props) {
+export default function MercadoPagoButton({ variant = 'default', full}: Props) {
     const $bonus = useStore(bonus)
     const clerk = useStore(auth)
 
@@ -79,8 +79,6 @@ export default function MercadoPagoButton({ variant = 'default' , full}: Props) 
             const data = await response.json();
             const { id } = data
             setPreferenceId(id);
-            console.log(data)
-
         }
         catch (error) {
 
@@ -95,7 +93,7 @@ export default function MercadoPagoButton({ variant = 'default' , full}: Props) 
             variant: variant,
             userId: isSecondary ? clerk?.user?.id ?? '123' : '123',
         }
-        if (formData.additional_info.items){
+        if (formData.additional_info.items) {
             formData.additional_info.items[0].category_id = 'learnings'
         }
         //formData.aditional_info.items[0].category_id = 'learnings'
@@ -103,42 +101,40 @@ export default function MercadoPagoButton({ variant = 'default' , full}: Props) 
         formData.external_reference = variant
         formData.notification_url = `https://${import.meta.env.PUBLIC_VERCEL_URL}/api/webhooks/mercadopago/notification`
         formData.description = name
-        console.log(formData)
-        if (!formData) {
-            return new Promise<void>((resolve, reject) => {
-                fetch("/api/mercadopago/payment", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                }).then((response) => {
-                    if (!response.ok) {
-                        console.error(response)
-                        throw new Error(response.statusText, { cause: response });
+
+        return new Promise<void>((resolve, reject) => {
+            fetch("/api/mercadopago/payment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            }).then((response) => {
+                if (!response.ok) {
+                    console.error(response)
+                    throw new Error(response.statusText, { cause: response });
+                }
+                return response.json()
+            })
+                .then((data) => {
+                    // recibir el resultado del pago
+                    if (data.status === 'rejected' || data.status === 'cancelled') {
+                        throw new Error('Error al procesar el pago', { cause: data.status })
                     }
+                    setShowSuccessDialog(true)
+                    setTimeout(async () => {
+                        await confettiAni()
+                    }, 500)
 
-                    return response.json()
+                    resolve();
                 })
-                    .then((data) => {
-                        // recibir el resultado del pago
-                        if (data.status === 'rejected' || data.status === 'cancelled') {
-                            throw new Error('Error al procesar el pago', { cause: data.status })
-                        }
-                        setShowSuccessDialog(true)
-                        setTimeout(async () => {
-                            await confettiAni()
-                        }, 500)
+                .catch((error) => {
+                    // manejar la respuesta de error al intentar crear el pago
+                    console.log(error);
+                    reject();
+                });
+        });
 
-                        resolve();
-                    })
-                    .catch((error) => {
-                        // manejar la respuesta de error al intentar crear el pago
-                        console.log(error);
-                        reject();
-                    });
-            });
-        }
 
     };
     const onError = async (error: any) => {
@@ -176,7 +172,7 @@ export default function MercadoPagoButton({ variant = 'default' , full}: Props) 
                 </>
                     :
                     <div className={`min-h-64  ${loading ? ' mx-6 animate-pulse' : ' animate-none'} z-50`} >
-                        {(loading || !preferenceId)  && <div role="status" className="w-full flex flex-col gap-4 animate-pulse   ">
+                        {(loading || !preferenceId) && <div role="status" className="w-full flex flex-col gap-4 animate-pulse   ">
                             <div className="boder max-h-72 divide-y-2 divide-stone-300/20  border-stone-300 rounded shadow ">
                                 <div className="flex items-center p-4 space-x-4  w-full  ">
                                     <Skeleton className="w-6 bg-stone-300 h-6 rounded-full"></Skeleton>
