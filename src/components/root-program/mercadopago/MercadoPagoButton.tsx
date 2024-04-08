@@ -160,15 +160,16 @@ export default function MercadoPagoButton({ variant = 'default', full}: Props) {
                     </Button>}
 
             </AlertDialogTrigger>
-            <AlertDialogContent className={`min-h-[408px] max-h-[90%] ${loading ? 'overflow-y-hidden' : 'overflow-y-auto'} pb-0 px-0 md:px-4  `}>
+            <AlertDialogContent className={` ${showSuccessDialog ? 'min-h-0 ' : 'min-h-[408px] pb-0  '} max-h-[90%] ${loading ? 'overflow-y-hidden  ' : 'overflow-y-auto '}  px-0 md:px-4  `}>
                 <AlertDialogCancel className="fixed top-1 right-1 p-2 w-fit mt-0 border-none"><X /></AlertDialogCancel>
 
                 <AlertDialogHeader >
                     <AlertDialogTitle className="px-10" >{showSuccessDialog ? 'Bienvenida a la tribu 🧙‍♀️' : 'Compra con Mercado Pago'}</AlertDialogTitle>
+
                 </AlertDialogHeader>
                 {showSuccessDialog ? <>
-                    <span>Tu compra fue exitosa, felicitaciones y gracias por confiar en Naz como tu mentora! 🤍</span>
-                    <span>Te hemos enviado un mail acceder al programa.</span>
+                    <div>Tu compra fue exitosa, felicitaciones y gracias por confiar en Naz como tu mentora! 🤍</div>
+                    <div>Te hemos enviado un mail acceder al programa.</div>
                 </>
                     :
                     <div className={`min-h-64  ${loading ? ' mx-6 animate-pulse' : ' animate-none'} z-50`} >
