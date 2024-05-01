@@ -4,11 +4,8 @@ import OfferSection from "@components/root-program/OfferSection.astro";
 import BuyNowSection from "@components/root-program/BuyNowSection.astro";
 
 import MainLayout from "@components/layouts/MainLayout.astro";
-import { Button } from "@components/ui/button";
 import Cart from "@components/root-program/Cart.astro";
-import { db, Course, Lesson, eq } from "astro:db";
 
-const lessons = await db.select().from(Lesson).where(eq(Lesson.courseId, 1));
 export const prerender = true;
 ---
 
@@ -16,13 +13,13 @@ export const prerender = true;
     description={"Vende sin sacrificar tu paz. Te enseño a como usar redes sociales para vender tus servicios sin métodos complejos"}
     title={"Root Program | Nazarena Batalla"}
 >
-    <div class="bg-white xxl:my-8 mx-auto px-0 items-center max-w-screen-lg">
+    <div class="bg-white rounded-t-lg mx-auto px-0 items-center max-w-screen-lg">
         <Hero />
-        <h2 class="p-6 xs:p-10">
-            Si aprovechas <strong> “Root Program</strong> tendrás
-            <strong>acceso inmediato</strong> a lo siguiente:
+        <h2 class="p-4 xs:p-6">
+            Si compras <strong> “Root Program</strong> tendrás
+            <strong>acceso inmediato</strong> a:
         </h2>
-        <OfferSection lessons={lessons} />
+        <OfferSection  />
         <BuyNowSection />
         <Cart />
     </div>

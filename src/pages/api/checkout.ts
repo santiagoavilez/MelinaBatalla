@@ -13,7 +13,7 @@ export const POST: APIRoute = async ({ request }) => {
         const body = await request.json();
 
         const { variant, bonus: $bonus, userId } = body.data as { variant: string, bonus: boolean, userId: string}
-        const customprice = variant !== 'default' ? 4400 : ($bonus ? 33200 : 30500)
+        const customprice = variant !== 'default' ? 3000 : ($bonus ? 31800 : 30500)
         const discount_code = variant !== 'default' ? undefined : code
         const variant_id = variant === 'default' ? root : potenciador
 

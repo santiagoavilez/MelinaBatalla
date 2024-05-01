@@ -21,11 +21,12 @@ export function BonusCard() {
                     POTENCIADOR DE RESULTADOS
                 </CardTitle>
             </CardHeader>
-            <CardContent>
-                En este entrenamiento privado, te compartiré como multiplicar las ganancias de tus servicios x2, x3 (Que no te va a llevar más de 30 minutos aplicar).
+            <CardContent >
+                <p className="text-left pb-2">Si estas a punto de comprar root program, pero dudas de que esta inversión te genere el retorno que deseas entonces te recomiendo al 100% agregar este entrenamiento.</p>
+                <p className="text-left">Si lo agregas tendrás un entrenamiento privado + una reunión exclusiva con Melina Batalla donde te dará feedback y resolverá tus dudas. </p>
             </CardContent>
             <CardFooter className="font-semibold text-xl flex-col items-start gap-2">
-                <div><span className="text-[#7ED957] pr-2">$27.00</span>
+                <div><span className="text-[#7ED957] pr-2">$13.00</span>
                     <span className="line-through"> $47.00</span>
                 </div>
                 <div className="items-top flex space-x-2  bg-blanco text-negro p-3  w-full">

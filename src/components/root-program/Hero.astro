@@ -2,49 +2,67 @@
 import ButtonCTA from "@components/ui/buttonCTA.astro";
 // import melinaLogo from "@assets/mblogo.png";
 // import { Image } from "astro:assets";
+import melinaPortrait from "@assets/root-program/melina-hero-image.png";
+import melinaPortraitMd from "@assets/root-program/root-program-portrait-banner.png";
+
+import { getImage, Image } from "astro:assets";
+
+const optimizedBackgroundmd = await getImage({
+  src: melinaPortraitMd,
+  format: "webp",
+});
 ---
 
-<section class="h-full p-6 w-full rounded-b-xl xxl:rounded-xl bg-marmol">
-    <div class="px-0 flex flex-col items-center gap-4 text-negro">
-        <div
-            class="text-left md:text-center flex flex-col gap-2 md:gap-1 pt-4 md:pt-0"
-        >
-            <span class="md:text-xl text-lg leading-4">
-                Atención emprendedoras holísticas:
-            </span>
-            <h1
-                class="text-6xl text-left md:text-center md:text-6xl leading-[3rem] tracking-tight text-negro font-bold"
-            >
-                Vende sin sacrificar tu paz.
-            </h1>
-            <span class="text-2xl md:text-2xl leading-5 pt-2 tracking-tight">
-                Como usar redes sociales para vender tus servicios sin métodos
-                complejos:
-            </span>
-        </div>
-
-        <div
-            class="w-full pt-6 md:pt-0 -mb-28 md:-mb-32 relative grow h-full max-w-xl"
-        >
-            <iframe
-                id="panda-05c02b32-7443-4047-8b82-a33bddfce763"
-                src="https://player-vz-c8120ef3-31f.tv.pandavideo.com/embed/?v=05c02b32-7443-4047-8b82-a33bddfce763"
-                style="border:none;"
-                title="Presentacion de root-program "
-                allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-                class="w-full aspect-video rounded-lg"
-
-                fetchpriority="high"></iframe>
-
-        </div>
+<section
+  class={`h-full  aspect-[9/16] md:aspect-video  rounded-t-xl  relative w-full rounded-b-xl xxl:rounded-xl  bg-cover bg-no-repeat text-white`}
+>
+  <Image
+    alt={"Nazarena Batalla en un retrato de estudio."}
+    src={melinaPortrait}
+    width={600}
+    height={1067}
+    format="webp"
+    loading="eager"
+    class={"rounded-lg block rounded-t-xl min-[600px]:hidden mx-auto  "}
+  />
+  <Image
+    alt={"Nazarena Batalla en un retrato de estudio."}
+    src={melinaPortrait}
+    width={800}
+    height={1067}
+    format="webp"
+    loading="eager"
+    class={"rounded-lg hidden  min-[600px]:block rounded-t-xl md:hidden mx-auto  "}
+  />
+  <Image
+    alt={"Nazarena Batalla en un retrato de estudio."}
+    src={optimizedBackgroundmd.src}
+    width={1024}
+    height={634}
+    format="webp"
+    loading="eager"
+    class={" md:block rounded-2xl  hidden mx-auto  top-0 left-0 right-0 "}
+  />
+  <div
+    class="h-full min-h-[569px] rounded-2xl absolute p-6 right-0 top-0 flex flex-col justify-center text-white bg-black/80 w-full gap-4 z-10"
+  >
+    <div
+      class="text-left md:text-center flex flex-col gap-2 md:gap-4 pb-4 md:pt-0"
+    >
+      <span class="text-xl leading-4"> Programa para coachs </span>
+      <h1
+        class="text-7xl text-left md:text-center md:text-6xl leading-[4rem] tracking-tight font-bold"
+      >
+        Root Program
+      </h1>
+      <span class="text-xl leading-5 pt-2 tracking-tight">
+        Como usar Instagram para vender tus servicios de manera saludable:
+      </span>
     </div>
-</section>
-<section class="pt-32 md:pt-32 pb-2 flex justify-center">
-
-        <ButtonCTA
-            className="h-16 px-12 hover:bg-primary hover:scale-105 transition-transform text-xl md:text-2xl   shadow-lg shadow-gray-400 mx-8 "
-        >
-            Obtener Ahora!
-        </ButtonCTA>
-
+    <ButtonCTA
+      className="h-16  px-12 w-full md:w-fit justify-self-center self-center hover:bg-primary hover:scale-105 transition-transform text-xl md:text-2xl   shadow-lg  "
+    >
+      Ver Programa
+    </ButtonCTA>
+  </div>
 </section>

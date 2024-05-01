@@ -15,7 +15,6 @@ export default function BonusDescription() {
     }, [clerk]);
 
     if (!loaded) {
-        console.log('no loaded');
         return (
             <div role="status" className="space-y-2.5 animate-pulse w-full">
                 <div className="flex items-center w-full">
