@@ -43,7 +43,7 @@ import MercadoPagoButton from "./mercadopago/MercadoPagoButton";
         </span>
       </div>
 
-      <div class="flex gap-4 flex-col md:flex-row ">
+      <div class="flex gap-4 flex-col md:flex-row">
         <!-- <CompleteOrder variant="secondary" client:only
                     >Obtener Ahora</CompleteOrder
                 > -->
@@ -79,11 +79,14 @@ import MercadoPagoButton from "./mercadopago/MercadoPagoButton";
     const bonusSpotify = document.getElementById("bonus-spotify")!;
 
     const skeleton = document.getElementById("skeleton")!;
-    console.log("skeleton", skeleton.id);
-    console.log("bonusSpotify", bonusSpotify.id);
-    console.log("bonusContainer", bonusContainer.id);
     auth.subscribe((clerk) => {
-      if (!!clerk && clerk?.loaded) {
+      if (
+        !!clerk &&
+        clerk?.loaded &&
+        bonusContainer &&
+        bonusSpotify &&
+        skeleton
+      ) {
         if (clerk.user) {
           const bonus = clerk.user?.publicMetadata?.bonus;
           if (bonus !== "true") {
@@ -112,11 +115,15 @@ import MercadoPagoButton from "./mercadopago/MercadoPagoButton";
     const bonusSpotify = document.getElementById("bonus-spotify")!;
 
     const skeleton = document.getElementById("skeleton")!;
-    console.log("skeleton", skeleton.id);
-    console.log("bonusSpotify", bonusSpotify.id);
-    console.log("bonusContainer", bonusContainer.id);
+
     auth.subscribe((clerk) => {
-      if (!!clerk && clerk?.loaded) {
+      if (
+        !!clerk &&
+        clerk?.loaded &&
+        bonusContainer &&
+        bonusSpotify &&
+        skeleton
+      ) {
         if (clerk.user) {
           const bonus = clerk.user?.publicMetadata?.bonus;
           if (bonus !== "true") {
@@ -124,7 +131,6 @@ import MercadoPagoButton from "./mercadopago/MercadoPagoButton";
             bonusContainer?.classList.add("flex");
             bonusContainer?.classList.remove("hidden");
           } else {
-            console.log("tiene bonus", bonus);
             skeleton?.classList.add("hidden");
             bonusContainer?.classList.add("hidden");
             bonusContainer?.classList.remove("flex");

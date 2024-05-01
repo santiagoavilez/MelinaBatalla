@@ -27,7 +27,7 @@ export default function MercadoPagoButton({ variant = 'default', full}: Props) {
     const [preferenceId, setPreferenceId] = useState<string | null>(null);
     const [initialization, setInitialization] = useState<any>(false);
     const isSecondary = variant === 'secondary'
-    const price = isSecondary ? 44000 : $bonus ? 44000 : 17000;
+    const price = isSecondary ? 30000 : $bonus ? 30000 : 17000;
     const name = `Root Program ${$bonus || isSecondary ? '- Potenciador de resultados' : ''}.`
     const description = isSecondary ? 'Entrenamiento privado y acceso a feedback exclusivo. ' : `Programa integrado por 5 clases grabadas, plantillas para creación de contenido efectivo y acceso a la comunidad de acompañamiento privado.${$bonus ? 'Además, recibirás un potenciador de resultados para acelerar tu proceso de aprendizaje.' : ''} `
     useEffect(() => {
