@@ -1,39 +1,34 @@
 ---
-
-
 import CardOffer from "./CardOffer.astro";
-
 ---
 
 <section class="h-full p-6 xs:p-10 w-full">
-    <div class="flex flex-col items-center gap-8">
-
-        <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
-
-            <CardOffer
-                modulo={"MODULO 1"}
-                title="Atrae clientes  comprometidos con su proceso"
-                description="Empezarás a definir y atraer clientes clientes consientes y comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieres ser ayudados."
-                variant="marron"
-            />
-            <CardOffer
-                modulo="MODULO 2"
-                title="Aprende a crear contenido funcional sin sacrificar tu paz"
-                description="Nunca más publicar cantidades excesivas de contenido sin obtener resultados y sacrificando tu tiempo. Transforma tu deseo de ayudar a otros en una oferta irresistible que se venda fácilmente. "
-            />
-            <CardOffer
-                modulo="MODULO 3"
-                title="Obtén seguridad con una estrategia clara"
-                description="Deja de depender de recomendados o  la suerte. Te comparto la estrategia para atraer clientes interesados en invertir en ti."
-                variant="marron"
-                order="third"
-            />
-            <CardOffer
-                modulo="MODULO 4"
-                title="Aprende a enfocar tu energía"
-                description="Que tu energía deje de drenarse en tareas que no están alineadas a tus objetivos. Te comparto en que debes enfocar toda tu energía para obtener resultados."
-                order="fourth"
-            />
-        </div>
+  <div class="flex flex-col items-center gap-8">
+    <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
+      <CardOffer
+        modulo={"MODULO 1"}
+        title="Atrae clientes  comprometidos con su proceso"
+        description="Empezarás a definir tu sistema para atraer clientes comprometidos con su transformación. Deja de maternar clientes y enfocate en aquellos que si quieren ser ayudados."
+        variant="marron"
+      />
+      <CardOffer
+        modulo="MODULO 2"
+        title="Aprende a crear contenido funcional sin sacrificar tu paz"
+        description="Nunca más publicar cantidades excesivas de contenido sin obtener resultados y sacrificando tu tiempo. Transforma tu deseo de ayudar a otros en una oferta irresistible. "
+      />
+      <CardOffer
+        modulo="MODULO 3"
+        title="Obtén seguridad con una estrategia clara"
+        description="Deja de depender de recomendados o  la suerte. Te comparto el embudo que debes aplicar para atraer clientes interesados en invertir en ti."
+        variant="marron"
+        order="third"
+      />
+      <CardOffer
+        modulo="MODULO 4"
+        title="Aprende a enfocar tu energía"
+        description="Que tu energía deje de drenarse en tareas que no están alineadas a tus objetivos. Te comparto en que debes enfocar toda tu energía para obtener resultados."
+        order="fourth"
+      />
     </div>
+  </div>
 </section>
