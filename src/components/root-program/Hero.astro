@@ -6,11 +6,20 @@ import melinaPortrait from "@assets/root-program/melina-hero-image.png";
 import melinaPortraitMd from "@assets/root-program/root-program-portrait-banner.png";
 
 import { getImage, Image } from "astro:assets";
+import AnimatedSpan from "./AnimatedSpan";
 
 const optimizedBackgroundmd = await getImage({
   src: melinaPortraitMd,
   format: "webp",
 });
+
+const animatedTexts = [
+    "coachs",
+    "terapeutas",
+    "psicologas",
+    "mentoras",
+    "vendedoras de servicios",
+];
 ---
 
 <section
@@ -49,7 +58,7 @@ const optimizedBackgroundmd = await getImage({
     <div
       class="text-left md:text-center flex flex-col gap-2 md:gap-4 pb-4 md:pt-0"
     >
-      <span class="text-xl leading-4"> Programa para coachs </span>
+      <span class="text-xl leading-4"> Programa para <AnimatedSpan client:load arrayText={animatedTexts} > </span>
       <h1
         class="text-7xl text-left md:text-center md:text-6xl leading-[4rem] tracking-tight font-bold"
       >
