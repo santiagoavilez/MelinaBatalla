@@ -27,9 +27,9 @@ export default function MercadoPagoButton({ variant = 'default', full}: Props) {
     const [preferenceId, setPreferenceId] = useState<string | null>(null);
     const [initialization, setInitialization] = useState<any>(false);
     const isSecondary = variant === 'secondary'
-    const price = isSecondary ? 30000 : $bonus ? 30000 : 17000;
-    const name = `Root Program ${$bonus || isSecondary ? '- Potenciador de resultados' : ''}.`
-    const description = isSecondary ? 'Entrenamiento privado y acceso a feedback exclusivo. ' : `Programa integrado por 5 clases grabadas, plantillas para creación de contenido efectivo y acceso a la comunidad de acompañamiento privado.${$bonus ? 'Además, recibirás un potenciador de resultados para acelerar tu proceso de aprendizaje.' : ''} `
+    const price =55000;
+    const name = `Root Program.`
+    const description = `Programa integrado por 5 clases grabadas, plantillas para creación de contenido efectivo y acceso a la comunidad de acompañamiento privado. `
     useEffect(() => {
         import('@mercadopago/sdk-react/mercadoPago/initMercadoPago').then(({ default: initMercadoPago }) => {
             initMercadoPago(import.meta.env.PUBLIC_MP_PUBLIC_KEY as string, { locale: 'es-AR' });
@@ -128,9 +128,20 @@ export default function MercadoPagoButton({ variant = 'default', full}: Props) {
 
                     resolve();
                 })
-                .catch((error) => {
+                .catch(async (error) => {
                     // manejar la respuesta de error al intentar crear el pago
                     console.log(error);
+                    try {
+
+                        const { cause } = error
+                        const body = cause.body
+                        const message = await body.json()
+                        console.log(message)
+                    }
+                    catch (error) {
+                        console.log(error)
+                    }
+
                     reject();
                 });
         });

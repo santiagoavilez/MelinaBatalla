@@ -17,7 +17,7 @@ export function CartItems() {
                     <div className="flex justify-between" >
                         <span className="grow w-full min-[430px]:w-auto" >Root Program</span>
 
-                            <span className="grow-0 inline-block space ">$17.00 USD</span>
+                            <span className="grow-0 inline-block space ">$55.00 USD</span>
 
                     </div>
                     <Accordion className='my-3.5' type="single" value={$bonus ? "item-1" : ""} >
@@ -35,7 +35,7 @@ export function CartItems() {
                     <div className="flex justify-between text-xl font-semibold relative">
 
                         <span >TOTAL:</span>
-                        <span className={`${!$bonus ? 'opacity-100 absolute right-0 ' : 'opacity-0  '} transition-opacity ease-in-out delay-150 duration-300`}>{'$17.00 USD'}</span>
+                        <span className={`${!$bonus ? 'opacity-100 absolute right-0 ' : 'opacity-0  '} transition-opacity ease-in-out delay-150 duration-300`}>{'$55.00 USD'}</span>
                         <span className={`${$bonus === true ? 'opacity-100 absolute right-0' : 'opacity-0 invisible '} transition-opacity ease-in-out delay-150 duration-300`}>{'$30.00 USD'}</span>
 
                     </div>
