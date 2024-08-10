@@ -5,7 +5,7 @@ const secretKey = import.meta.env.CLERK_SECRET_KEY
 
 const protectedPageUrls = ['/das/']
 
-const privatePagesUrls = ['/', 'transforma-tu-realidad', '/links', '/cursos/descubri-tu-esencia']
+const privatePagesUrls = ['transforma-tu-realidad', '/links', '/cursos/descubri-tu-esencia']
 
 const staticPagesUrls = ['/cursos']
 
@@ -18,7 +18,6 @@ export const onRequest = defineMiddleware(async ({ redirect, request, locals }, 
 
     const url = new URL(request.url)
     if (privatePagesUrls.some(path => url.pathname === path)) {
-        console.log('private page')
         return redirect('/root-program')
     }
     if(staticPagesUrls.some(path => url.pathname.startsWith(path))) {

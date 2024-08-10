@@ -1,0 +1,102 @@
+---
+import { SEO } from "astro-seo";
+
+interface Props {
+    title?: string | undefined;
+    description?: string | undefined;
+    image?: string | undefined;
+    transitions?: boolean;
+}
+import SpeedInsights from "@vercel/speed-insights/astro";
+
+const { title, description, image, transitions } = Astro.props;
+import melinaPortrait from "@assets/Melina-batalla.png";
+import { ViewTransitions } from "astro:transitions";
+---
+
+<head>
+    <meta charset="utf-8" />
+    <meta property="og:type" content="website" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" property="og:description" content={description} />
+    <meta property="og:locale" content="es_ES" />
+    <SpeedInsights />
+
+    <meta
+        property="og:image"
+        content={"https://res.cloudinary.com/dozjn0kxw/image/upload/v1711717551/nazarenabatalla.png"}
+    />
+    <link rel="icon" type="image/svg+xml" href="/mbfavicon.svg" />
+
+    <SEO
+        title={(title as string) || "Nazarena Battalla"}
+        description={(description as string) || "Nazarena Battalla"}
+        canonical={Astro.url.href}
+        openGraph={{
+            basic: {
+                title: (title as string) || "Nazarena Battalla",
+                image: "https://res.cloudinary.com/dozjn0kxw/image/upload/v1711717551/nazarenabatalla.png",
+                type: "website",
+            },
+
+            image: {
+                secureUrl:
+                    "https://res.cloudinary.com/dozjn0kxw/image/upload/v1711717551/nazarenabatalla.png",
+                url: "https://res.cloudinary.com/dozjn0kxw/image/upload/v1711717551/nazarenabatalla.png",
+                alt: "Melina Battalla",
+                width: melinaPortrait.width,
+                height: melinaPortrait.height,
+            },
+        }}
+    />
+    <meta property="og:url" content="https://melinabatalla.com/root-program" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="twitter:site" content="summary_large_image" />
+
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/mblogo.png" />
+
+    <meta name="title" property="og:title" content={title} />
+    <title>{title}</title>
+    {transitions && <ViewTransitions />}
+    <!-- Start of Provely Notification Display Code -->
+    <script is:inline>
+        window.addEventListener("load", () => {
+            (function (w, n) {
+                if (typeof w[n] == "undefined") {
+                    w[n] = [];
+                    w.provelySet = function () {
+                        w[n].push(arguments);
+                    };
+                    d = document.createElement("script");
+                    d.type = "text/javascript";
+                    d.defer = 1;
+                    d.charset = "UTF-8";
+                    d.src =
+                        "https://provely-public.s3.amazonaws.com/scripts/provely-widget.js?version=1.0";
+                    x = document.getElementsByTagName("script")[0];
+                    x.parentNode.insertBefore(d, x);
+                }
+            })(window, "provelyObj");
+            provelySet(
+                "config",
+                "uuid",
+                "803895a5-a6c9-4162-abe7-a17915ae4f78",
+            );
+            provelySet("config", "type", "notification");
+            provelySet(
+                "config",
+                "uuid",
+                "26222b1e-e9e8-451f-b906-9616d7f6bc57",
+            );
+            provelySet("config", "type", "notification");
+        });
+    </script>
+    <!-- End of Provely Notification Display Code -->
+</head>

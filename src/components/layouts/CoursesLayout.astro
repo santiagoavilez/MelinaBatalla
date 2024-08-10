@@ -10,69 +10,18 @@ interface Props {
 	slug?: string;
 }
 const { title, description, slug } = Astro.props;
-import melinaPortrait from "@assets/Melina-batalla.png";
 
-import { slide, ViewTransitions } from "astro:transitions";
 import LessonsList from "@components/root-program/LessonsList.astro";
 
 import SideBarHeader from "./root-program/SideBarHeader.astro";
 import SideBarFooter from "./root-program/SideBarFooter.astro";
 import NavBar from "./root-program/NavBar.astro";
 import { Toaster } from "@components/ui/toaster";
-
+import MainHead from "./head/MainHead.astro";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta property="og:type" content="website" />
-		<meta name="viewport" content="width=device-width" />
-		<meta
-			name="description"
-			property="og:description"
-			content={description}
-		/>
-		<meta property="og:locale" content="es_ES" />
-
-		<meta
-			property="og:image"
-			content={"https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png"}
-		/>
-		<SEO
-			title={(title as string) || "Melina Battalla"}
-			description={(description as string) || "Melina Battalla"}
-			canonical={Astro.url.href}
-			openGraph={{
-				basic: {
-					title: (title as string) || "Melina Battalla",
-					image: "https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png",
-					type: "website",
-				},
-
-				image: {
-					secureUrl:
-						"https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png",
-					url: "https://res.cloudinary.com/dozjn0kxw/image/upload/v1701555003/msv95a48pc0climvtpfl.png",
-					alt: "Melina Battalla",
-					width: melinaPortrait.width,
-					height: melinaPortrait.height,
-				},
-			}}
-		/>
-		<meta property="og:url" content="https://www.example.com/webpage/" />
-		<meta name="description" content={description} />
-		<meta name="robots" content="index, follow" />
-		<meta name="twitter:site" content="summary_large_image" />
-
-		<meta name="viewport" content="width=device-width" />
-
-		<meta name="generator" content={Astro.generator} />
-
-		<link rel="icon" type="image/svg+xml" href="/MBlogo.svg" />
-		<meta name="title" property="og:title" content={title} />
-		<title>{title}</title>
-		<ViewTransitions />
-	</head>
+	<MainHead title={title} description={description} transitions />
 
 	<body id="parent" class="bg-marmol w-full">
 		<div class="w-full h-full min-h-screen">

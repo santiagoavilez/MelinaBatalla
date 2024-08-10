@@ -2,6 +2,10 @@
 import Hero from "@components/home/Hero.astro";
 import ReviewsSection from "@components/home/ReviewsSection.astro";
 import MainLayout from "@components/layouts/MainLayout.astro";
+import melinaPortrait from "@assets/root-program/naza-root-program.png";
+import { Image } from "astro:assets";
+import { Button } from "@components/ui/button";
+import { ArrowRight } from "lucide-react";
 ---
 
 <MainLayout
@@ -9,7 +13,40 @@ import MainLayout from "@components/layouts/MainLayout.astro";
 	title={"Melina Batalla"}
 >
 	<main>
-		<Hero />
+		<div
+			class="container w-full max-w-4xl flex flex-col gap-4 justify-center min-h-screen"
+		>
+			<div class="flex flex-col md:flex-row items-center gap-4">
+				<div class="">
+					<h1 class="text-4xl pt-10 font-bold text-left">
+						¿Deseas liberar el verdadero potencial de tu negocio?
+					</h1>
+					<span class="block mt-4 text-lg">
+						Aquí te comparto el como.
+					</span>
+				</div>
+				<div class="flex-grow">
+					<Image
+						alt={"Nazarena Batalla en un retrato de estudio."}
+						src={melinaPortrait}
+						width={300}
+						format="webp"
+						class={"rounded-lg mx-auto "}
+					/>
+				</div>
+			</div>
+			<Button
+				className="w-full h-fit flex  text-xl py-6 font-medium max-w-md  mt-10"
+			>
+				<span
+					>Aprende sobre negocios <strong class="font-bold">
+						&nbsp;GRATIS &nbsp;</strong
+					></span
+				>
+
+				<ArrowRight />
+			</Button>
+		</div>
 		<ReviewsSection />
 	</main>
 </MainLayout>
